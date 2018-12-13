@@ -1,4 +1,4 @@
-package com.vetx.jarVes.service;
+package com.vetx.jarVes.security;
 
 import com.vetx.jarVes.model.User;
 import com.vetx.jarVes.repository.UserRepository;
