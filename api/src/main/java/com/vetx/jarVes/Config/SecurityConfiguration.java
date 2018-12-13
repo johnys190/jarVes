@@ -4,7 +4,7 @@ package com.vetx.jarVes.Config;
 
 import com.vetx.jarVes.security.JwtAuthenticationEntryPoint;
 import com.vetx.jarVes.security.JwtAuthenticationFilter;
-import com.vetx.jarVes.service.UserPrincipalService;
+import com.vetx.jarVes.security.UserPrincipalService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -97,8 +97,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         .anyRequest()
         .authenticated();
 
-//    TODO:change commented out matcher
-    // Add our custom JWT security filter
+
     http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
   }

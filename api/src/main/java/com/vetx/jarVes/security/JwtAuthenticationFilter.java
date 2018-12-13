@@ -1,6 +1,5 @@
 package com.vetx.jarVes.security;
 
-import com.vetx.jarVes.service.UserPrincipalService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
