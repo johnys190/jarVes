@@ -1,9 +1,6 @@
 package com.vetx.jarVes.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.NaturalId;
 
 import javax.persistence.*;
@@ -25,6 +22,10 @@ public class Role {
     @NaturalId
     @Column(length = 60)
     private RoleName name;
+
+    public Role(RoleName name) {
+        this.name = name;
+    }
 }
 
 
