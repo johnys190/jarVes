@@ -1,8 +1,7 @@
 package com.vetx.jarVes.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Data;
-import lombok.NonNull;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -13,6 +12,9 @@ import java.util.Set;
 
 @Entity
 @Data
+@RequiredArgsConstructor
+@NoArgsConstructor
+@Table(uniqueConstraints = {@UniqueConstraint(columnNames = {"email"})})
 public class User {
 
     //Variable Declaration
@@ -20,19 +22,23 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NonNull
     @NotBlank(message = "Name is required.")
     @Size(max = 140)
     private String name;
 
-    @NotBlank(message = "Last firstName is required.")
-    @Size(min = 3, max = 140, message = "Last firstName is required")
+    @NonNull
+    @NotBlank(message = "Last name is required.")
+    @Size(max = 140)
     private String lastName;
 
+    @NonNull
     @Email
     @NotBlank(message = "Email is required.")
     @Size(max = 140)
     private String email;
 
+    @NonNull
     @NotBlank(message = "Password is required.")
     @Size(max = 140)
     @JsonIgnore
@@ -43,4 +49,6 @@ public class User {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
+
+
 }
