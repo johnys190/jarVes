@@ -2,7 +2,6 @@ package com.vetx.jarVes.security;
 
 import com.vetx.jarVes.model.User;
 import com.vetx.jarVes.repository.UserRepository;
-import com.vetx.jarVes.security.UserPrincipal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -26,9 +25,7 @@ public class UserPrincipalService implements UserDetailsService {
   public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
     User user = userRepository
         .findByEmail(email)
-        .orElseThrow(() ->
-            new UsernameNotFoundException("User not found with username or email : " + email)
-        );
+        .orElseThrow(() -> new UsernameNotFoundException("User not found email : " + email));
 
     return UserPrincipal.create(user);
   }
@@ -38,9 +35,7 @@ public class UserPrincipalService implements UserDetailsService {
   public UserDetails loadUserById(Long id) {
     User user = userRepository
         .findById(id)
-        .orElseThrow(
-            () -> new UsernameNotFoundException("User not found with id : " + id)
-        );
+        .orElseThrow(() -> new UsernameNotFoundException("User not found with id : " + id));
 
     return UserPrincipal.create(user);
   }

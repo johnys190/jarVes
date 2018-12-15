@@ -7,19 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-/*NAME
-
-PIC
-Notes (na anoigei ena notepad)
-
-SPEED
-IFO-BALLAST
-IFO-LADEN
-PORT IDLE
-PORT WORKING
-MGO PORT IDLE
-MGO PORT WORKING
-BOILER*/
+//TODO:Notes - (na anoigei ena notepad).
 
 @Entity
 @Data
@@ -42,5 +30,27 @@ public class Vessel {
     private double grain;
 
     private String manager;
+
+    private String pic;
+
+    private int speed;
+
+    private double ifo_ballast;
+
+    private double ifo_laden;
+
+    private double port_idle;
+
+    private double port_working;
+
+    private double mgo_port_idle;
+
+    private double mgo_port_working;
+
+    private int boiler;
+
+
+
+
 
 }

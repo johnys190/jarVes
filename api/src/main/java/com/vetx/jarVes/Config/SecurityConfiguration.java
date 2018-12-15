@@ -88,9 +88,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             "/**/*.js")
         .permitAll()
 //        .antMatchers("/api/auth/**")
-        .antMatchers("/api/**")
+        .antMatchers("/**")
         .permitAll()
         .antMatchers("/h2-console/**")
+        .permitAll()
+        .antMatchers("/v2/**")
         .permitAll()
         .anyRequest()
         .authenticated();
