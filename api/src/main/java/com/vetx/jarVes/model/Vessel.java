@@ -48,9 +48,4 @@ public class Vessel {
     private double mgo_port_working;
 
     private int boiler;
-
-
-
-
-
 }

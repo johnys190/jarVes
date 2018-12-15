@@ -2,10 +2,7 @@ package com.vetx.jarVes.model;
 
 import lombok.*;
 import org.hibernate.annotations.NaturalId;
-
 import javax.persistence.*;
-
-
 
 @Entity
 @Data
