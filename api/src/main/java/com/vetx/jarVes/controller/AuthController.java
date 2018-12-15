@@ -10,6 +10,8 @@ import com.vetx.jarVes.model.User;
 import com.vetx.jarVes.repository.RoleRepository;
 import com.vetx.jarVes.repository.UserRepository;
 import com.vetx.jarVes.security.JwtTokenProvider;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,6 +28,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.validation.Valid;
 import java.util.Collections;
 
+@Api(description = "This is the authorization controller.")
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
@@ -53,6 +56,7 @@ public class AuthController {
     this.tokenProvider = tokenProvider;
   }
 
+  @ApiOperation(value = "This endpoint will be used for User sign-in.")
   @PostMapping("/signin")
   public ResponseEntity<?> authenticateUser(@Valid @RequestBody LogInRequest loginRequest) {
 
@@ -64,11 +68,12 @@ public class AuthController {
     return ResponseEntity.ok(JwtAuthenticationResponse.builder().accessToken(tokenProvider.generateToken(authentication)).build());
   }
 
+  @ApiOperation(value = "This endpoint will be used for User sign-up.")
   @PostMapping("/signup")
   public ResponseEntity<?> registerUser(@Valid @RequestBody SignUpRequest signUpRequest) {
-        if (userRepository.existsByEmail(signUpRequest.getEmail())) {
+    if (userRepository.existsByEmail(signUpRequest.getEmail())) {
       return new ResponseEntity(new ApiResponse(false, "Email Address already in use!"),
-          HttpStatus.BAD_REQUEST);
+      HttpStatus.BAD_REQUEST);
     }
 
     // Creating user's account
@@ -83,6 +88,6 @@ public class AuthController {
 
     userRepository.save(user);
 
-    return ResponseEntity.ok(new ApiResponse(true, "User registered successfully"));
+    return ResponseEntity.ok(new ApiResponse(true, "User registered successfully."));
   }
 }
