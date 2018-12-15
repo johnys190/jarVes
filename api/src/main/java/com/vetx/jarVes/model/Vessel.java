@@ -7,7 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-//TODO:Notes - (na anoigei ena notepad).
+//TODO:Notes - (open a Notepad).
 
 @Entity
 @Data
