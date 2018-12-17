@@ -1,0 +1,19 @@
+
+.container {
+  max-width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.content {
+  max-width: 95%;
+  margin: 0 auto;
+  align-content: center;
+}
+
+.center-button{
+  text-align: center;
+  width: 200;
+}

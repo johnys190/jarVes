@@ -1,0 +1,39 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+}
+
+.container {
+  max-width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.content {
+  max-width: 420px;
+  margin: 0 auto;
+  margin-top: 40px;    
+  align-content: center;
+}
+
+.center-button{
+  text-align: center;
+  width: 200px;
+}
+
+.center-col{
+  text-align: center;
+}
+
+.center-row{
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  h1 {
+    font-size: 1.7em;
+  }
+}
