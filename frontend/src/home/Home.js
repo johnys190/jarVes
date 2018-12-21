@@ -34,11 +34,11 @@ class Home extends Component {
 			<div className="container">
 				<div className="content">
 					<StickyContainer>
-					    <Tabs defaultActiveKey="1" renderTabBar={renderTabBar}>
-					      <TabPane tab="Position List" key="1"><PositionList /></TabPane>
+					    <Tabs defaultActiveKey="4" renderTabBar={renderTabBar}>
+					      <TabPane tab="Position List" key="1"><PositionList /*parse props here*//></TabPane>
 					      <TabPane tab="Vessel Entry" key="2"><VesselEntry /></TabPane>
 					      <TabPane tab="Voyage Estimate" key="3"><VoyageEstimate /></TabPane>
-					      <TabPane tab="T/C Estimate" key="4"><TCEstimate /></TabPane>
+					      <TabPane tab="Time Charter Estimate" key="4"><TCEstimate /></TabPane>
 					    </Tabs>
 				  	</StickyContainer>
 				</div>

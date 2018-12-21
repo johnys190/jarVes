@@ -1,0 +1,86 @@
+.alignLeft {
+	width: 49%;
+	float: left;
+}
+
+.alignRight {
+	width: 49%;
+	float: right;
+}
+.alignCenter {
+	width: 49%;
+	float: left;
+	text-align: center;
+}
+
+.button{
+	width: 100px;
+}
+
+.alignComponent {
+	padding: 5px;
+  	text-align: right;
+}
+
+.ant-input-group-addon{
+	width: 147px;
+  	border-color: #bfbfbf;
+}
+
+.ant-input{
+  	border-color: #bfbfbf;
+}
+
+.ant-input-disabled{
+  	color: black;
+}
+
+.alignResultRed {
+	padding: 5px;
+  	text-align: right;
+  	background-color: #f0a0a2;
+}
+
+.alignResultGreen {
+	padding: 5px;
+  	text-align: right;
+  	background-color: #d8fdd0;
+}
+
+.alignResultDarkBlue {
+	padding: 5px;
+  	text-align: right;
+  	background-color: #bce5fc;
+}
+
+.alignResultLightBlue {
+	padding: 5px;
+  	text-align: right;
+  	background-color: #ccfdfc;
+}
+
+.alignRadioGroup {
+	padding: 5px;
+}
+
+.alignLeftRadio {
+	width: 60%;
+	float: left;
+}
+
+.alignRightRadio {
+	width: 30%;
+	float: right;
+}
+
+.alignSelect {
+	width: 100%;
+}
+
+.alignClear {
+	clear: both;
+}
+
+.formComp{
+	width: 40%;
+}
