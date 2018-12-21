@@ -1,4 +1,4 @@
-package com.vetx.jarVes.Payload;
+package com.vetx.jarVes.payload;
 
 import lombok.Data;
 

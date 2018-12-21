@@ -1,4 +1,4 @@
-package com.vetx.jarVes.Config;
+package com.vetx.jarVes.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

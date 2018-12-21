@@ -1,6 +1,6 @@
 package com.vetx.jarVes.controller;
 
-import com.vetx.jarVes.Payload.UserSummary;
+import com.vetx.jarVes.payload.UserSummary;
 import com.vetx.jarVes.model.User;
 import com.vetx.jarVes.repository.UserRepository;
 import com.vetx.jarVes.security.CurrentUser;

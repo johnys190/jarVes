@@ -1,9 +1,9 @@
 package com.vetx.jarVes.controller;
 
-import com.vetx.jarVes.Payload.ApiResponse;
-import com.vetx.jarVes.Payload.JwtAuthenticationResponse;
-import com.vetx.jarVes.Payload.LogInRequest;
-import com.vetx.jarVes.Payload.SignUpRequest;
+import com.vetx.jarVes.payload.ApiResponse;
+import com.vetx.jarVes.payload.JwtAuthenticationResponse;
+import com.vetx.jarVes.payload.LogInRequest;
+import com.vetx.jarVes.payload.SignUpRequest;
 import com.vetx.jarVes.repository.UserRepository;
 import com.vetx.jarVes.security.JwtTokenProvider;
 import com.vetx.jarVes.service.CreateUserAccountService;

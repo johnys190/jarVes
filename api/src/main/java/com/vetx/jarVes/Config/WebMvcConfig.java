@@ -1,4 +1,4 @@
-package com.vetx.jarVes.Config;
+package com.vetx.jarVes.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;

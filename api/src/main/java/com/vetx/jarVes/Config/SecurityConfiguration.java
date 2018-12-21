@@ -1,4 +1,4 @@
-package com.vetx.jarVes.Config;
+package com.vetx.jarVes.config;
 
 import com.vetx.jarVes.security.JwtAuthenticationEntryPoint;
 import com.vetx.jarVes.security.JwtAuthenticationFilter;
