@@ -24,6 +24,7 @@ const request = (options) => {
 };
 
 export function login(loginRequest) {
+    console.log(loginRequest);
     return request({
         url: API_BASE_URL + "/auth/signin",
         method: 'POST',
@@ -68,6 +69,20 @@ export function getCurrentUser() {
 export function getUserProfile(username) {
     return request({
         url: API_BASE_URL + "/users/" + username,
+        method: 'GET'
+    });
+}
+
+export function getVesselById(id) {
+    return request({
+        url: API_BASE_URL + "/vessel/" + id,
+        method: 'GET'
+    });
+}
+
+export function getAllVessels() {
+    return request({
+        url: API_BASE_URL + "/vessel/vessels",
         method: 'GET'
     });
 }

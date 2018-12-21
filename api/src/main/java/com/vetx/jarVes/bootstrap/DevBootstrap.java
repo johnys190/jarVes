@@ -3,8 +3,10 @@ package com.vetx.jarVes.bootstrap;
 import com.vetx.jarVes.model.Role;
 import com.vetx.jarVes.model.RoleName;
 import com.vetx.jarVes.model.User;
+import com.vetx.jarVes.model.Vessel;
 import com.vetx.jarVes.repository.RoleRepository;
 import com.vetx.jarVes.repository.UserRepository;
+import com.vetx.jarVes.repository.VesselRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
@@ -20,12 +22,15 @@ public class DevBootstrap implements ApplicationListener<ContextRefreshedEvent> 
 
     UserRepository userRepository;
 
+    VesselRepository vesselRepository;
+
     PasswordEncoder passwordEncoder;
 
     @Autowired
-    public DevBootstrap(RoleRepository roleRepository, UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public DevBootstrap(RoleRepository roleRepository, UserRepository userRepository, VesselRepository vesselRepository, PasswordEncoder passwordEncoder) {
         this.roleRepository = roleRepository;
         this.userRepository = userRepository;
+        this.vesselRepository = vesselRepository;
         this.passwordEncoder = passwordEncoder;
     }
 
@@ -42,21 +47,31 @@ public class DevBootstrap implements ApplicationListener<ContextRefreshedEvent> 
         roleRepository.save(role_guest);
 
         User user1 = new User("Zan", "Toichi", "zan@email.com", passwordEncoder.encode("123456"));
+        User user524 = new User("Peos", "Proktos", "peos@prokt.all", passwordEncoder.encode("poutsa"));
         User user2 = new User("Thanos", "Louk", "than@email.com", passwordEncoder.encode("654321"));
         User user3 = new User("Pietr", "Piotr", "pietr@email.com", passwordEncoder.encode("1234321"));
         User user4 = new User("Pikos", "Pipikos", "pikos@email.com", passwordEncoder.encode("123454321"));
         User user5 = new User("Kwstas", "Okwsten", "kwsten@email.com", passwordEncoder.encode("12321"));
 
         user1.setRoles(Collections.singleton(role_admin));
+        user524.setRoles(Collections.singleton(role_admin));
         user2.setRoles(Collections.singleton(role_guest));
         user3.setRoles(Collections.singleton(role_guest));
         user4.setRoles(Collections.singleton(role_guest));
         user5.setRoles(Collections.singleton(role_guest));
 
         userRepository.save(user1);
+        userRepository.save(user524);
         userRepository.save(user2);
         userRepository.save(user3);
         userRepository.save(user4);
         userRepository.save(user5);
+
+        Vessel vessel1 = new Vessel("peos", 1, "type1", "flag1", 1, "gear1", 1.1, "manager1", "pic1", 1, 1.1, 1.1, 1.1, 1.1, 1.1, 1.1, 1);
+        Vessel vessel2 = new Vessel("aidio", 2, "type2", "flag2", 2, "gear2", 2.2, "manager2", "pic2", 2, 2.2, 2.2, 2.2, 2.2, 2.2, 2.2, 2);
+
+        vesselRepository.save(vessel1);
+        vesselRepository.save(vessel2);
+
     }
 }

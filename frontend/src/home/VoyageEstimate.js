@@ -10,6 +10,10 @@ import {
     Select,
     Button
 } from 'antd';
+import { 
+    getVesselById,
+    getAllVessels
+} from '../util/APIUtils';
 
 const Option = Select.Option;
 
@@ -18,9 +22,15 @@ class VoyageEstimate extends Component {
         super(props);
         this.state = {
             isLoading: false,
-            new: false
+            new: false,
+            vesselId: 1
         };
+        this.getAllVessels();
+        //this.getAllVessels = this.getAllVessels.bind(this);
+    }
 
+    componentWillMount(){
+        this.getAllVessels();
     }
 
     calculate(){
@@ -29,6 +39,57 @@ class VoyageEstimate extends Component {
                 timecharterrate:  Number(this.state.hirerate) + Number(this.state.ballastbonus)
             })
         }
+    }
+
+    getVesselById(){
+        this.setState({
+            isLoading: true
+        });
+        let promise;
+
+        promise = getVesselById(this.state.vesselId);
+
+        if (!promise) {
+            return;
+        }
+
+        promise
+            .then(response => {
+                console.log(response)
+                // this.setState({
+                //     vessels: response ? response : [],
+                //     isLoading: false
+                // })
+            }).catch(error => {
+            this.setState({
+                isLoading: false
+            })
+        });
+    }
+
+    getAllVessels(){
+        this.setState({
+            isLoading: true
+        });
+        let promise;
+
+        promise = getAllVessels();
+
+        if (!promise) {
+            return;
+        }
+
+        promise
+            .then(response => {
+                this.setState({
+                    vessels: response ? response : [],
+                    isLoading: false
+                })
+            }).catch(error => {
+            this.setState({
+                isLoading: false
+            })
+        });
     }
 
     handleChangeInput = (e) => {
@@ -137,6 +198,10 @@ class VoyageEstimate extends Component {
         const newClearButton = this.state.new ?
                     (<Button className='button' type='danger' onClick={this.handleNewCancelClick}>Cancel</Button>) :
                     (<Button className='button' type='danger' onClick={this.handleNewCancelClick}>New</Button>);
+
+        const vesselsOptions = this.state.vessels.map((vessel) => {
+                                        return (<Option value={vessel.id}>{vessel.name}</Option>);
+                                    });
 		return (
             <div>
 
@@ -208,9 +273,7 @@ class VoyageEstimate extends Component {
                                 onFocus={this.handleFocus}
                                 onBlur={this.handleBlur}
                                 filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}>
-                                    <Option value="jack">Jack</Option>
-                                    <Option value="lucy">Lucy</Option>
-                                    <Option value="tom">Tom</Option>
+                                    {vesselsOptions}
                             </Select>
                         </span>
                     </span>

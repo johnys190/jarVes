@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Api(description = "This is the Vessel controller.")
 @RestController
 @RequestMapping("/api/vessel")
@@ -21,7 +23,13 @@ public class VesselController {
     @GetMapping("/{id}")
     @ResponseBody
     @PreAuthorize("hasRole('GUEST')")
-    public Vessel getVessel(@PathVariable Long id){
+    public Vessel getVesselById(@PathVariable Long id){
         return vesselRepository.findById(id).get();
+    }
+
+    @GetMapping("/vessels")
+    @ResponseBody
+    public List<Vessel> getAllVessel(){
+        return vesselRepository.findAll();
     }
 }
