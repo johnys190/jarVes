@@ -7,4 +7,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 
 @Repository
 @CrossOrigin
-public interface VoyEstimateRepository extends JpaRepository<VoyEstimate, Long> {}
+public interface VoyEstimateRepository extends JpaRepository<VoyEstimate,Long> {
+
+}
+
