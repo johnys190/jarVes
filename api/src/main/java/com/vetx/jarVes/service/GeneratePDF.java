@@ -1,70 +1,69 @@
 package com.vetx.jarVes.service;
 
-import com.itextpdf.text.*;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.util.List;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.FontFactory;
+import com.itextpdf.text.Phrase;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.vetx.jarVes.model.VoyEstimate;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-
 public class GeneratePDF {
-  public static ByteArrayInputStream voyEstimatePDF(VoyEstimate voyEstimate) {
-    Document document = new Document();
-    ByteArrayOutputStream out = new ByteArrayOutputStream();
 
-    try {
 
-      PdfPTable table = new PdfPTable(4);
-      table.setWidthPercentage(60);
-      table.setWidths(new int[] {1, 3, 3, 3});
+    public static ByteArrayInputStream voyEstimatePDF(List<VoyEstimate> voyEstimate) {
+        Document document = new Document();
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
 
-      Font headFont = FontFactory.getFont(FontFactory.HELVETICA_BOLD);
+        try {
 
-      PdfPCell hcellHeaders;
+            PdfPTable table = new PdfPTable(2);
+            table.setWidthPercentage(60);
+            table.setWidths(new int[]{1, 3, 3});
 
-      hcellHeaders = new PdfPCell(new Phrase("Id", headFont));
-      hcellHeaders.setHorizontalAlignment(Element.ALIGN_CENTER);
-      table.addCell(hcellHeaders);
+            Font headFont = FontFactory.getFont(FontFactory.HELVETICA_BOLD);
 
-      hcellHeaders = new PdfPCell(new Phrase("Name", headFont));
-      hcellHeaders.setHorizontalAlignment(Element.ALIGN_CENTER);
-      table.addCell(hcellHeaders);
+            PdfPCell hcell;
+            hcell = new PdfPCell(new Phrase("Id", headFont));
+            hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+            table.addCell(hcell);
 
-      hcellHeaders = new PdfPCell(new Phrase("Account", headFont));
-      hcellHeaders.setHorizontalAlignment(Element.ALIGN_CENTER);
-      table.addCell(hcellHeaders);
+            hcell = new PdfPCell(new Phrase("Broker", headFont));
+            hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+            table.addCell(hcell);
 
-      hcellHeaders = new PdfPCell(new Phrase("Voyage", headFont));
-      hcellHeaders.setHorizontalAlignment(Element.ALIGN_CENTER);
-      table.addCell(hcellHeaders);
+            for (VoyEstimate voyEstimates : voyEstimate)  {
 
-      PdfPCell cell;
+                PdfPCell cell;
 
-      cell = new PdfPCell(new Phrase(voyEstimate.getId().toString()));
-      cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-      table.addCell(cell);
+                cell = new PdfPCell(new Phrase(voyEstimates.getId().toString()));
+                cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+                cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+                table.addCell(cell);
 
-      cell = new PdfPCell(new Phrase(voyEstimate.getName()));
-      cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-      table.addCell(cell);
+                cell = new PdfPCell(new Phrase(String.valueOf(voyEstimates.getBroker())));
+                cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+                cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+                cell.setPaddingRight(5);
+                table.addCell(cell);
+            }
 
-      cell = new PdfPCell(new Phrase(voyEstimate.getAccount()));
-      cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-      table.addCell(cell);
+            PdfWriter.getInstance(document, out);
+            document.open();
+            document.add(table);
 
-      cell = new PdfPCell(new Phrase(voyEstimate.getVoyage()));
-      cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-      table.addCell(cell);
+            document.close();
 
-      PdfWriter.getInstance(document, out);
-      document.open();
-      document.add(table);
-      document.close();
-    } catch (DocumentException ex) {
+        } catch (DocumentException ex) {
 
+        }
+
+        return new ByteArrayInputStream(out.toByteArray());
     }
-    return new ByteArrayInputStream(out.toByteArray());
-  }
 }
