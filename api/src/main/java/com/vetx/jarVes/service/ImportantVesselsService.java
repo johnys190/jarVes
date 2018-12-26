@@ -27,24 +27,24 @@ public class ImportantVesselsService {
 
     public List<ImportantVesselDTO> getImportantVessels(Long id){
 
-        List<Vessel> vessels = vesselRepository.findAll();
+
 
         User user = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException(id));
 
         List<ImportantVesselDTO> importantVessels = new ArrayList<>();
 
-        for (Vessel vessel: vessels) {
+        vesselRepository.findAll().forEach(vessel -> {
             ImportantVesselDTO importantVessel = ImportantVesselDTO.builder().id(vessel.getId()).name(vessel.getName())
-                .dwt(vessel.getDwt()).type(vessel.getType()).flag(vessel.getFlag()).built(vessel.getBuilt())
-                .gear(vessel.getGear()).grain(vessel.getGrain()).manager(vessel.getManager()).pic(vessel.getPic())
-                .speed(vessel.getSpeed()).ifo_ballast(vessel.getIfo_ballast()).ifo_laden(vessel.getIfo_laden())
-                .port_idle(vessel.getPort_idle()).port_working(vessel.getPort_working())
-                .mgo_port_idle(vessel.getMgo_port_idle()).mgo_port_working(vessel.getMgo_port_working())
-                .boiler(vessel.getBoiler()).important(user.getImportantVessels()
-                .contains(vessel) ? true : false).build();
+                    .dwt(vessel.getDwt()).type(vessel.getType()).flag(vessel.getFlag()).built(vessel.getBuilt())
+                    .gear(vessel.getGear()).grain(vessel.getGrain()).manager(vessel.getManager()).pic(vessel.getPic())
+                    .speed(vessel.getSpeed()).ifo_ballast(vessel.getIfo_ballast()).ifo_laden(vessel.getIfo_laden())
+                    .port_idle(vessel.getPort_idle()).port_working(vessel.getPort_working())
+                    .mgo_port_idle(vessel.getMgo_port_idle()).mgo_port_working(vessel.getMgo_port_working())
+                    .boiler(vessel.getBoiler()).important(user.getImportantVessels()
+                    .contains(vessel) ? true : false).build();
 
             importantVessels.add(importantVessel);
-        }
+        });
 
 
         return importantVessels;
