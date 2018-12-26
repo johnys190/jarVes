@@ -20,7 +20,7 @@ import java.util.Set;
 
 @Api(description = "This is the Voyage Estimate controller.")
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/voy-estimate")
 public class VoyEstimateController {
 
     private VoyEstimateRepository voyEstimateRepository;
@@ -30,7 +30,7 @@ public class VoyEstimateController {
         this.voyEstimateRepository = voyEstimateRepository;
     }
 
-    @GetMapping("/voy-estimates")
+    @GetMapping("/voy-estimate")
     @ResponseBody
     public List<VoyEstimate> getallVoyEstimates(){
         return voyEstimateRepository.findAll();
@@ -43,19 +43,19 @@ public class VoyEstimateController {
         return voyEstimateRepository.findById(id).orElseThrow(() -> new EstimateNotFoundException(id));
     }
 
-    @PutMapping("voy-estimates/{id}")
+    @PutMapping("/{id}")
     public VoyEstimate updateVoyEstimate (@Valid @RequestBody VoyEstimate newVoyEstimate,@PathVariable Long id) {
         newVoyEstimate.setId(id);
         return voyEstimateRepository.save(newVoyEstimate);
     }
 
 
-    @DeleteMapping("voy-estimates/{id}")
+    @DeleteMapping("/{id}")
     public void removeVoyEstimate(@PathVariable Long id) {
         voyEstimateRepository.deleteById(id);
     }
 
-    @PostMapping("/voy-estimates")
+    @PostMapping("/{id}")
     VoyEstimate newVoyEstimate(@RequestBody VoyEstimate newVoyEstimate) {
         return voyEstimateRepository.save(newVoyEstimate);
     }
