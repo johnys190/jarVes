@@ -1,12 +1,7 @@
 package com.vetx.jarVes.bootstrap;
 
-import com.vetx.jarVes.model.Role;
-import com.vetx.jarVes.model.RoleName;
-import com.vetx.jarVes.model.User;
-import com.vetx.jarVes.model.Vessel;
-import com.vetx.jarVes.repository.RoleRepository;
-import com.vetx.jarVes.repository.UserRepository;
-import com.vetx.jarVes.repository.VesselRepository;
+import com.vetx.jarVes.model.*;
+import com.vetx.jarVes.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
@@ -26,13 +21,21 @@ public class DevBootstrap implements ApplicationListener<ContextRefreshedEvent> 
 
     PasswordEncoder passwordEncoder;
 
+    TcEstimateRepository tcEstimateRepository;
+
+    VoyEstimateRepository voyEstimateRepository;
+
     @Autowired
-    public DevBootstrap(RoleRepository roleRepository, UserRepository userRepository, VesselRepository vesselRepository, PasswordEncoder passwordEncoder) {
+    public DevBootstrap(RoleRepository roleRepository, UserRepository userRepository, VesselRepository vesselRepository, PasswordEncoder passwordEncoder, TcEstimateRepository tcEstimateRepository, VoyEstimateRepository voyEstimateRepository) {
         this.roleRepository = roleRepository;
         this.userRepository = userRepository;
         this.vesselRepository = vesselRepository;
         this.passwordEncoder = passwordEncoder;
+        this.tcEstimateRepository = tcEstimateRepository;
+        this.voyEstimateRepository = voyEstimateRepository;
     }
+
+
 
     @Override
     public void onApplicationEvent(ContextRefreshedEvent event) {
@@ -72,6 +75,12 @@ public class DevBootstrap implements ApplicationListener<ContextRefreshedEvent> 
 
         vesselRepository.save(vessel1);
         vesselRepository.save(vessel2);
+
+        TcEstimate tcEstimate1 = TcEstimate.builder().name("TcTestimate").account("testaccount").build();
+        tcEstimateRepository.save(tcEstimate1);
+
+        VoyEstimate voyEstimate1 = VoyEstimate.builder().name("VoyTestimate").account("testvoyaccount").build();
+        voyEstimateRepository.save(voyEstimate1);
 
     }
 }
