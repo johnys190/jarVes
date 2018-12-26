@@ -12,11 +12,10 @@ import com.itextpdf.text.Phrase;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
+import com.vetx.jarVes.model.TcEstimate;
 import com.vetx.jarVes.model.VoyEstimate;
 
 public class GeneratePDF {
-
-
     public static ByteArrayInputStream voyEstimatePDF(List<VoyEstimate> voyEstimate) {
         Document document = new Document();
         ByteArrayOutputStream out = new ByteArrayOutputStream();
@@ -57,9 +56,7 @@ public class GeneratePDF {
             PdfWriter.getInstance(document, out);
             document.open();
             document.add(table);
-
             document.close();
-
         } catch (DocumentException ex) {
 
         }

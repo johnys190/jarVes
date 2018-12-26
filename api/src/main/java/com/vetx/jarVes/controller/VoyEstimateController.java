@@ -17,7 +17,7 @@ import java.util.List;
 
 @Api(description = "This is the Voyage Estimate controller.")
 @RestController
-@RequestMapping("/api/VoyEstimate")
+@RequestMapping("/api/voy-estimate")
 public class VoyEstimateController {
 
     private VoyEstimateRepository voyEstimateRepository;
@@ -27,7 +27,7 @@ public class VoyEstimateController {
         this.voyEstimateRepository = voyEstimateRepository;
     }
 
-    @GetMapping("/voyestimates")
+    @GetMapping("/voy-estimates")
     @ResponseBody
     public List<VoyEstimate> getallVoyEstimates(){
         return voyEstimateRepository.findAll();
@@ -40,7 +40,7 @@ public class VoyEstimateController {
         return voyEstimateRepository.findById(id).get();
     }
 
-    @GetMapping(value = "/voyestimate_pdf", produces = MediaType.APPLICATION_PDF_VALUE)
+    @GetMapping(value = "/voyestimate-pdf", produces = MediaType.APPLICATION_PDF_VALUE)
     public ResponseEntity<InputStreamResource> customersReport() throws IOException {
         List<VoyEstimate> voyEstimates = (List<VoyEstimate>) voyEstimateRepository.findAll();
 
