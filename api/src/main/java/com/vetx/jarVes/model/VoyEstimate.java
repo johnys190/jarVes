@@ -1,10 +1,7 @@
 package com.vetx.jarVes.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.*;
@@ -16,6 +13,7 @@ import java.util.Set;
 @Data
 @NoArgsConstructor
 @RequiredArgsConstructor
+@Builder
 public class VoyEstimate {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

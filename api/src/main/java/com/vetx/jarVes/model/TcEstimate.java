@@ -1,5 +1,6 @@
 package com.vetx.jarVes.model;
 
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
@@ -11,6 +12,7 @@ import java.util.Date;
 @Entity
 @NoArgsConstructor
 @RequiredArgsConstructor
+@Builder
 public class TcEstimate {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
