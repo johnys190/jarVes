@@ -46,39 +46,8 @@ public class UserController {
     @ResponseStatus(HttpStatus.OK)
     @PreAuthorize("hasRole('GUEST')")
     public List<User> getUsers(){
-        try {
-            return userRepository.findAll();
-        } catch (UsernameNotFoundException ex) {
-            throw new ResponseStatusException(
-                    HttpStatus.NOT_FOUND, "Cannot display Users", ex);
-        }
+        return userRepository.findAll();
     }
-
-    @ApiOperation(value = "This endpoint will create a Vessel.")
-    @PostMapping("/create-vessel")
-    @ResponseStatus(HttpStatus.CREATED)
-    @PreAuthorize("hasRole('ADMIN')")
-    public Vessel createNewVessel(@Valid @RequestBody Vessel vessel){
-        try {
-            return vesselRepository.save(vessel);
-        } catch (UsernameNotFoundException ex) {
-            throw new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE, "Cannot create Vessel", ex);
-        }
-    }
-
-    @ApiOperation(value = "This endpoint will delete a Vessel.")
-    @DeleteMapping("/delete-vessel/{vesselId}")
-    @ResponseStatus(HttpStatus.OK)
-    @PreAuthorize("hasRole('ADMIN')")
-    public void deleteVesselById(@PathVariable Long vesselId) {
-        try {
-            vesselRepository.deleteById(vesselId);
-        } catch (UsernameNotFoundException ex) {
-            throw new ResponseStatusException(
-                    HttpStatus.NOT_FOUND, "Cannot delete Vessel", ex);
-        }
-    }
-
 
 //    @ApiOperation(value = "This endpoint will create a User.")
 //    @PostMapping("/create_user")

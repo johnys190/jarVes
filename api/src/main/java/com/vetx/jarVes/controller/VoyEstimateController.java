@@ -1,5 +1,6 @@
 package com.vetx.jarVes.controller;
 
+import com.vetx.jarVes.exceptions.EstimateNotFoundException;
 import com.vetx.jarVes.model.VoyEstimate;
 import com.vetx.jarVes.repository.VoyEstimateRepository;
 import com.vetx.jarVes.service.GeneratePDF;
@@ -37,7 +38,7 @@ public class VoyEstimateController {
     @ResponseBody
     //@PreAuthorize("hasRole('GUEST')")
     public VoyEstimate getEstimateById(@PathVariable Long id){
-        return voyEstimateRepository.findById(id).get();
+        return voyEstimateRepository.findById(id).orElseThrow(() -> new EstimateNotFoundException(id));
     }
 
     @GetMapping(value = "/voyestimate-pdf", produces = MediaType.APPLICATION_PDF_VALUE)

@@ -1,6 +1,8 @@
 package com.vetx.jarVes.controller;
 
 
+import com.vetx.jarVes.exceptions.EstimateNotFoundException;
+import com.vetx.jarVes.exceptions.VesselNotFoundException;
 import com.vetx.jarVes.model.TcEstimate;
 import com.vetx.jarVes.repository.TcEstimateRepository;
 import io.swagger.annotations.Api;
@@ -28,17 +30,22 @@ public class TcEstimateController {
     @GetMapping("/{id}")
     //@PreAuthorize("hasRole('GUEST')")
     public TcEstimate getTcEstimateById(@PathVariable Long id){
-        return tcEstimateRepository.findById(id).get();
+        return tcEstimateRepository.findById(id).orElseThrow(() -> new EstimateNotFoundException(id));
     }
 
     @PutMapping("/{id}")
     public TcEstimate updateTcEstimateById(@Valid @RequestBody TcEstimate updatedTcEstimate, @PathVariable Long id){
-//        TcEstimate updatedTcEstimate =  tcEstimateRepository.findById(updatedTcEstimate.getId());
+        TcEstimate theupdatedTcEstimate =  tcEstimateRepository.findById(updatedTcEstimate.getId()).get();
 
-        return tcEstimateRepository.save(updatedTcEstimate);
+        return tcEstimateRepository.save(theupdatedTcEstimate);
     }
 
-    @PostMapping()
+    @DeleteMapping("/{id}")
+    public void deleteTcEstimateById(@PathVariable Long id){
+        tcEstimateRepository.delete(tcEstimateRepository.findById(id).get());
+    }
+
+    @PostMapping("/create-tc-estimate")
     public TcEstimate createTcEstimate(@Valid @RequestBody TcEstimate newTcEstimate){
         return tcEstimateRepository.save(newTcEstimate);
     }
