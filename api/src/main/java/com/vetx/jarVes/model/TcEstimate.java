@@ -16,6 +16,8 @@ public class TcEstimate {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(unique = true)
+    private String name;
 
     private String voyage;
 
@@ -27,9 +29,17 @@ public class TcEstimate {
 
     private String laycan;
 
+    private String reposition;
+
     private Date date;
 
-    private String reposition;
+    private Double hireRate;
+
+    private Double approxDuration;
+
+    private Double ballastBonus;
+
+    private Double commisionPercent;
 
     private Integer ballastDistanceSeca;
 
@@ -43,83 +53,35 @@ public class TcEstimate {
 
     private Double mdoPrice;
 
+    private Double deliveryCosts;
+
+    private Double redeliveryCosts;
+
     private Double canalsCost;
 
     private Double miscelCosts;
 
     private Double lostWaitingDays;
 
-    private Double hireRate;
+    private Double grossRevenue;
 
-    private Integer loadRate;
+    private Double bunkerCost;
 
-    private Integer dischargeRate;
+    private Double expenses;
 
-    @Enumerated(EnumType.STRING)
-    private LayTimeType loadLayTimeType;
+    private Double netRevenue;
 
-    @Enumerated(EnumType.STRING)
-    private LayTimeType dischargeLayTimeType;
+    private Integer sensitivity;
 
+    private Double sensitivityFiveDays;
 
-    private Double commisionPercent;
+    private Integer bbGross;
 
+    private Double totalDuration;
 
+    private Double timeCharterRate;
 
-    private Double loadPortCosts;
-
-    private Double dischargePortCosts;
-
-    private Double othersPortCosts;
-
-
-    private Double taxesCosts;
-
-
-    private Double exinsCosts;
-
-    private Double loadTimeLostPercent;
-
-    private Double disachargeTimeLostPercent;
-
-    private Double steamingMarginTimeLostPercent;
-
-    private Double steamingDays;
-
-    private Double loadDays;
-
-    private Double dischargeDays;
-
-    private Double shexLoadDays;
-
-    private Double shexDischargeDays;
-
-    private Double totalDurationDays;
-
-    private Double grossRevenueResult;
-
-    private Double sailingBunkersResult;
-
-    private Double loadPortBunkersResult;
-
-    private Double dischargePortBunkersResult;
-
-    private Double totalBunkerCostsResult;
-
-    private Double expensesResult;
-
-    private Double commisionsResult;
-
-    private Double taxesResult;
-
-    private Double exinsResult;
-
-    private Double netRevenueResult;
-
-    private Double timeCharterRateResult;
-
-    private Double sensitivity;
-
-
-
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "Vessel_id")
+    private Vessel vessel;
 }
