@@ -34,10 +34,9 @@ public class TcEstimateController {
     }
 
     @PutMapping("/{id}")
-    public TcEstimate updateTcEstimateById(@Valid @RequestBody TcEstimate updatedTcEstimate, @PathVariable Long id){
-        TcEstimate theupdatedTcEstimate =  tcEstimateRepository.findById(updatedTcEstimate.getId()).get();
-
-        return tcEstimateRepository.save(theupdatedTcEstimate);
+    public TcEstimate updateVoyEstimate (@Valid @RequestBody TcEstimate newTcEstimate,@PathVariable Long id) {
+        newTcEstimate.setId(id);
+        return tcEstimateRepository.save(newTcEstimate);
     }
 
     @DeleteMapping("/{id}")
