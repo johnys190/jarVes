@@ -10,18 +10,18 @@ import javax.persistence.*;
 @Data
 @RequiredArgsConstructor
 @NoArgsConstructor
-@Table(uniqueConstraints = {@UniqueConstraint(columnNames = {"name"})})
 public class Vessel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(unique = true)
     @NonNull
     private String name;
 
     @NonNull
-    private int dwt;
+    private Integer dwt;
 
     @NonNull
     private String type;
@@ -30,13 +30,13 @@ public class Vessel {
     private String flag;
 
     @NonNull
-    private int built;
+    private Integer built;
 
     @NonNull
     private String gear;
 
     @NonNull
-    private double grain;
+    private Double grain;
 
     @NonNull
     private String manager;
@@ -45,26 +45,26 @@ public class Vessel {
     private String pic;
 
     @NonNull
-    private int speed;
+    private Integer speed;
 
     @NonNull
-    private double ifo_ballast;
+    private Double ifo_ballast;
 
     @NonNull
-    private double ifo_laden;
+    private Double ifo_laden;
 
     @NonNull
-    private double port_idle;
+    private Double port_idle;
 
     @NonNull
-    private double port_working;
+    private Double port_working;
 
     @NonNull
-    private double mgo_port_idle;
+    private Double mgo_port_idle;
 
     @NonNull
-    private double mgo_port_working;
+    private Double mgo_port_working;
 
     @NonNull
-    private int boiler;
+    private Integer boiler;
 }
