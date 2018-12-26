@@ -1,6 +1,8 @@
 package com.vetx.jarVes.model;
 
-import lombok.*;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -9,79 +11,115 @@ import java.util.Date;
 @Entity
 @NoArgsConstructor
 @RequiredArgsConstructor
-@AllArgsConstructor
-@Builder
 public class TcEstimate {
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-  @Column(unique = true)
-  private String name;
 
-  @NonNull private String voyage;
+    private String voyage;
 
-  private String account;
+    private String account;
 
-  private String commodity;
+    private String commodity;
 
-  private String broker;
+    private String broker;
 
-  private String laycan;
+    private String laycan;
 
-  private String reposition;
+    private Date date;
 
-  private Date date;
+    private String reposition;
 
-  private Double hire_rate;
+    private Integer ballastDistanceSeca;
 
-  private Double approx_dur;
+    private Integer ballastDistanceNonSeca;
 
-  private Double ballast_bonus;
+    private Integer ladenDistanceSeca;
 
-  private Double commision_percent;
+    private Integer ladenDistanceNonSeca;
 
-  private Integer ballast_distance_seca;
+    private Double ifoPrice;
 
-  private Integer ballast_distance_non_seca;
+    private Double mdoPrice;
 
-  private Integer laden_distance_seca;
+    private Double canalsCost;
 
-  private Integer laden_distance_non_seca;
+    private Double miscelCosts;
 
-  private Double ifo_price;
+    private Double lostWaitingDays;
 
-  private Double mdo_price;
+    private Double hireRate;
 
-  private Double delivery_costs;
+    private Integer loadRate;
 
-  private Double redelivery_costs;
+    private Integer dischargeRate;
 
-  private Double canals_cost;
+    @Enumerated(EnumType.STRING)
+    private LayTimeType loadLayTimeType;
 
-  private Double miscel_costs;
+    @Enumerated(EnumType.STRING)
+    private LayTimeType dischargeLayTimeType;
 
-  private Double lost_waiting_days;
 
-  private Double gross_revenue;
+    private Double commisionPercent;
 
-  private Double bunker_cost;
 
-  private Double expenses;
 
-  private Double net_revenue;
+    private Double loadPortCosts;
 
-  private Integer sensitivity;
+    private Double dischargePortCosts;
 
-  private Double sensitivity_five_days;
+    private Double othersPortCosts;
 
-  private Integer bb_gross;
 
-  private Double total_duration;
+    private Double taxesCosts;
 
-  private Double time_charter_rate;
 
-  @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "Vessel_id")
-  private Vessel vessel;
+    private Double exinsCosts;
+
+    private Double loadTimeLostPercent;
+
+    private Double disachargeTimeLostPercent;
+
+    private Double steamingMarginTimeLostPercent;
+
+    private Double steamingDays;
+
+    private Double loadDays;
+
+    private Double dischargeDays;
+
+    private Double shexLoadDays;
+
+    private Double shexDischargeDays;
+
+    private Double totalDurationDays;
+
+    private Double grossRevenueResult;
+
+    private Double sailingBunkersResult;
+
+    private Double loadPortBunkersResult;
+
+    private Double dischargePortBunkersResult;
+
+    private Double totalBunkerCostsResult;
+
+    private Double expensesResult;
+
+    private Double commisionsResult;
+
+    private Double taxesResult;
+
+    private Double exinsResult;
+
+    private Double netRevenueResult;
+
+    private Double timeCharterRateResult;
+
+    private Double sensitivity;
+
+
+
 }

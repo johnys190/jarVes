@@ -9,9 +9,7 @@ import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -27,6 +25,19 @@ public class VoyEstimateController {
     @Autowired
     public VoyEstimateController(VoyEstimateRepository voyEstimateRepository) {
         this.voyEstimateRepository = voyEstimateRepository;
+    }
+
+    @GetMapping("/voyestimates")
+    @ResponseBody
+    public List<VoyEstimate> getallVoyEstimates(){
+        return voyEstimateRepository.findAll();
+    }
+
+    @GetMapping("/{id}")
+    @ResponseBody
+    //@PreAuthorize("hasRole('GUEST')")
+    public VoyEstimate getEstimateById(@PathVariable Long id){
+        return voyEstimateRepository.findById(id).get();
     }
 
     @GetMapping(value = "/voyestimate_pdf", produces = MediaType.APPLICATION_PDF_VALUE)
