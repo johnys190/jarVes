@@ -60,27 +60,16 @@ public class VesselController {
     return vesselRepository.findAll();
   }
 
-  @ApiOperation(value = "This endpoint deletes a Vessel by its ID.")
-  @DeleteMapping("/{id}")
-  @ResponseStatus(HttpStatus.OK)
-  @PreAuthorize("hasAnyRole('GUEST', 'ADMIN')")
-  public void deleteVesselById(@PathVariable Long vesselId) {
-    try {
-      vesselRepository.deleteById(vesselId);
-    } catch (UsernameNotFoundException ex) {
-      throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Cannot delete Vessel", ex);
+    @GetMapping("/{id}")
+    @PreAuthorize("hasRole('GUEST')")
+    public Vessel getVesselById(@PathVariable Long id){
+        return vesselRepository.findById(id).get();
     }
   }
 
-  @ApiOperation(value = "This endpoint creates a Vessel.")
-  @PostMapping("/new")
-  @ResponseStatus(HttpStatus.CREATED)
-  @PreAuthorize("hasAnyRole('GUEST', 'ADMIN')")
-  public Vessel createNewVessel(@Valid @RequestBody Vessel vessel) {
-    try {
-      return vesselRepository.save(vessel);
-    } catch (UsernameNotFoundException ex) {
-      throw new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE, "Cannot create Vessel", ex);
+    @GetMapping("/vessels")
+    public List<Vessel> getAllVessel(){
+        return vesselRepository.findAll();
     }
   }
 }
