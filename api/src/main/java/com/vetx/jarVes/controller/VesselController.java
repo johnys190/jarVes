@@ -2,7 +2,11 @@ package com.vetx.jarVes.controller;
 
 import com.vetx.jarVes.exceptions.VesselNotFoundException;
 import com.vetx.jarVes.model.Vessel;
+import com.vetx.jarVes.payload.ImportantVesselDTO;
 import com.vetx.jarVes.repository.VesselRepository;
+import com.vetx.jarVes.security.CurrentUser;
+import com.vetx.jarVes.security.UserPrincipal;
+import com.vetx.jarVes.service.ImportantVesselsService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,20 +25,26 @@ import java.util.List;
 public class VesselController {
     private VesselRepository vesselRepository;
 
+    private ImportantVesselsService importantVesselsService;
+
     @Autowired
-    public VesselController(VesselRepository vesselRepository) {
+    public VesselController(VesselRepository vesselRepository, ImportantVesselsService importantVesselsService) {
         this.vesselRepository = vesselRepository;
+        this.importantVesselsService = importantVesselsService;
     }
 
     @GetMapping("/{id}")
     @PreAuthorize("hasRole('GUEST')")
     public Vessel getVesselById(@PathVariable Long id){
-        return vesselRepository.findById(id).orElseThrow(() -> new VesselNotFoundException(id));
+        Vessel vessel = vesselRepository.findById(id).orElseThrow(() -> new VesselNotFoundException(id));
+        return vessel;
     }
 
     @GetMapping("/vessels")
-    public List<Vessel> getAllVessel(){
-        return vesselRepository.findAll();
+    public List<ImportantVesselDTO> getAllVessel(@CurrentUser UserPrincipal currentUser){
+
+
+        return importantVesselsService.getImportantVessels(currentUser.getId());
     }
 
     @ApiOperation(value = "This endpoint will delete a Vessel.")
