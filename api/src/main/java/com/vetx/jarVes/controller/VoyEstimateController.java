@@ -12,13 +12,15 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.List;
+import java.util.Set;
 
 @Api(description = "This is the Voyage Estimate controller.")
 @RestController
-@RequestMapping("/api/voy-estimate")
+@RequestMapping("/api")
 public class VoyEstimateController {
 
     private VoyEstimateRepository voyEstimateRepository;
@@ -40,6 +42,24 @@ public class VoyEstimateController {
     public VoyEstimate getEstimateById(@PathVariable Long id){
         return voyEstimateRepository.findById(id).orElseThrow(() -> new EstimateNotFoundException(id));
     }
+
+    @PutMapping("voy-estimates/{id}")
+    public VoyEstimate updateVoyEstimate (@Valid @RequestBody VoyEstimate newVoyEstimate,@PathVariable Long id) {
+        newVoyEstimate.setId(id);
+        return voyEstimateRepository.save(newVoyEstimate);
+    }
+
+
+    @DeleteMapping("voy-estimates/{id}")
+    public void removeVoyEstimate(@PathVariable Long id) {
+        voyEstimateRepository.deleteById(id);
+    }
+
+    @PostMapping("/voy-estimates")
+    VoyEstimate newVoyEstimate(@RequestBody VoyEstimate newVoyEstimate) {
+        return voyEstimateRepository.save(newVoyEstimate);
+    }
+
 
     @GetMapping(value = "/voyestimate-pdf", produces = MediaType.APPLICATION_PDF_VALUE)
     public ResponseEntity<InputStreamResource> customersReport() throws IOException {

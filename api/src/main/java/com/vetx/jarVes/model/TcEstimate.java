@@ -1,9 +1,6 @@
 package com.vetx.jarVes.model;
 
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -12,6 +9,7 @@ import java.util.Date;
 @Entity
 @NoArgsConstructor
 @RequiredArgsConstructor
+@AllArgsConstructor
 @Builder
 public class TcEstimate {
     @Id
@@ -21,6 +19,7 @@ public class TcEstimate {
     @Column(unique = true)
     private String name;
 
+    @NonNull
     private String voyage;
 
     private String account;

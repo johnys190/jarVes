@@ -76,10 +76,10 @@ public class DevBootstrap implements ApplicationListener<ContextRefreshedEvent> 
         vesselRepository.save(vessel1);
         vesselRepository.save(vessel2);
 
-        TcEstimate tcEstimate1 = TcEstimate.builder().name("TcTestimate").account("testaccount").build();
+        TcEstimate tcEstimate1 = TcEstimate.builder().name("TcTestimate").account("testaccount").voyage("ath-lon").build();
         tcEstimateRepository.save(tcEstimate1);
 
-        VoyEstimate voyEstimate1 = VoyEstimate.builder().name("VoyTestimate").account("testvoyaccount").build();
+        VoyEstimate voyEstimate1 = VoyEstimate.builder().name("VoyTestimate").account("testvoyaccount").voyage("ath-lon").build();
         voyEstimateRepository.save(voyEstimate1);
 
     }
