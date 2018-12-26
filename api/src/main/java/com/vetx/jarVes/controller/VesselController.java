@@ -25,51 +25,27 @@ import java.util.List;
 public class VesselController {
   private VesselRepository vesselRepository;
 
-  private ImportantVesselsService importantVesselsService;
+    private ImportantVesselsService importantVesselsService;
 
-  @Autowired
-  public VesselController(
-      VesselRepository vesselRepository, ImportantVesselsService importantVesselsService) {
-    this.vesselRepository = vesselRepository;
-    this.importantVesselsService = importantVesselsService;
-  }
-
-  @ApiOperation(value = "This endpoint returns a Vessel by its ID.")
-  @GetMapping("/{id}")
-  @PreAuthorize("hasAnyRole('GUEST', 'ADMIN')")
-  @ResponseStatus(HttpStatus.OK)
-  public Vessel getVesselById(@PathVariable Long id) {
-    return vesselRepository.findById(id).orElseThrow(() -> new VesselNotFoundException(id));
-  }
-
-  @ApiOperation(value = "This endpoint updates a Vessel by its ID.")
-  @PutMapping("/{id}")
-  @ResponseStatus(HttpStatus.OK)
-  @PreAuthorize("hasAnyRole('GUEST', 'ADMIN')")
-  public Vessel updateVessel(
-          @Valid @RequestBody Vessel vessel, @PathVariable Long id) {
-    vessel.setId(id);
-    return vesselRepository.save(vessel);
-  }
-
-  @ApiOperation(value = "This endpoint returns a list of all Time Charter Estimates.")
-  @GetMapping("/all")
-  @ResponseStatus(HttpStatus.OK)
-  @PreAuthorize("hasAnyRole('GUEST', 'ADMIN')")
-  public List<Vessel> getAllVessels() {
-    return vesselRepository.findAll();
-  }
+    @Autowired
+    public VesselController(VesselRepository vesselRepository, ImportantVesselsService importantVesselsService) {
+        this.vesselRepository = vesselRepository;
+        this.importantVesselsService = importantVesselsService;
+    }
 
     @GetMapping("/{id}")
     @PreAuthorize("hasRole('GUEST')")
     public Vessel getVesselById(@PathVariable Long id){
-        return vesselRepository.findById(id).orElseThrow(() -> new VesselNotFoundException(id));
+        Vessel vessel = vesselRepository.findById(id).orElseThrow(() -> new VesselNotFoundException(id));
+        return vessel;
     }
   }
 
     @GetMapping("/vessels")
-    public List<Vessel> getAllVessel(){
-        return vesselRepository.findAll();
+    public List<ImportantVesselDTO> getAllVessel(@CurrentUser UserPrincipal currentUser){
+
+
+        return importantVesselsService.getImportantVessels(currentUser.getId());
     }
 
     @ApiOperation(value = "This endpoint will delete a Vessel.")

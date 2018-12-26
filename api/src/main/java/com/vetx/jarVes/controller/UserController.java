@@ -1,5 +1,7 @@
 package com.vetx.jarVes.controller;
 
+import com.vetx.jarVes.exceptions.UserNotFoundException;
+import com.vetx.jarVes.exceptions.VesselNotFoundException;
 import com.vetx.jarVes.model.Vessel;
 import com.vetx.jarVes.payload.UserSummary;
 import com.vetx.jarVes.model.User;
@@ -48,6 +50,30 @@ public class UserController {
     public List<User> getUsers(){
         return userRepository.findAll();
     }
+
+    @ApiOperation(value = "This endpoint will add an ImportantVessel to a User.")
+    @PostMapping("/{userId}/add-important-vessel/{vesselId}")
+    @ResponseStatus(HttpStatus.CREATED)
+    @PreAuthorize("hasRole('GUEST')")
+    public void addImportantVessel(@PathVariable Long userId, @PathVariable Long vesselId){
+        User user = userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException(userId));
+        Vessel importantVessel = vesselRepository.findById(vesselId).orElseThrow(() -> new VesselNotFoundException(vesselId));
+        user.getImportantVessels().add(importantVessel);
+        userRepository.save(user);
+    }
+
+    @ApiOperation(value = "This endpoint will return a list of all Users.")
+    @PutMapping("{id}/add-important-vessel/{id}")
+    @ResponseStatus(HttpStatus.CREATED)
+    @PreAuthorize("hasRole('GUEST')")
+    public void deleteImportantVessel(@PathVariable Long userId, @PathVariable Long vesselId){
+        User user = userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException(userId));
+        Vessel importantVessel = vesselRepository.findById(vesselId).orElseThrow(() -> new VesselNotFoundException(vesselId));
+        user.getImportantVessels().remove(importantVessel);
+        userRepository.save(user);
+    }
+
+
 
 //    @ApiOperation(value = "This endpoint will create a User.")
 //    @PostMapping("/create_user")

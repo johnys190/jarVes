@@ -12,7 +12,7 @@ class EstimateNotFoundAdvice {
     @ResponseBody
     @ExceptionHandler(EstimateNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    String VesselOrEstimateNotFoundHandler(EstimateNotFoundException ex) {
+    String EstimateNotFoundHandler(EstimateNotFoundException ex) {
         return ex.getMessage();
     }
 }
