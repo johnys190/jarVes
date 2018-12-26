@@ -54,7 +54,7 @@ public class UserController {
     }
 
     @ApiOperation(value = "This endpoint will create a Vessel.")
-    @PostMapping("/create_vessel")
+    @PostMapping("/create-vessel")
     @ResponseStatus(HttpStatus.CREATED)
     @PreAuthorize("hasRole('ADMIN')")
     public Vessel createNewVessel(@Valid @RequestBody Vessel vessel){
@@ -66,7 +66,7 @@ public class UserController {
     }
 
     @ApiOperation(value = "This endpoint will delete a Vessel.")
-    @DeleteMapping("/delete_vessel/{vesselId}")
+    @DeleteMapping("/delete-vessel/{vesselId}")
     @ResponseStatus(HttpStatus.OK)
     @PreAuthorize("hasRole('ADMIN')")
     public void deleteVesselById(@PathVariable Long vesselId) {

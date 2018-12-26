@@ -21,14 +21,12 @@ public class VesselController {
     }
 
     @GetMapping("/{id}")
-    @ResponseBody
     @PreAuthorize("hasRole('GUEST')")
     public Vessel getVesselById(@PathVariable Long id){
         return vesselRepository.findById(id).get();
     }
 
     @GetMapping("/vessels")
-    @ResponseBody
     public List<Vessel> getAllVessel(){
         return vesselRepository.findAll();
     }
