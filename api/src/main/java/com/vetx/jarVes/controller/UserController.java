@@ -36,7 +36,7 @@ public class UserController {
     }
 
     @ApiOperation(value = "This endpoint will return the current User.")
-    @GetMapping("/me")
+    @GetMapping("/users/me")
     @PreAuthorize("hasRole('GUEST')")
     public UserSummary getCurrentUser(@CurrentUser UserPrincipal currentUser) {
         UserSummary userSummary = new UserSummary(currentUser.getId(), currentUser.getUsername(), currentUser.getName());
@@ -46,29 +46,29 @@ public class UserController {
     @ApiOperation(value = "This endpoint will return a list of all Users.")
     @GetMapping("/users")
     @ResponseStatus(HttpStatus.OK)
-    @PreAuthorize("hasRole('GUEST')")
+    @PreAuthorize("hasRole('ADMIN')")
     public List<User> getUsers(){
         return userRepository.findAll();
     }
 
     @ApiOperation(value = "This endpoint will add an ImportantVessel to a User.")
-    @PostMapping("/{userId}/add-important-vessel/{vesselId}")
+    @PostMapping("/add-important-vessel/{id}")
     @ResponseStatus(HttpStatus.CREATED)
     @PreAuthorize("hasRole('GUEST')")
-    public void addImportantVessel(@PathVariable Long userId, @PathVariable Long vesselId){
-        User user = userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException(userId));
-        Vessel importantVessel = vesselRepository.findById(vesselId).orElseThrow(() -> new VesselNotFoundException(vesselId));
+    public void addImportantVessel(@CurrentUser UserPrincipal currentUser, @PathVariable Long id){
+        User user = userRepository.findById(currentUser.getId()).orElseThrow(() -> new UserNotFoundException(currentUser.getId()));
+        Vessel importantVessel = vesselRepository.findById(id).orElseThrow(() -> new VesselNotFoundException(id));
         user.getImportantVessels().add(importantVessel);
         userRepository.save(user);
     }
 
     @ApiOperation(value = "This endpoint will return a list of all Users.")
-    @PutMapping("{id}/add-important-vessel/{id}")
+    @PostMapping("/remove-important-vessel/{id}")
     @ResponseStatus(HttpStatus.CREATED)
     @PreAuthorize("hasRole('GUEST')")
-    public void deleteImportantVessel(@PathVariable Long userId, @PathVariable Long vesselId){
-        User user = userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException(userId));
-        Vessel importantVessel = vesselRepository.findById(vesselId).orElseThrow(() -> new VesselNotFoundException(vesselId));
+    public void deleteImportantVessel(@CurrentUser UserPrincipal currentUser, @PathVariable Long id){
+        User user = userRepository.findById(currentUser.getId()).orElseThrow(() -> new UserNotFoundException(currentUser.getId()));
+        Vessel importantVessel = vesselRepository.findById(id).orElseThrow(() -> new VesselNotFoundException(id));
         user.getImportantVessels().remove(importantVessel);
         userRepository.save(user);
     }

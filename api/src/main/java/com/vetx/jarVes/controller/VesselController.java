@@ -21,7 +21,7 @@ import java.util.List;
 
 @Api(value = "This is the Vessel controller.")
 @RestController
-@RequestMapping("/api/vessel")
+@RequestMapping("/api/vessels")
 public class VesselController {
   private VesselRepository vesselRepository;
 
@@ -41,7 +41,7 @@ public class VesselController {
     }
   }
 
-    @GetMapping("/vessels")
+    @GetMapping
     public List<ImportantVesselDTO> getAllVessel(@CurrentUser UserPrincipal currentUser){
 
 
@@ -49,7 +49,7 @@ public class VesselController {
     }
 
     @ApiOperation(value = "This endpoint will delete a Vessel.")
-    @DeleteMapping("/delete-vessel/{vesselId}")
+    @DeleteMapping("/{vesselId}")
     @ResponseStatus(HttpStatus.OK)
     @PreAuthorize("hasRole('ADMIN')")
     public void deleteVesselById(@PathVariable Long vesselId) {
@@ -62,7 +62,7 @@ public class VesselController {
     }
 
     @ApiOperation(value = "This endpoint will create a Vessel.")
-    @PostMapping("/create-vessel")
+    @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     @PreAuthorize("hasRole('ADMIN')")
     public Vessel createNewVessel(@Valid @RequestBody Vessel vessel){
