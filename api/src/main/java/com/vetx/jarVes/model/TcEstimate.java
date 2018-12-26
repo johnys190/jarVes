@@ -1,28 +1,21 @@
 package com.vetx.jarVes.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Repository;
 
 import javax.persistence.*;
-import java.math.BigDecimal;
 import java.util.Date;
-import java.util.Set;
 
-@Entity
 @Data
+@Entity
 @NoArgsConstructor
 @RequiredArgsConstructor
-public class VoyEstimate {
+public class TcEstimate {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(unique = true)
-    private String name;
 
     private String voyage;
 
@@ -34,9 +27,29 @@ public class VoyEstimate {
 
     private String laycan;
 
-    private Double quantity;
+    private Date date;
 
-    //private Double Freightrate;
+    private String reposition;
+
+    private Integer ballastDistanceSeca;
+
+    private Integer ballastDistanceNonSeca;
+
+    private Integer ladenDistanceSeca;
+
+    private Integer ladenDistanceNonSeca;
+
+    private Double ifoPrice;
+
+    private Double mdoPrice;
+
+    private Double canalsCost;
+
+    private Double miscelCosts;
+
+    private Double lostWaitingDays;
+
+    private Double hireRate;
 
     private Integer loadRate;
 
@@ -48,25 +61,10 @@ public class VoyEstimate {
     @Enumerated(EnumType.STRING)
     private LayTimeType dischargeLayTimeType;
 
-    private Integer ballastDistanceSeca;
-
-    private Integer ballastDistanceNonSeca;
-
-    private Integer ladenDistanceSeca;
-
-    private Integer ladenDistanceNonSeca;
 
     private Double commisionPercent;
 
-    private String reposition;
 
-    private Date date;
-
-    private Double ifoPrice;
-
-    private Double mdoPrice;
-
-    private Double lostWaitingDays;
 
     private Double loadPortCosts;
 
@@ -74,11 +72,9 @@ public class VoyEstimate {
 
     private Double othersPortCosts;
 
-    private Double canalsCost;
 
     private Double taxesCosts;
 
-    private Double miscelCosts;
 
     private Double exinsCosts;
 
@@ -123,13 +119,6 @@ public class VoyEstimate {
     private Double timeCharterRateResult;
 
     private Double sensitivity;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "Vessel_id")
-    private Vessel vessel;
-
-
-
 
 
 
