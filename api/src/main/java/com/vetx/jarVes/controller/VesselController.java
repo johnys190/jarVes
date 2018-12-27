@@ -36,7 +36,7 @@ public class VesselController {
 
   @ApiOperation(value = "This endpoint returns a Vessel by its ID.")
   @GetMapping("/{id}")
-  @PreAuthorize("hasRole('GUEST')")
+  @PreAuthorize("hasAnyRole('GUEST', 'ADMIN')")
   @ResponseStatus(HttpStatus.OK)
   public Vessel getVesselById(@PathVariable Long id) {
     return vesselRepository.findById(id).orElseThrow(() -> new VesselNotFoundException(id));

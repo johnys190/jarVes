@@ -27,7 +27,7 @@ public class TcEstimateController {
   @ApiOperation(value = "This endpoint returns a list of all Time Charter Estimates.")
   @GetMapping("/tc-estimates")
   @ResponseStatus(HttpStatus.OK)
-  @PreAuthorize("hasRole('GUEST')")
+  @PreAuthorize("hasAnyRole('GUEST', 'ADMIN')")
   public List<TcEstimate> getAllTcEstimates() {
     return tcEstimateRepository.findAll();
   }
@@ -35,7 +35,7 @@ public class TcEstimateController {
   @ApiOperation(value = "This endpoint returns a Time Charter Estimate by its ID.")
   @GetMapping("/{id}")
   @ResponseStatus(HttpStatus.OK)
-  @PreAuthorize("hasRole('GUEST')")
+  @PreAuthorize("hasAnyRole('GUEST', 'ADMIN')")
   public TcEstimate getTcEstimateById(@PathVariable Long id) {
     return tcEstimateRepository.findById(id).orElseThrow(() -> new EstimateNotFoundException(id));
   }
