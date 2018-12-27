@@ -20,29 +20,46 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(
-    securedEnabled = true,
-    jsr250Enabled = true,
-    prePostEnabled = true
-)
+@EnableGlobalMethodSecurity(securedEnabled = true, jsr250Enabled = true, prePostEnabled = true)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
+  private static final String[] AUTH_WHITELIST = {
+    // -- swagger ui:
+    "/v2/api-docs",
+    "/swagger-resources",
+    "/swagger-resources/**",
+    "/configuration/ui",
+    "/configuration/security",
+    "/swagger-ui.html",
+    "/webjars/**",
+    // Other public API endpoints may be appended to this array:
+    "/",
+    "/favicon.ico",
+    "/**/*.png",
+    "/**/*.gif",
+    "/**/*.svg",
+    "/**/*.jpg",
+    "/**/*.html",
+    "/**/*.css",
+    "/**/*.js"
+  };
   private final JwtAuthenticationEntryPoint unauthorizedHandler;
-
   private final JwtAuthenticationFilter jwtAuthenticationFilter;
-
   private final UserPrincipalService userPrincipalService;
 
-
   @Autowired
-  public SecurityConfiguration(JwtAuthenticationEntryPoint unauthorizedHandler, JwtAuthenticationFilter jwtAuthenticationFilter, UserPrincipalService userPrincipalService) {
+  public SecurityConfiguration(
+      JwtAuthenticationEntryPoint unauthorizedHandler,
+      JwtAuthenticationFilter jwtAuthenticationFilter,
+      UserPrincipalService userPrincipalService) {
     this.unauthorizedHandler = unauthorizedHandler;
     this.jwtAuthenticationFilter = jwtAuthenticationFilter;
     this.userPrincipalService = userPrincipalService;
   }
 
   @Override
-  public void configure(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
+  public void configure(AuthenticationManagerBuilder authenticationManagerBuilder)
+      throws Exception {
     authenticationManagerBuilder
         .userDetailsService(userPrincipalService)
         .passwordEncoder(passwordEncoder());
@@ -59,31 +76,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     return new BCryptPasswordEncoder();
   }
 
-  private static final String[] AUTH_WHITELIST = {
-          // -- swagger ui:
-          "/v2/api-docs",
-          "/swagger-resources",
-          "/swagger-resources/**",
-          "/configuration/ui",
-          "/configuration/security",
-          "/swagger-ui.html",
-          "/webjars/**",
-          // Other public API endpoints may be appended to this array:
-          "/",
-          "/favicon.ico",
-          "/**/*.png",
-          "/**/*.gif",
-          "/**/*.svg",
-          "/**/*.jpg",
-          "/**/*.html",
-          "/**/*.css",
-          "/**/*.js"
-  };
-
   @Override
   protected void configure(HttpSecurity http) throws Exception {
-    http
-        .cors()
+    http.cors()
         .and()
         .csrf()
         .disable()
@@ -107,8 +102,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         .anyRequest()
         .authenticated();
 
-
     http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
-
   }
 }

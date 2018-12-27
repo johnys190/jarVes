@@ -27,44 +27,44 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(classes = JarVesApplication.class)
 public class JarVesApplicationTests {
 
-	@Autowired
-	private WebApplicationContext wac;
+  @Autowired private WebApplicationContext wac;
 
-	@Autowired
-	private FilterChainProxy springSecurityFilterChain;
+  @Autowired private FilterChainProxy springSecurityFilterChain;
 
-	private MockMvc mockMvc;
+  private MockMvc mockMvc;
 
-	@Before
-	public void setup() {
-		this.mockMvc = MockMvcBuilders.webAppContextSetup(this.wac)
-				.addFilter(springSecurityFilterChain).build();
-	}
+  @Before
+  public void setup() {
+    this.mockMvc =
+        MockMvcBuilders.webAppContextSetup(this.wac).addFilter(springSecurityFilterChain).build();
+  }
 
-	private String obtainAccessToken(String email, String password) throws Exception {
+  private String obtainAccessToken(String email, String password) throws Exception {
 
-		MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
-		params.add("grant_type", "password");
-		params.add("client_id", "fooClientIdPassword");
-		params.add("email", email);
-		params.add("password", password);
+    MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+    params.add("grant_type", "password");
+    params.add("client_id", "fooClientIdPassword");
+    params.add("email", email);
+    params.add("password", password);
 
-		ResultActions result
-				= mockMvc.perform(post("/api/auth/login")
-				.params(params)
-				.with(httpBasic("fooClientIdPassword","secret"))
-				.accept("application/json;charset=UTF-8"))
-				.andExpect(status().isOk())
-				.andExpect(content().contentType("application/json;charset=UTF-8"));
+    ResultActions result =
+        mockMvc
+            .perform(
+                post("/api/auth/login")
+                    .params(params)
+                    .with(httpBasic("fooClientIdPassword", "secret"))
+                    .accept("application/json;charset=UTF-8"))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType("application/json;charset=UTF-8"));
 
-		String resultString = result.andReturn().getResponse().getContentAsString();
+    String resultString = result.andReturn().getResponse().getContentAsString();
 
-		JacksonJsonParser jsonParser = new JacksonJsonParser();
-		return jsonParser.parseMap(resultString).get("access_token").toString();
-	}
+    JacksonJsonParser jsonParser = new JacksonJsonParser();
+    return jsonParser.parseMap(resultString).get("access_token").toString();
+  }
 
-	@Test
-	public void givenNoToken_whenGetSecureRequest_thenUnauthorized() throws Exception {
-		mockMvc.perform(get("/api/user/users")).andExpect(status().isUnauthorized());
-	}
+  @Test
+  public void givenNoToken_whenGetSecureRequest_thenUnauthorized() throws Exception {
+    mockMvc.perform(get("/api/user/users")).andExpect(status().isUnauthorized());
+  }
 }

@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 
-@Api(description = "This is the authorization controller.")
+@Api(value = "This is the authorization controller.")
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
@@ -37,8 +37,11 @@ public class AuthController {
   private JwtTokenProvider tokenProvider;
 
   @Autowired
-  public AuthController(AuthenticationManager authenticationManager, UserRepository userRepository,
-                        CreateUserAccountService createUserAccountService, JwtTokenProvider tokenProvider) {
+  public AuthController(
+      AuthenticationManager authenticationManager,
+      UserRepository userRepository,
+      CreateUserAccountService createUserAccountService,
+      JwtTokenProvider tokenProvider) {
     this.authenticationManager = authenticationManager;
     this.userRepository = userRepository;
     this.createUserAccountService = createUserAccountService;
@@ -49,24 +52,30 @@ public class AuthController {
   @PostMapping("/signin")
   public ResponseEntity<?> authenticateUser(@Valid @RequestBody LogInRequest loginRequest) {
 
-    Authentication authentication = authenticationManager
-        .authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getEmail(),loginRequest.getPassword()));
+    Authentication authentication =
+        authenticationManager.authenticate(
+            new UsernamePasswordAuthenticationToken(
+                loginRequest.getEmail(), loginRequest.getPassword()));
 
     SecurityContextHolder.getContext().setAuthentication(authentication);
 
-    return ResponseEntity.ok(JwtAuthenticationResponse.builder().accessToken(tokenProvider.generateToken(authentication)).build());
+    return ResponseEntity.ok(
+        JwtAuthenticationResponse.builder()
+            .accessToken(tokenProvider.generateToken(authentication))
+            .build());
   }
 
   @ApiOperation(value = "This endpoint will be used for User sign-up.")
   @PostMapping("/signup")
   public ResponseEntity<?> registerUser(@Valid @RequestBody SignUpRequest signUpRequest) {
     if (userRepository.existsByEmail(signUpRequest.getEmail())) {
-      return new ResponseEntity(new ApiResponse(false, "Email Address already in use!"),
-      HttpStatus.BAD_REQUEST);
+      return new ResponseEntity(
+          new ApiResponse(false, "Email Address already in use!"), HttpStatus.BAD_REQUEST);
     }
 
-    createUserAccountService.newUser(signUpRequest.getFirstName(), signUpRequest.getLastName(),
-                                     signUpRequest.getEmail(), signUpRequest.getPassword());
+    createUserAccountService.newUser(
+        signUpRequest.getFirstName(), signUpRequest.getLastName(),
+        signUpRequest.getEmail(), signUpRequest.getPassword());
 
     return ResponseEntity.ok(new ApiResponse(true, "User registered successfully."));
   }

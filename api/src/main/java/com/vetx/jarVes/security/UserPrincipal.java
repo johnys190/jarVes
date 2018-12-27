@@ -24,23 +24,19 @@ public class UserPrincipal implements UserDetails {
 
   private String username;
 
-  @JsonIgnore
-  private String password;
+  @JsonIgnore private String password;
 
   private Collection<? extends GrantedAuthority> authorities;
 
   public static UserPrincipal create(User user) {
-    List<GrantedAuthority> authorities = user.getRoles().stream().map(role ->
-        new SimpleGrantedAuthority(role.getName().name())
-    ).collect(Collectors.toList());
+    List<GrantedAuthority> authorities =
+        user.getRoles()
+            .stream()
+            .map(role -> new SimpleGrantedAuthority(role.getName().name()))
+            .collect(Collectors.toList());
 
     return new UserPrincipal(
-        user.getId(),
-        user.getName(),
-        user.getEmail(),
-        user.getPassword(),
-        authorities
-    );
+        user.getId(), user.getName(), user.getEmail(), user.getPassword(), authorities);
   }
 
   @Override
