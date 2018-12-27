@@ -36,7 +36,7 @@ public class VoyEstimateController {
   @GetMapping("/voy-estimate")
   @ResponseBody
   @ResponseStatus(HttpStatus.OK)
-  @PreAuthorize("hasRole('GUEST')")
+  @PreAuthorize("hasAnyRole('GUEST', 'ADMIN')")
   public List<VoyEstimate> getAllVoyEstimates() {
     return voyEstimateRepository.findAll();
   }
@@ -45,7 +45,7 @@ public class VoyEstimateController {
   @GetMapping("/{id}")
   @ResponseBody
   @ResponseStatus(HttpStatus.OK)
-  @PreAuthorize("hasRole('GUEST')")
+  @PreAuthorize("hasAnyRole('GUEST', 'ADMIN')")
   public VoyEstimate getEstimateById(@PathVariable Long id) {
     return voyEstimateRepository.findById(id).orElseThrow(() -> new EstimateNotFoundException(id));
   }
@@ -78,7 +78,7 @@ public class VoyEstimateController {
 
   @ApiOperation(value = "This endpoint exports a Voyage Estimate in PDF form.")
   @GetMapping(value = "/pdf/{id}", produces = MediaType.APPLICATION_PDF_VALUE)
-//  @PreAuthorize("hasRole('GUEST')")
+  @PreAuthorize("hasAnyRole('GUEST', 'ADMIN')")
   public ResponseEntity<InputStreamResource> voyEstimateReport(@PathVariable Long id) throws IOException {
     VoyEstimate voyEstimate = voyEstimateRepository.findById(id).get();
 
