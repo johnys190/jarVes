@@ -19,57 +19,61 @@ import org.springframework.web.server.ResponseStatusException;
 import javax.validation.Valid;
 import java.util.List;
 
-@Api(description = "This is the Vessel controller.")
+@Api(value = "This is the Vessel controller.")
 @RestController
 @RequestMapping("/api/vessels")
 public class VesselController {
-    private VesselRepository vesselRepository;
+  private VesselRepository vesselRepository;
 
-    private ImportantVesselsService importantVesselsService;
+  private ImportantVesselsService importantVesselsService;
 
-    @Autowired
-    public VesselController(VesselRepository vesselRepository, ImportantVesselsService importantVesselsService) {
-        this.vesselRepository = vesselRepository;
-        this.importantVesselsService = importantVesselsService;
+  @Autowired
+  public VesselController(
+      VesselRepository vesselRepository, ImportantVesselsService importantVesselsService) {
+    this.vesselRepository = vesselRepository;
+    this.importantVesselsService = importantVesselsService;
+  }
+
+  @ApiOperation(value = "This endpoint returns a Vessel by its ID.")
+  @GetMapping("/{id}")
+  @PreAuthorize("hasRole('GUEST')")
+  @ResponseStatus(HttpStatus.OK)
+  public Vessel getVesselById(@PathVariable Long id) {
+    Vessel vessel =
+        vesselRepository.findById(id).orElseThrow(() -> new VesselNotFoundException(id));
+    return vessel;
+  }
+
+  @ApiOperation(
+      value = "This endpoint returns a list of Vessels with the Important property added.")
+  @GetMapping
+  @ResponseStatus(HttpStatus.OK)
+  @PreAuthorize("hasRole('GUEST')")
+  public List<ImportantVesselDTO> getAllVessel(@CurrentUser UserPrincipal currentUser) {
+    return importantVesselsService.getImportantVessels(currentUser.getId());
+  }
+
+  @ApiOperation(value = "This endpoint deletes a Vessel by its ID.")
+  @DeleteMapping("/{vesselId}")
+  @ResponseStatus(HttpStatus.OK)
+  @PreAuthorize("hasRole('ADMIN')")
+  public void deleteVesselById(@PathVariable Long vesselId) {
+    try {
+      vesselRepository.deleteById(vesselId);
+    } catch (UsernameNotFoundException ex) {
+      throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Cannot delete Vessel", ex);
     }
+  }
 
-    @GetMapping("/{id}")
-    @PreAuthorize("hasRole('GUEST')")
-    public Vessel getVesselById(@PathVariable Long id){
-        Vessel vessel = vesselRepository.findById(id).orElseThrow(() -> new VesselNotFoundException(id));
-        return vessel;
+  @ApiOperation(value = "This endpoint creates a Vessel.")
+  @PostMapping
+  @ResponseStatus(HttpStatus.CREATED)
+  @PreAuthorize("hasRole('ADMIN')")
+  public Vessel createNewVessel(@Valid @RequestBody Vessel vessel) {
+    try {
+      return vesselRepository.save(vessel);
+    } catch (UsernameNotFoundException ex) {
+      throw new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE, "Cannot create Vessel", ex);
     }
-
-    @GetMapping
-    public List<ImportantVesselDTO> getAllVessel(@CurrentUser UserPrincipal currentUser){
-
-
-        return importantVesselsService.getImportantVessels(currentUser.getId());
-    }
-
-    @ApiOperation(value = "This endpoint will delete a Vessel.")
-    @DeleteMapping("/{vesselId}")
-    @ResponseStatus(HttpStatus.OK)
-    @PreAuthorize("hasRole('ADMIN')")
-    public void deleteVesselById(@PathVariable Long vesselId) {
-        try {
-            vesselRepository.deleteById(vesselId);
-        } catch (UsernameNotFoundException ex) {
-            throw new ResponseStatusException(
-                    HttpStatus.NOT_FOUND, "Cannot delete Vessel", ex);
-        }
-    }
-
-    @ApiOperation(value = "This endpoint will create a Vessel.")
-    @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    @PreAuthorize("hasRole('ADMIN')")
-    public Vessel createNewVessel(@Valid @RequestBody Vessel vessel){
-        try {
-            return vesselRepository.save(vessel);
-        } catch (UsernameNotFoundException ex) {
-            throw new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE, "Cannot create Vessel", ex);
-        }
-    }
-
+  }
 }

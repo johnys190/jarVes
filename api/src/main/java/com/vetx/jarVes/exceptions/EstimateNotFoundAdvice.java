@@ -9,10 +9,10 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @ControllerAdvice
 class EstimateNotFoundAdvice {
 
-    @ResponseBody
-    @ExceptionHandler(EstimateNotFoundException.class)
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    String EstimateNotFoundHandler(EstimateNotFoundException ex) {
-        return ex.getMessage();
-    }
+  @ResponseBody
+  @ExceptionHandler(EstimateNotFoundException.class)
+  @ResponseStatus(HttpStatus.NOT_FOUND)
+  String EstimateNotFoundHandler(EstimateNotFoundException ex) {
+    return ex.getMessage();
+  }
 }

@@ -9,12 +9,12 @@ import java.util.TimeZone;
 @SpringBootApplication
 public class JarVesApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(JarVesApplication.class, args);
-	}
+  public static void main(String[] args) {
+    SpringApplication.run(JarVesApplication.class, args);
+  }
 
-	@PostConstruct
-	void init() {
-		TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
-	}
+  @PostConstruct
+  void init() {
+    TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
+  }
 }

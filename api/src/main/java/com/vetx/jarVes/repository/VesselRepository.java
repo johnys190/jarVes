@@ -7,6 +7,4 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 
 @Repository
 @CrossOrigin
-public interface VesselRepository extends JpaRepository<Vessel, Long> {
-
-}
+public interface VesselRepository extends JpaRepository<Vessel, Long> {}
