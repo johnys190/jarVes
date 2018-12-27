@@ -8,45 +8,55 @@ import com.vetx.jarVes.model.VoyEstimate;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.util.List;
 
 public class GeneratePDF {
-  public static ByteArrayInputStream voyEstimatePDF(List<VoyEstimate> voyEstimate) {
+  public static ByteArrayInputStream voyEstimatePDF(VoyEstimate voyEstimate) {
     Document document = new Document();
     ByteArrayOutputStream out = new ByteArrayOutputStream();
 
     try {
 
-      PdfPTable table = new PdfPTable(2);
+      PdfPTable table = new PdfPTable(4);
       table.setWidthPercentage(60);
-      table.setWidths(new int[] {1, 3, 3});
+      table.setWidths(new int[] {1, 3, 3, 3});
 
       Font headFont = FontFactory.getFont(FontFactory.HELVETICA_BOLD);
 
-      PdfPCell hcell;
-      hcell = new PdfPCell(new Phrase("Id", headFont));
-      hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
-      table.addCell(hcell);
+      PdfPCell hcellHeaders;
 
-      hcell = new PdfPCell(new Phrase("Broker", headFont));
-      hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
-      table.addCell(hcell);
+      hcellHeaders = new PdfPCell(new Phrase("Id", headFont));
+      hcellHeaders.setHorizontalAlignment(Element.ALIGN_CENTER);
+      table.addCell(hcellHeaders);
 
-      for (VoyEstimate voyEstimates : voyEstimate) {
+      hcellHeaders = new PdfPCell(new Phrase("Name", headFont));
+      hcellHeaders.setHorizontalAlignment(Element.ALIGN_CENTER);
+      table.addCell(hcellHeaders);
 
-        PdfPCell cell;
+      hcellHeaders = new PdfPCell(new Phrase("Account", headFont));
+      hcellHeaders.setHorizontalAlignment(Element.ALIGN_CENTER);
+      table.addCell(hcellHeaders);
 
-        cell = new PdfPCell(new Phrase(voyEstimates.getId().toString()));
-        cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-        table.addCell(cell);
+      hcellHeaders = new PdfPCell(new Phrase("Voyage", headFont));
+      hcellHeaders.setHorizontalAlignment(Element.ALIGN_CENTER);
+      table.addCell(hcellHeaders);
 
-        cell = new PdfPCell(new Phrase(String.valueOf(voyEstimates.getBroker())));
-        cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-        cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
-        cell.setPaddingRight(5);
-        table.addCell(cell);
-      }
+      PdfPCell cell;
+
+      cell = new PdfPCell(new Phrase(voyEstimate.getId().toString()));
+      cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+      table.addCell(cell);
+
+      cell = new PdfPCell(new Phrase(voyEstimate.getName()));
+      cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+      table.addCell(cell);
+
+      cell = new PdfPCell(new Phrase(voyEstimate.getAccount()));
+      cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+      table.addCell(cell);
+
+      cell = new PdfPCell(new Phrase(voyEstimate.getVoyage()));
+      cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+      table.addCell(cell);
 
       PdfWriter.getInstance(document, out);
       document.open();
@@ -55,7 +65,6 @@ public class GeneratePDF {
     } catch (DocumentException ex) {
 
     }
-
     return new ByteArrayInputStream(out.toByteArray());
   }
 }

@@ -39,9 +39,7 @@ public class VesselController {
   @PreAuthorize("hasRole('GUEST')")
   @ResponseStatus(HttpStatus.OK)
   public Vessel getVesselById(@PathVariable Long id) {
-    Vessel vessel =
-        vesselRepository.findById(id).orElseThrow(() -> new VesselNotFoundException(id));
-    return vessel;
+    return vesselRepository.findById(id).orElseThrow(() -> new VesselNotFoundException(id));
   }
 
   @ApiOperation(

@@ -34,9 +34,7 @@ public class UserController {
   @GetMapping("/users/me")
   @PreAuthorize("hasRole('GUEST')")
   public UserSummary getCurrentUser(@CurrentUser UserPrincipal currentUser) {
-    UserSummary userSummary =
-        new UserSummary(currentUser.getId(), currentUser.getUsername(), currentUser.getName());
-    return userSummary;
+    return new UserSummary(currentUser.getId(), currentUser.getUsername(), currentUser.getName());
   }
 
   @ApiOperation(value = "This endpoint returns a list of all Users.")
