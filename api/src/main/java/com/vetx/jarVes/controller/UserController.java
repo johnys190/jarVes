@@ -32,7 +32,7 @@ public class UserController {
 
   @ApiOperation(value = "This endpoint returns the current User.")
   @GetMapping("/users/me")
-  @PreAuthorize("hasRole('GUEST')")
+  @PreAuthorize("hasAnyRole('GUEST', 'ADMIN')")
   public UserSummary getCurrentUser(@CurrentUser UserPrincipal currentUser) {
     return new UserSummary(currentUser.getId(), currentUser.getUsername(), currentUser.getName());
   }
@@ -48,7 +48,7 @@ public class UserController {
   @ApiOperation(value = "This endpoint adds ImportantVessel to a User.")
   @PostMapping("/add-important-vessel/{id}")
   @ResponseStatus(HttpStatus.CREATED)
-  @PreAuthorize("hasRole('GUEST')")
+  @PreAuthorize("hasAnyRole('GUEST', 'ADMIN')")
   public void addImportantVessel(@CurrentUser UserPrincipal currentUser, @PathVariable Long id) {
     User user =
         userRepository
@@ -63,7 +63,7 @@ public class UserController {
   @ApiOperation(value = "This endpoint removes an ImportantVessel from a User.")
   @PostMapping("/remove-important-vessel/{id}")
   @ResponseStatus(HttpStatus.CREATED)
-  @PreAuthorize("hasRole('GUEST')")
+  @PreAuthorize("hasAnyRole('GUEST', 'ADMIN')")
   public void deleteImportantVessel(@CurrentUser UserPrincipal currentUser, @PathVariable Long id) {
     User user =
         userRepository
