@@ -13,17 +13,17 @@ import java.util.Collections;
 @Component
 public class DevBootstrap implements ApplicationListener<ContextRefreshedEvent> {
 
-  RoleRepository roleRepository;
+  private RoleRepository roleRepository;
 
-  UserRepository userRepository;
+  private UserRepository userRepository;
 
-  VesselRepository vesselRepository;
+  private VesselRepository vesselRepository;
 
-  PasswordEncoder passwordEncoder;
+  private PasswordEncoder passwordEncoder;
 
-  TcEstimateRepository tcEstimateRepository;
+  private TcEstimateRepository tcEstimateRepository;
 
-  VoyEstimateRepository voyEstimateRepository;
+  private VoyEstimateRepository voyEstimateRepository;
 
   @Autowired
   public DevBootstrap(
@@ -48,25 +48,24 @@ public class DevBootstrap implements ApplicationListener<ContextRefreshedEvent> 
 
   private void initData() {
 
-    Role role_admin = new Role(RoleName.ROLE_ADMIN);
-    Role role_guest = new Role(RoleName.ROLE_GUEST);
-    roleRepository.save(role_admin);
-    roleRepository.save(role_guest);
+    Role roleAdmin = new Role(RoleName.ROLE_ADMIN);
+    Role roleGuest = new Role(RoleName.ROLE_GUEST);
+    roleRepository.save(roleAdmin);
+    roleRepository.save(roleGuest);
 
     User user1 = new User("Zan", "Toichi", "zan@email.com", passwordEncoder.encode("123456"));
     User user524 = new User("Peos", "Proktos", "peos@prokt.all", passwordEncoder.encode("poutsa"));
     User user2 = new User("Thanos", "Louk", "than@email.com", passwordEncoder.encode("654321"));
     User user3 = new User("Pietr", "Piotr", "pietr@email.com", passwordEncoder.encode("1234321"));
-    User user4 =
-        new User("Pikos", "Pipikos", "pikos@email.com", passwordEncoder.encode("123454321"));
+    User user4 = new User("Pikos", "Pipikos", "pikos@email.com", passwordEncoder.encode("123454321"));
     User user5 = new User("Kwstas", "Okwsten", "kwsten@email.com", passwordEncoder.encode("12321"));
 
-    user1.setRoles(Collections.singleton(role_admin));
-    user524.setRoles(Collections.singleton(role_admin));
-    user2.setRoles(Collections.singleton(role_guest));
-    user3.setRoles(Collections.singleton(role_guest));
-    user4.setRoles(Collections.singleton(role_guest));
-    user5.setRoles(Collections.singleton(role_guest));
+    user1.setRoles(Collections.singleton(roleAdmin));
+    user524.setRoles(Collections.singleton(roleAdmin));
+    user2.setRoles(Collections.singleton(roleGuest));
+    user3.setRoles(Collections.singleton(roleGuest));
+    user4.setRoles(Collections.singleton(roleGuest));
+    user5.setRoles(Collections.singleton(roleGuest));
 
     userRepository.save(user1);
     userRepository.save(user524);
