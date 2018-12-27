@@ -9,10 +9,10 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @ControllerAdvice
 class VesselNotFoundAdvice {
 
-    @ResponseBody
-    @ExceptionHandler(VesselNotFoundException.class)
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    String VesselNotFoundHandler(VesselNotFoundException ex) {
-        return ex.getMessage();
-    }
+  @ResponseBody
+  @ExceptionHandler(VesselNotFoundException.class)
+  @ResponseStatus(HttpStatus.NOT_FOUND)
+  String VesselNotFoundHandler(VesselNotFoundException ex) {
+    return ex.getMessage();
+  }
 }
