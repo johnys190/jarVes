@@ -77,12 +77,12 @@ public class VoyEstimateController {
   }
 
   @ApiOperation(value = "This endpoint exports a Voyage Estimate in PDF form.")
-  @GetMapping(value = "/voyestimate-pdf", produces = MediaType.APPLICATION_PDF_VALUE)
-  @PreAuthorize("hasRole('GUEST')")
-  public ResponseEntity<InputStreamResource> customersReport() throws IOException {
-    List<VoyEstimate> voyEstimates = voyEstimateRepository.findAll();
+  @GetMapping(value = "/pdf/{id}", produces = MediaType.APPLICATION_PDF_VALUE)
+//  @PreAuthorize("hasRole('GUEST')")
+  public ResponseEntity<InputStreamResource> voyEstimateReport(@PathVariable Long id) throws IOException {
+    VoyEstimate voyEstimate = voyEstimateRepository.findById(id).get();
 
-    ByteArrayInputStream bis = GeneratePDF.voyEstimatePDF(voyEstimates);
+    ByteArrayInputStream bis = GeneratePDF.voyEstimatePDF(voyEstimate);
 
     HttpHeaders headers = new HttpHeaders();
     headers.add("Content-Disposition", "inline; filename=VOYestimate.pdf");
