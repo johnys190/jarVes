@@ -52,13 +52,12 @@ public class VesselController {
     return vesselRepository.save(vessel);
   }
 
-  @ApiOperation(
-      value = "This endpoint returns a list of Vessels with the Important property added.")
+  @ApiOperation(value = "This endpoint returns a list of all Time Charter Estimates.")
   @GetMapping("/all")
   @ResponseStatus(HttpStatus.OK)
-  @PreAuthorize("hasAnyRole('GUEST')")
-  public List<ImportantVesselDTO> getAllVessel(@CurrentUser UserPrincipal currentUser) {
-    return importantVesselsService.getImportantVessels(currentUser.getId());
+  @PreAuthorize("hasAnyRole('GUEST', 'ADMIN')")
+  public List<Vessel> getAllVessels() {
+    return vesselRepository.findAll();
   }
 
   @ApiOperation(value = "This endpoint deletes a Vessel by its ID.")
