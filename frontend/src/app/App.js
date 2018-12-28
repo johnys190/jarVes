@@ -105,6 +105,24 @@ class App extends Component {
                 <Route exact path="/" 
                   render={(props) => <Home {...props} />}>
                 </Route>
+                <Route exact path="/vessel/:id" 
+                  render={(props) => <Home {...props} />}>
+                </Route>
+                <Route exact path="/vessel/new" 
+                  render={(props) => <Home {...props} />}>
+                </Route>
+                <Route exact path="/voyageEstimate/:id" 
+                  render={(props) => <Home {...props} />}>
+                </Route>
+                <Route exact path="/voyageEstimate/new" 
+                  render={(props) => <Home {...props} />}>
+                </Route>
+                <Route exact path="/timeCharterEstimate/:id" 
+                  render={(props) => <Home {...props} />}>
+                </Route>
+                <Route exact path="/timeCharterEstimate/new" 
+                  render={(props) => <Home {...props} />}>
+                </Route>
                 <Route path="/login" 
                   render={(props) => <Login onLogin={this.handleLogin} {...props} />}></Route>
                 <Route path="/signup" component={Signup}></Route>

@@ -32,5 +32,10 @@ export function formatDateTime(dateTimeString) {
 
 
 export function renderID(field){
-  return field.toString().toLowerCase().replace(/[. ()%+-/$]/g,'');
+  let result = field;
+  result = result.toString().toLowerCase();
+  result = result.replace(/[ -]/g,'_');
+  result = result.replace(/[1234567890]/g,'');
+  result = result.replace(/[.()%+/$]/g,'');
+  return result;
 }
