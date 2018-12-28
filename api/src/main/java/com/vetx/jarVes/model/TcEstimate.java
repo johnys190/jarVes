@@ -33,53 +33,53 @@ public class TcEstimate {
 
   private Date date;
 
-  private Double hireRate;
+  private Double hire_rate;
 
-  private Double approxDuration;
+  private Double approx_dur;
 
-  private Double ballastBonus;
+  private Double ballast_bonus;
 
-  private Double commisionPercent;
+  private Double commision_percent;
 
-  private Integer ballastDistanceSeca;
+  private Integer ballast_distance_seca;
 
-  private Integer ballastDistanceNonSeca;
+  private Integer ballast_distance_non_seca;
 
-  private Integer ladenDistanceSeca;
+  private Integer laden_distance_seca;
 
-  private Integer ladenDistanceNonSeca;
+  private Integer laden_distance_non_seca;
 
-  private Double ifoPrice;
+  private Double ifo_price;
 
-  private Double mdoPrice;
+  private Double mdo_price;
 
-  private Double deliveryCosts;
+  private Double delivery_costs;
 
-  private Double redeliveryCosts;
+  private Double redelivery_costs;
 
-  private Double canalsCost;
+  private Double canals_cost;
 
-  private Double miscelCosts;
+  private Double miscel_costs;
 
-  private Double lostWaitingDays;
+  private Double lost_waiting_days;
 
-  private Double grossRevenue;
+  private Double gross_revenue;
 
-  private Double bunkerCost;
+  private Double bunker_cost;
 
   private Double expenses;
 
-  private Double netRevenue;
+  private Double net_revenue;
 
   private Integer sensitivity;
 
-  private Double sensitivityFiveDays;
+  private Double sensitivity_five_days;
 
-  private Integer bbGross;
+  private Integer bb_gross;
 
-  private Double totalDuration;
+  private Double total_duration;
 
-  private Double timeCharterRate;
+  private Double time_charter_rate;
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "Vessel_id")
