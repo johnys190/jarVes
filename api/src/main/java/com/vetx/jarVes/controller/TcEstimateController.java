@@ -43,7 +43,7 @@ public class TcEstimateController {
   @ApiOperation(value = "This endpoint updates a Time Charter Estimate by its ID.")
   @PutMapping("/{id}")
   @ResponseStatus(HttpStatus.OK)
-  @PreAuthorize("hasRole('GUEST', 'ADMIN')")
+  @PreAuthorize("hasAnyRole('GUEST', 'ADMIN')")
   public TcEstimate updateTcEstimate(
       @Valid @RequestBody TcEstimate newTcEstimate, @PathVariable Long id) {
     newTcEstimate.setId(id);
@@ -53,7 +53,7 @@ public class TcEstimateController {
   @ApiOperation(value = "This endpoint deletes a Time Charter Estimate by its ID.")
   @DeleteMapping("/{id}")
   @ResponseStatus(HttpStatus.NO_CONTENT)
-  @PreAuthorize("hasRole('GUEST', 'ADMIN')")
+  @PreAuthorize("hasAnyRole('GUEST', 'ADMIN')")
   public void deleteTcEstimateById(@PathVariable Long id) {
     tcEstimateRepository.delete(tcEstimateRepository.findById(id).get());
   }
@@ -61,7 +61,7 @@ public class TcEstimateController {
   @ApiOperation(value = "This endpoint creates a Time Charter Estimate.")
   @PostMapping("/new")
   @ResponseStatus(HttpStatus.CREATED)
-  @PreAuthorize("hasRole('GUEST', 'ADMIN')")
+  @PreAuthorize("hasAnyRole('GUEST', 'ADMIN')")
   public TcEstimate createTcEstimate(@Valid @RequestBody TcEstimate newTcEstimate) {
     return tcEstimateRepository.save(newTcEstimate);
   }

@@ -45,7 +45,7 @@ public class VesselController {
   @ApiOperation(value = "This endpoint updates a Vessel by its ID.")
   @PutMapping("/{id}")
   @ResponseStatus(HttpStatus.OK)
-  @PreAuthorize("hasRole('GUEST', 'ADMIN')")
+  @PreAuthorize("hasAnyRole('GUEST', 'ADMIN')")
   public Vessel updateVessel(
           @Valid @RequestBody Vessel vessel, @PathVariable Long id) {
     vessel.setId(id);
@@ -56,7 +56,7 @@ public class VesselController {
       value = "This endpoint returns a list of Vessels with the Important property added.")
   @GetMapping("/all")
   @ResponseStatus(HttpStatus.OK)
-  @PreAuthorize("hasRole('GUEST')")
+  @PreAuthorize("hasAnyRole('GUEST')")
   public List<ImportantVesselDTO> getAllVessel(@CurrentUser UserPrincipal currentUser) {
     return importantVesselsService.getImportantVessels(currentUser.getId());
   }
@@ -64,7 +64,7 @@ public class VesselController {
   @ApiOperation(value = "This endpoint deletes a Vessel by its ID.")
   @DeleteMapping("/{id}")
   @ResponseStatus(HttpStatus.OK)
-  @PreAuthorize("hasRole('GUEST', 'ADMIN')")
+  @PreAuthorize("hasAnyRole('GUEST', 'ADMIN')")
   public void deleteVesselById(@PathVariable Long vesselId) {
     try {
       vesselRepository.deleteById(vesselId);
@@ -76,7 +76,7 @@ public class VesselController {
   @ApiOperation(value = "This endpoint creates a Vessel.")
   @PostMapping("/new")
   @ResponseStatus(HttpStatus.CREATED)
-  @PreAuthorize("hasRole('GUEST', 'ADMIN')")
+  @PreAuthorize("hasAnyRole('GUEST', 'ADMIN')")
   public Vessel createNewVessel(@Valid @RequestBody Vessel vessel) {
     try {
       return vesselRepository.save(vessel);

@@ -53,7 +53,7 @@ public class VoyEstimateController {
   @ApiOperation(value = "This endpoint updates a Voyage Estimate.")
   @PutMapping("/{id}")
   @ResponseStatus(HttpStatus.OK)
-  @PreAuthorize("hasRole('GUEST', 'ADMIN')")
+  @PreAuthorize("hasAnyRole('GUEST', 'ADMIN')")
   public VoyEstimate updateVoyEstimate(
       @Valid @RequestBody VoyEstimate newVoyEstimate, @PathVariable Long id) {
     newVoyEstimate.setId(id);
@@ -63,7 +63,7 @@ public class VoyEstimateController {
   @ApiOperation(value = "This endpoint deletes a Voyage Estimate.")
   @DeleteMapping("/{id}")
   @ResponseStatus(HttpStatus.NO_CONTENT)
-  @PreAuthorize("hasRole('GUEST', 'ADMIN')")
+  @PreAuthorize("hasAnyRole('GUEST', 'ADMIN')")
   public void removeVoyEstimate(@PathVariable Long id) {
     voyEstimateRepository.deleteById(id);
   }
@@ -71,7 +71,7 @@ public class VoyEstimateController {
   @ApiOperation(value = "This endpoint creates a Voyage Estimate.")
   @PostMapping("/new")
   @ResponseStatus(HttpStatus.CREATED)
-  @PreAuthorize("hasRole('GUEST', 'ADMIN')")
+  @PreAuthorize("hasAnyRole('GUEST', 'ADMIN')")
   VoyEstimate newVoyEstimate(@RequestBody VoyEstimate newVoyEstimate) {
     return voyEstimateRepository.save(newVoyEstimate);
   }
