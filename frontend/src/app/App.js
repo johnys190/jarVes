@@ -76,14 +76,14 @@ class App extends Component {
     this.props.history.push(redirectTo);
     
     notification[notificationType]({
-      message: 'I need a NAME!',
+      message: 'Link Line Voyage Estimate',
       description: description,
     });
   }
 
   handleLogin() {
     notification.success({
-      message: 'I need a NAME!',
+      message: 'Link Line Voyage Estimate',
       description: "You're successfully logged in.",
     });
     this.loadCurrentUser();
@@ -123,10 +123,16 @@ class App extends Component {
                 <Route exact path="/timeCharterEstimate/new" 
                   render={(props) => <Home {...props} />}>
                 </Route>
+                <Route path="/users/:id" 
+                  render={(props) => <Home {...props} />}>
+                </Route>
+                <Route path="/users/new" 
+                  render={(props) => <Home {...props} />}>
+                </Route>
                 <Route path="/login" 
                   render={(props) => <Login onLogin={this.handleLogin} {...props} />}></Route>
                 <Route path="/signup" component={Signup}></Route>
-                <Route path="/users/:username" 
+                <Route path="/profile/:id" 
                   render={(props) => <Profile isAuthenticated={this.state.isAuthenticated} currentUser={this.state.currentUser} {...props}  />}>
                 </Route>
                 <Route component={NotFound}></Route>

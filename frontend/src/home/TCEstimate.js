@@ -115,7 +115,7 @@ class TCEstimate extends Component {
             promise
                 .then(response => {
                     notification.success({
-                        message: 'Seminar App',
+                        message: 'Link Line Voyage Estimate',
                         description: "Sucessfully saved changes!",
                     });
                     this.setState({
@@ -124,7 +124,7 @@ class TCEstimate extends Component {
                 })
                 .catch(error => {
                     notification.error({
-                        message: 'Seminar App',
+                        message: 'Link Line Voyage Estimate',
                         description: error.message || 'Sorry! Something went wrong. Please try again!'
                     });
                     this.setState({
@@ -137,7 +137,7 @@ class TCEstimate extends Component {
             promise
                 .then(response => {
                     notification.success({
-                        message: 'Seminar App',
+                        message: 'Link Line Voyage Estimate',
                         description: "Sucessfully created!",
                     });
 
@@ -148,7 +148,7 @@ class TCEstimate extends Component {
                 })
                 .catch(error => {
                     notification.error({
-                        message: 'Seminar App',
+                        message: 'Link Line Voyage Estimate',
                         description: error.message || 'Sorry! Something went wrong. Please try again!'
                     });
                     this.setState({
@@ -173,7 +173,7 @@ class TCEstimate extends Component {
         promise
             .then(response => {
                 notification.success({
-                    message: 'Seminar App',
+                    message: 'Link Line Voyage Estimate',
                     description: "Sucessfully saved!",
                 });
                 this.setState({
@@ -183,7 +183,7 @@ class TCEstimate extends Component {
             })
             .catch(error => {
                 notification.error({
-                    message: 'Seminar App',
+                    message: 'Link Line Voyage Estimate',
                     description: error.message || 'Sorry! Something went wrong. Please try again!'
                 });
                 this.setState({
@@ -201,7 +201,6 @@ class TCEstimate extends Component {
         this.setState({
             tcest:tcestEdit
         });
-        console.log(this.state);
     }
 
     // handleChangeInput = (e) => {

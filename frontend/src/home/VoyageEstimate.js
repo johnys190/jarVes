@@ -67,78 +67,75 @@ class VoyageEstimate extends Component {
     calculate(){
         const voyestEdit = this.state.voyest;
 
+        let total_ballast_distance = Number(voyestEdit.non_seca_ballast) + Number(voyestEdit.seca_ballast);
+        let total_laden_distance = Number(voyestEdit.non_seca_laden) + Number(voyestEdit.seca_laden);
+
         if ( voyestEdit.freight_rate_type == 'lumpsum' ) {
-            voyestEdit.gross_revenue = voyestEdit.freight_rate
+            voyestEdit.gross_revenue = voyestEdit.freight_rate;
         } else { 
-            voyestEdit.gross_revenue = voyestEdit.freight_rate * voyestEdit.quantity
-        }
+            voyestEdit.gross_revenue = voyestEdit.freight_rate * voyestEdit.quantity;
+        }       
 
-        voyestEdit.sailing_bunkers = (voyestEdit.otal_ballast_distance - voyestEdit.seca_ballast_distance) * voyestEdit.ifo_ballast * voyestEdit.ifo_price + voyestEdit.seca_ballast_distance * voyestEdit.ifo_ballast * voyestEdit.mgo_price + (voyestEdit.total_laden_distance - voyestEdit.seca_laden_distance) * voyestEdit.ifo_laden * voyestEdit.ifo_price + voyestEdit.seca_laden_distance * voyestEdit.ifo_laden * voyestEdit.mgo_price;
-
-        if (voyestEdit.seca &&(voyestEdit.load_port in voyestEdit.seca)){
+        voyestEdit.sailing_bunkers = (total_ballast_distance - voyestEdit.seca_ballast) * voyestEdit.ifo_ballast * voyestEdit.ifo_price + voyestEdit.seca_ballast * voyestEdit.ifo_ballast * voyestEdit.mgo_price + (total_laden_distance - voyestEdit.seca_laden) * voyestEdit.ifo_laden * voyestEdit.ifo_price + voyestEdit.seca_laden * voyestEdit.ifo_laden * voyestEdit.mgo_price;
+        
+        if (voyestEdit.load_port_type == 'seca'){
             voyestEdit.loadport_bunkers = voyestEdit.ifo_port_work * voyestEdit.load_days * voyestEdit.mgo_price + voyestEdit.ifo_port_idle * voyestEdit.shex_load * voyestEdit.mgo_price + voyestEdit.mgo_port_work * voyestEdit.load_days * voyestEdit.mgo_price + voyestEdit.mgo_port_idle * voyestEdit.shex_load * voyestEdit.mgo_price + (voyestEdit.load_days + voyestEdit.shex_load) * voyestEdit.boiler_port * voyestEdit.mgo_price;
         }
 
-        
-        if (voyestEdit.non_seca && voyestEdit.load_port in voyestEdit.non_seca){
+        if (voyestEdit.load_port_type == 'non_seca'){
             voyestEdit.loadport_bunkers = voyestEdit.ifo_port_work * voyestEdit.load_days * voyestEdit.ifo_price + voyestEdit.ifo_port_idle * voyestEdit.shex_load * voyestEdit.ifo_price + voyestEdit.mgo_port_work * voyestEdit.load_days * voyestEdit.mgo_price + voyestEdit.mgo_port_idle * voyestEdit.shex_load * voyestEdit.mgo_price + (voyestEdit.load_days + voyestEdit.shex_load) * voyestEdit.boiler_port * voyestEdit.ifo_price;
         }
 
-        // voyestEdit.discharge_port_bunkers(){
-        // if load_port in seca  ifo_port_work * discharge_days * mgo_price + ifo_port_idle * shex_discharge_days * mgo_price + mgo_port_work * discharge_days * mgo_price + mgo_port_idle * shex_discharge_days * mgo_price + (discharge_days + shex_discharge_days) * boiler_port * mgo_price
-        // }
+        if (voyestEdit.discharge_port_type  == 'seca'){
+            voyestEdit.disport_bunkers = voyestEdit.ifo_port_work * voyestEdit.disch_days * voyestEdit.mgo_price + voyestEdit.ifo_port_idle * voyestEdit.shex_disch * voyestEdit.mgo_price + voyestEdit.mgo_port_work * voyestEdit.disch_days * voyestEdit.mgo_price + voyestEdit.mgo_port_idle * voyestEdit.shex_disch * voyestEdit.mgo_price + (voyestEdit.disch_days + voyestEdit.shex_disch) * voyestEdit.boiler_port * voyestEdit.mgo_price;
+        }
+        
+        if (voyestEdit.discharge_port_type  == 'non_seca'){
+            voyestEdit.disport_bunkers = voyestEdit.ifo_port_work * voyestEdit.disch_days * voyestEdit.ifo_price + voyestEdit.ifo_port_idle * voyestEdit.shex_disch * voyestEdit.ifo_price + voyestEdit.mgo_port_work * voyestEdit.disch_days * voyestEdit.mgo_price + voyestEdit.mgo_port_idle * voyestEdit.shex_disch * voyestEdit.mgo_price + (voyestEdit.disch_days + voyestEdit.shex_disch) * voyestEdit.boiler_port * voyestEdit.ifo_price;
+        }
 
-        // voyestEdit.discharge_port_bunkers(){
-        // if load_port in non_seca  ifo_port_work * discharge_days * ifo_price + ifo_port_idle * shex_discharge_days * ifo_price + mgo_port_work * discharge_days * mgo_price + mgo_port_idle * shex_discharge_days * mgo_price + (discharge_days + shex_discharge_days) * boiler_port * ifo_price
-        // }
+        voyestEdit.total_bunker_cost = voyestEdit.loadport_bunkers + voyestEdit.disport_bunkers + voyestEdit.sailing_bunkers + voyestEdit.lostwaiting_days * ( voyestEdit.ifo_port_idle * voyestEdit.ifo_price + voyestEdit.mgo_port_idle * voyestEdit.mgo_price + voyestEdit.boiler_port * voyestEdit.ifo_price)
+        
 
-        // voyestEdit.total_bunker_cost(){
-        // loadport_bunkers + discharge_port_bunkers + sailing_bunkers + lost_waiting_days * ( ifo_port_idle * ifo_price + mgo_port_idle * mgo_price + boiler_port * ifo_price)
-        // }
+        voyestEdit.expenses = Number(voyestEdit.load) + Number(voyestEdit.disch) + Number(voyestEdit.others) + Number(voyestEdit.canals) + Number(voyestEdit.exins) + (Number(voyestEdit.comm) * Number(voyestEdit.gross_revenue));
+        
 
-        // voyestEdit.expenses(){
-        // load + disch + others + canals + exins + (comm x gross_revenue)
-        // }
+        voyestEdit.taxes = voyestEdit.taxesP * voyestEdit.gross_revenue;
+        
 
-        // voyestEdit.taxes(){
-        // taxes x gross_revenue
-        // }
+        voyestEdit.net_revenue = voyestEdit.gross_revenue - voyestEdit.expenses - voyestEdit.taxes - voyestEdit.total_bunker_cost;
+        
 
-        // voyestEdit.exins(){
-        // exins
-        // }
+        voyestEdit.time_charter_rate = voyestEdit.net_revenue / voyestEdit.total_duration;
 
-        // voyestEdit.net_revenue(){
-        // gross_revenue - expenses - taxes - total_bunker_cost
-        // }
+        voyestEdit.steaming = (Number(total_ballast_distance) + Number(total_laden_distance) ) / ( voyestEdit.speed * 24 ) + voyestEdit.steaming_margin * (Number(total_ballast_distance) + Number(total_laden_distance) )  / ( voyestEdit.speed * 24 );
+        
+        if ( voyestEdit.load_rate_type == 'daps' ) { 
+            voyestEdit.load_days = voyestEdit.lrate;
+        } else { 
+            voyestEdit.load_days = voyestEdit.quantity / voyestEdit.lrate; 
+        }
 
-        // voyestEdit.time_charter_rate(){
-        // net_revenue / total_duration_days
-        // }
+        if ( voyestEdit.discharge_rate_type == 'daps' ) { 
+            voyestEdit.disch_days = voyestEdit.drate;
+        } else { 
+            voyestEdit.disch_days = voyestEdit.quantity / voyestEdit.drate;
+        }
 
-        // voyestEdit.steaming_days(){
-        // ( total_ballast_distance + total_laden_distance ) / ( speed * 24 ) + steaming_margin x ( total_ballast_distance + total_laden_distance ) / ( speed * 24 )
-        // }
+        if ( voyestEdit.load_rate_type == 'x') {
+            voyestEdit.shex_load = voyestEdit.load_days * voyestEdit.lostwaiting_days;
+        } else { 
+            voyestEdit.shex_load = 1; 
+        } 
+   
+        if ( voyestEdit.discharge_rate_type == 'x') { 
+            voyestEdit.shex_disch = voyestEdit.disch_days * voyestEdit.lostwaiting_days;
+        } else { 
+            voyestEdit.shex_disch = 1; 
+        } 
 
-        // voyestEdit.load_days(){
-        // if ( load_rate_type == DAPS ) { load_days = load_rate} else { load_days = quantity / load_rate } 
-        // }
-
-        // voyestEdit.discharge_days(){
-        // if ( discharge_rate_type == DAPS ) { discharge_days = discharge_rate} else { discharge_days = quantity / discharge_rate } 
-        // }
-
-        // voyestEdit.shex_load(){
-        // if ( load_rate_type == X) { shex_load = load_days * lost_waiting_days} else { shex_load = 1 } 
-        // }
-
-        // voyestEdit.shex_discharge_days(){
-        // if ( discharge_rate_type == X) { shex_discharge_days = discharge_days * lost_waiting_days} else { shex_discharge_days = 1 } 
-        // }
-
-        voyestEdit.total_duration_days = voyestEdit.steaming_days + voyestEdit.load_days + voyestEdit.discharge_days + voyestEdit.shex_load + voyestEdit.shex_discharge_days + voyestEdit.lost_waiting_days;
+        voyestEdit.total_duration = Number(voyestEdit.steaming) + Number(voyestEdit.load_days) + Number(voyestEdit.disch_days) + Number(voyestEdit.shex_load) + Number(voyestEdit.shex_disch) + Number(voyestEdit.lostwaiting_days);
     
-
         this.setState({
             voyest:voyestEdit
         });
@@ -236,7 +233,7 @@ class VoyageEstimate extends Component {
             promise
                 .then(response => {
                     notification.success({
-                        message: 'Seminar App',
+                        message: 'Link Line Voyage Estimate',
                         description: "Sucessfully saved changes!",
                     });
                     this.setState({
@@ -245,7 +242,7 @@ class VoyageEstimate extends Component {
                 })
                 .catch(error => {
                     notification.error({
-                        message: 'Seminar App',
+                        message: 'Link Line Voyage Estimate',
                         description: error.message || 'Sorry! Something went wrong. Please try again!'
                     });
                     this.setState({
@@ -258,7 +255,7 @@ class VoyageEstimate extends Component {
             promise
                 .then(response => {
                     notification.success({
-                        message: 'Seminar App',
+                        message: 'Link Line Voyage Estimate',
                         description: "Sucessfully created!",
                     });
 
@@ -269,7 +266,7 @@ class VoyageEstimate extends Component {
                 })
                 .catch(error => {
                     notification.error({
-                        message: 'Seminar App',
+                        message: 'Link Line Voyage Estimate',
                         description: error.message || 'Sorry! Something went wrong. Please try again!'
                     });
                     this.setState({
@@ -294,7 +291,7 @@ class VoyageEstimate extends Component {
         promise
             .then(response => {
                 notification.success({
-                    message: 'Seminar App',
+                    message: 'Link Line Voyage Estimate',
                     description: "Sucessfully saved!",
                 });
                 this.setState({
@@ -304,7 +301,7 @@ class VoyageEstimate extends Component {
             })
             .catch(error => {
                 notification.error({
-                    message: 'Seminar App',
+                    message: 'Link Line Voyage Estimate',
                     description: error.message || 'Sorry! Something went wrong. Please try again!'
                 });
                 this.setState({
@@ -371,6 +368,20 @@ class VoyageEstimate extends Component {
         ))
     }
 
+    renderInputNumberList(fields, className='', disabled=false){
+        return fields.map( (field) => (
+             <Input 
+                type='number'
+                step='any'
+                className={className}
+                addonBefore={field} 
+                name={renderID(field)}
+                onChange={(event) => this.handleInputChange(event)}
+                disabled={disabled}
+                defaultValue={this.state.voyest[renderID(field)]}/> 
+        ))
+    }
+
 
     renderRadioList(fields, id, style={}, className='alignRadioGroup'){
         const RadioGroup = Radio.Group;
@@ -417,28 +428,29 @@ class VoyageEstimate extends Component {
                         {saveAs}
                         <Row gutter={15}>
                             <Col  xs={24} sm={12} md={12} lg={12} xl={12}>
-                                {this.renderInputList(['Voyage', 'Account', 'Commodity', 'Broker', 'Laycan', 'Quantity', 'Freight rate'])}
+                                {this.renderInputList(['Voyage', 'Account', 'Commodity', 'Broker', 'Laycan'])}
+                                {this.renderInputNumberList([ 'Quantity', 'Freight rate'])}
                                 <br />
                                 {this.renderRadioList(['LUMPSUM', 'Per MT Intake', 'Per LT Intake'], 'freight_rate_type', veerticalRadioStyle)}
                             </Col>
                             <Col  xs={24} sm={12} md={12} lg={12} xl={12}>
                                 <Row>
                                     <Col span={12}>
-                                        <Input className='alignComponent' addonBefore='L/Rate' name='lrate' onChange={(event) => this.handleInputChange(event)}/>
+                                        <Input type='number' step='any' className='alignComponent' addonBefore='L/Rate' name='lrate' onChange={(event) => this.handleInputChange(event)}/>
                                     </Col>
                                     <Col offset={1} span={11}>
-                                     {this.renderRadioList(['X','C'],'lrateRadio')}
+                                     {this.renderRadioList(['X','C','DAPS'],'load_rate_type')}
                                     </Col>
                                 </Row>
                                 <Row>
                                     <Col span={12}>
-                                        <Input className='alignComponent' addonBefore='D/Rate' name='drate' onChange={(event) => this.handleInputChange(event)}/>
+                                        <Input type='number' step='any'  className='alignComponent' addonBefore='D/Rate' name='drate' onChange={(event) => this.handleInputChange(event)}/>
                                     </Col>
                                     <Col offset={1} span={11}>
-                                        {this.renderRadioList(['X','C'],'drateRadio')}
+                                        {this.renderRadioList(['X','C','DAPS'],'discharge_rate_type')}
                                     </Col>
                                 </Row>
-                                {this.renderInputList(['Comm.', 'Repos.'])}
+                                {this.renderInputNumberList(['Comm.', 'Repos.'])}
                                 <DatePicker addonBefore='Date' name='date' />
                             </Col>
                         </Row>
@@ -448,13 +460,56 @@ class VoyageEstimate extends Component {
                         <Row gutter={15}>
                             <Col  xs={24} sm={12} md={12} lg={12} xl={12}>
                                 <p>Ballast distance</p>
-                                {this.renderInputList(['NON Seca (Ballast)', 'Seca (Ballast)'])}
+                                {this.renderInputNumberList(['NON Seca (Ballast)', 'Seca (Ballast)'])}
                                 <p>Laden distance</p>
-                                {this.renderInputList(['NON Seca (Laden)', 'Seca (Laden)', 'Lfo price', 'Mgo price', 'Lost/waiting days'])}
+                                {this.renderInputNumberList(['NON Seca (Laden)', 'Seca (Laden)', 'IFO price', 'MGO price', 'Lost/waiting days'])}
                             </Col>
                             <Col  xs={24} sm={12} md={12} lg={12} xl={12}>
                                 <p>Port costs</p>
-                                {this.renderInputList(['Load', 'Disch', 'Others', 'Canals', 'Taxes %', 'Miscel.', 'Exins'])}
+                                <Row gutter={20}>
+                                    <Col span={12}>
+                                        <Input 
+                                            type='number'
+                                            step='any'
+                                            addonBefore='Load' 
+                                            name='load'
+                                            onChange={(event) => this.handleInputChange(event)}
+                                            defaultValue={this.state.voyest.load}/> 
+                                    </Col>
+                                    <Col span={12}>
+                                        {this.renderRadioList(['Seca', 'NON Seca'],'load_port_type')}
+                                    </Col>
+                                </Row>
+                                <Row gutter={20}>
+                                    <Col span={12}>
+                                         <Input 
+                                            type='number'
+                                            step='any'
+                                            addonBefore='Disch' 
+                                            name='disch'
+                                            onChange={(event) => this.handleInputChange(event)}
+                                            defaultValue={this.state.voyest.disch}/> 
+                                    </Col>
+                                    <Col span={12}>
+                                        {this.renderRadioList(['Seca', 'NON Seca'],'discharge_port_type')}
+                                    </Col>
+                                </Row>
+                                    {this.renderInputNumberList(['Others', 'Canals'])}
+                                     <Input 
+                                        type='number'
+                                        step='any'
+                                        addonBefore='Taxes %' 
+                                        name='taxesP'
+                                        onChange={(event) => this.handleInputChange(event)}
+                                        defaultValue={this.state.voyest.taxesP}/> 
+                                 {this.renderInputNumberList(['Miscel.', 'Exins', 'Extra costs'])}
+                                 <Input 
+                                    type='number'
+                                    step='any'
+                                    addonBefore='Extra costs 2' 
+                                    name='extra_costs2'
+                                    onChange={(event) => this.handleInputChange(event)}
+                                    defaultValue={this.state.voyest.extra_costs2}/> 
                             </Col>
                         </Row>
                     </Col>
@@ -480,13 +535,14 @@ class VoyageEstimate extends Component {
                         </span>
                         <Row gutter={15}>
                             <Col  xs={24} sm={12} md={12} lg={12} xl={12}>
-                                {this.renderInputList(['Speed', 'Ifo Ballast', 'Ifo Laden', 'Mdo Sea', 'IFO port idle', 'IFO port work', 'MGO port idle', 'MGO port work', 'Boiler port'])}
+                                {this.renderInputNumberList(['Speed', 'IFO Ballast', 'IFO Laden', 'MGO Sea', 'IFO port idle', 'IFO port work', 'MGO port idle', 'MGO port work', 'Boiler port'])}
                             </Col>
                             <Col  xs={24} sm={12} md={12} lg={12} xl={12}>
-                                {this.renderInputList(['Load port', 'Disch. port', 'Streaming margin'])}
+                                {this.renderInputNumberList(['Load port', 'Disch. port', 'Steaming margin'])}
                                 <p>Days</p> 
-                                {this.renderInputList(['Streaming','Load days','Disch days', 'SHEX load', 'SHEX disch'], 'alignResultLightBlue', true)}
+                                {this.renderInputNumberList(['Steaming','Load days','Disch days', 'SHEX load', 'SHEX disch'], 'alignResultLightBlue', true)}
                                 <Input 
+                                    type='number'
                                     className='alignResultRed' 
                                     addonBefore='Total duration'
                                     name='total_duration'
@@ -496,14 +552,16 @@ class VoyageEstimate extends Component {
                         </Row>
 
                         <p>RESULTS</p>
-                        {this.renderInputList(['Gross revenue', 'Sailing bunkers', 'Loadport bunkers', 'Disport bunkers', 'Total bunker cost', 'Expenses', 'Commissions', 'Taxes', 'Exins', 'Net Revenue'], 'alignResultDarkBlue', true)}
+                        {this.renderInputNumberList(['Gross revenue', 'Sailing bunkers', 'Loadport bunkers', 'Disport bunkers', 'Total bunker cost', 'Expenses', 'Commissions', 'Taxes', 'Exins', 'Net Revenue'], 'alignResultDarkBlue', true)}
                         <Input 
+                            type='number'
                             className='alignResultRed' 
                             addonBefore='Time charter rate' 
                             name='time_charter_rate'
                             disabled={true}
                             value={this.state.voyest.time_charter_rate}/>
                         <Input 
+                            type='number'
                             className='alignResultGreen' 
                             addonBefore='Sensitivity +/- $1'
                             name='sensitivity'

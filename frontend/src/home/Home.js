@@ -11,6 +11,9 @@ import VoyageEstimateList from './VoyageEstimateList.js';
 import TCEstimate from './TCEstimate.js';
 import TCEstimateList from './TCEstimateList.js';
 import Testpage from './Testpage.js';
+import Profile from '../user/profile/Profile.js';
+import UserList from '../user/UserList.js';
+import Signup from '../user/signup/Signup';
 
 class Home extends Component {
 	constructor(props) {
@@ -55,13 +58,22 @@ class Home extends Component {
         	tcEstimate = (<TCEstimateList /*parse props here*//>);
         }
 
+        let adminPanel;
+        if (this.props.location.pathname.startsWith('/users/new')){
+        	adminPanel = (<Signup />);
+        }else if (this.props.location.pathname.startsWith('/users/')){
+            adminPanel = (<Profile id={this.props.match.params.id} />);
+        }else{
+        	adminPanel = (<UserList />)
+        }
+
         let dk='vessel';
         if (this.props.location.pathname.indexOf('/',1) > 0){
 	        let l = this.props.location.pathname.indexOf('/', 1);
 	        if (l === -1) l = this.props.location.pathname.length-1;
 	        dk = this.props.location.pathname.substring(1,l);
 	    }
-	    dk='voyageEstimate';
+
 		return (
 			<div className="container">
 				<div className="content">
@@ -70,6 +82,7 @@ class Home extends Component {
 					      <TabPane tab="Vessels" key="vessel">{vessels}</TabPane>
 					      <TabPane tab="Voyage Estimate" key="voyageEstimate">{voyageEstimate}</TabPane>
 					      <TabPane tab="Time Charter Estimate" key="timeCharterEstimate">{tcEstimate}</TabPane>
+					      <TabPane tab="Admin Panel" key="users">{adminPanel}</TabPane>
 					    </Tabs>
 				  	</StickyContainer>
 				</div>

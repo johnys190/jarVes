@@ -8,8 +8,11 @@ import {
     EMAIL_MAX_LENGTH,
     PASSWORD_MIN_LENGTH, PASSWORD_MAX_LENGTH
 } from '../../constants';
-
 import { Form, Input, Button, notification } from 'antd';
+import {
+    getUserById,
+    updateUserById
+} from '../../util/APIUtils';
 const FormItem = Form.Item;
 
 class Signup extends Component {
@@ -19,7 +22,7 @@ class Signup extends Component {
             name: {
                 value: ''
             },
-            username: {
+            lastName: {
                 value: ''
             },
             email: {
@@ -34,6 +37,45 @@ class Signup extends Component {
         this.validateUsernameAvailability = this.validateUsernameAvailability.bind(this);
         this.validateEmailAvailability = this.validateEmailAvailability.bind(this);
         this.isFormInvalid = this.isFormInvalid.bind(this);
+        this.loadUserProfile = this.loadUserProfile.bind(this);
+        if (this.state.id !== 'new'){
+            this.loadUserProfile();
+        }
+
+
+    }
+    loadUserProfile() {
+        this.setState({
+            isLoading: true
+        });
+
+        getUserById(this.state.id)
+        .then(response => {
+            this.setState({
+                name: {
+                    value: response.name
+                },
+                lastName: {
+                    value: response.lastName
+                },
+                email: {
+                    value: response.email
+                },
+                isLoading: false
+            });
+        }).catch(error => {
+            if(error.status === 404) {
+                this.setState({
+                    notFound: true,
+                    isLoading: false
+                });
+            } else {
+                this.setState({
+                    serverError: true,
+                    isLoading: false
+                });        
+            }
+        });        
     }
 
     handleInputChange(event, validationFun) {
@@ -55,19 +97,19 @@ class Signup extends Component {
         const signupRequest = {
             name: this.state.name.value,
             email: this.state.email.value,
-            username: this.state.username.value,
+            lastName: this.state.lastName.value,
             password: this.state.password.value
         };
         signup(signupRequest)
         .then(response => {
             notification.success({
-                message: 'Polling App',
+                message: 'Link Line Voyage Estimate',
                 description: "Thank you! You're successfully registered. Please Login to continue!",
             });          
             this.props.history.push("/login");
         }).catch(error => {
             notification.error({
-                message: 'Polling App',
+                message: 'Link Line Voyage Estimate',
                 description: error.message || 'Sorry! Something went wrong. Please try again!'
             });
         });
@@ -75,13 +117,14 @@ class Signup extends Component {
 
     isFormInvalid() {
         return !(this.state.name.validateStatus === 'success' &&
-            this.state.username.validateStatus === 'success' &&
+            this.state.lastName.validateStatus === 'success' &&
             this.state.email.validateStatus === 'success' &&
             this.state.password.validateStatus === 'success'
         );
     }
 
     render() {
+
         return (
             <div className="signup-container">
                 <h1 className="page-title">Sign Up</h1>
@@ -99,16 +142,16 @@ class Signup extends Component {
                                 value={this.state.name.value} 
                                 onChange={(event) => this.handleInputChange(event, this.validateName)} />    
                         </FormItem>
-                        <FormItem label="Username"
+                        <FormItem label="Last Name"
                             hasFeedback
-                            validateStatus={this.state.username.validateStatus}
-                            help={this.state.username.errorMsg}>
+                            validateStatus={this.state.lastName.validateStatus}
+                            help={this.state.lastName.errorMsg}>
                             <Input 
                                 size="large"
-                                name="username" 
+                                name="lastName" 
                                 autoComplete="off"
-                                placeholder="A unique username"
-                                value={this.state.username.value} 
+                                placeholder="A unique lastName"
+                                value={this.state.lastName.value} 
                                 onBlur={this.validateUsernameAvailability}
                                 onChange={(event) => this.handleInputChange(event, this.validateUsername)} />    
                         </FormItem>
@@ -204,16 +247,16 @@ class Signup extends Component {
         }
     }
 
-    validateUsername = (username) => {
-        if(username.length < USERNAME_MIN_LENGTH) {
+    validateUsername = (lastName) => {
+        if(lastName.length < USERNAME_MIN_LENGTH) {
             return {
                 validateStatus: 'error',
-                errorMsg: `Username is too short (Minimum ${USERNAME_MIN_LENGTH} characters needed.)`
+                errorMsg: `Last Name is too short (Minimum ${USERNAME_MIN_LENGTH} characters needed.)`
             }
-        } else if (username.length > USERNAME_MAX_LENGTH) {
+        } else if (lastName.length > USERNAME_MAX_LENGTH) {
             return {
                 validationStatus: 'error',
-                errorMsg: `Username is too long (Maximum ${USERNAME_MAX_LENGTH} characters allowed.)`
+                errorMsg: `Last Name is too long (Maximum ${USERNAME_MAX_LENGTH} characters allowed.)`
             }
         } else {
             return {
@@ -224,52 +267,52 @@ class Signup extends Component {
     }
 
     validateUsernameAvailability() {
-        // First check for client side errors in username
-        const usernameValue = this.state.username.value;
-        const usernameValidation = this.validateUsername(usernameValue);
+        // First check for client side errors in lastName
+        const lastNameValue = this.state.lastName.value;
+        const lastNameValidation = this.validateUsername(lastNameValue);
 
-        if(usernameValidation.validateStatus === 'error') {
+        if(lastNameValidation.validateStatus === 'error') {
             this.setState({
-                username: {
-                    value: usernameValue,
-                    ...usernameValidation
+                lastName: {
+                    value: lastNameValue,
+                    ...lastNameValidation
                 }
             });
             return;
         }
 
         this.setState({
-            username: {
-                value: usernameValue,
+            lastName: {
+                value: lastNameValue,
                 validateStatus: 'validating',
                 errorMsg: null
             }
         });
 
-        checkUsernameAvailability(usernameValue)
+        checkUsernameAvailability(lastNameValue)
         .then(response => {
             if(response.available) {
                 this.setState({
-                    username: {
-                        value: usernameValue,
+                    lastName: {
+                        value: lastNameValue,
                         validateStatus: 'success',
                         errorMsg: null
                     }
                 });
             } else {
                 this.setState({
-                    username: {
-                        value: usernameValue,
+                    lastName: {
+                        value: lastNameValue,
                         validateStatus: 'error',
-                        errorMsg: 'This username is already taken'
+                        errorMsg: 'This lastName is already taken'
                     }
                 });
             }
         }).catch(error => {
             // Marking validateStatus as success, Form will be recchecked at server
             this.setState({
-                username: {
-                    value: usernameValue,
+                lastName: {
+                    value: lastNameValue,
                     validateStatus: 'success',
                     errorMsg: null
                 }

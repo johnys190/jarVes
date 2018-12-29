@@ -224,3 +224,32 @@ export function getVoyEstimatePDF() {
     });
 }
 
+export function getAllUsers() {
+    return request({
+        url: API_BASE_URL + "/users/all",
+        method: 'GET'
+    });
+}
+
+export function deleteUserById(id) {
+    return request({
+        url: API_BASE_URL + "/users/" + id,
+        method: 'DELETE'
+    });
+}
+
+export function updateUserById(id, body) {
+    return request({
+        url: API_BASE_URL + "/users/" + id,
+        method: 'PUT',
+        body: JSON.stringify(body)
+    });
+}
+
+export function getUserById(id) {
+    return request({
+        url: API_BASE_URL + "/users/" + id,
+        method: 'GET'
+    });
+}
+
