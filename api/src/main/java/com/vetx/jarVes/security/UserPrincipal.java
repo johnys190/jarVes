@@ -36,7 +36,12 @@ public class UserPrincipal implements UserDetails {
             .collect(Collectors.toList());
 
     return new UserPrincipal(
-        user.getId(), user.getName(), user.getEmail(), user.getPassword(), authorities);
+        user.getKey(),
+        user.getName(),
+        user.getEmail(),
+        user.getPassword(),
+        authorities
+    );
   }
 
   @Override

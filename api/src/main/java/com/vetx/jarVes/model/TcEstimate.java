@@ -12,9 +12,9 @@ import java.util.Date;
 @AllArgsConstructor
 @Builder
 public class TcEstimate {
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long key;
 
   @Column(unique = true)
   private String name;

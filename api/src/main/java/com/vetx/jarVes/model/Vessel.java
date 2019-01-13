@@ -15,9 +15,9 @@ import javax.persistence.*;
 @NoArgsConstructor
 public class Vessel {
 
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long key;
 
   @Column(unique = true)
   @NonNull
