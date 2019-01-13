@@ -1,6 +1,7 @@
 package com.vetx.jarVes.controller;
 
 import com.vetx.jarVes.exceptions.EstimateNotFoundException;
+import com.vetx.jarVes.exceptions.VoyEstimateAlreadyExistsException;
 import com.vetx.jarVes.model.VoyEstimate;
 import com.vetx.jarVes.repository.VoyEstimateRepository;
 import com.vetx.jarVes.service.GeneratePDF;
@@ -22,7 +23,7 @@ import java.util.List;
 
 @Api(value = "This is the Voyage Estimate controller.")
 @RestController
-@RequestMapping("/api/voy-estimate")
+@RequestMapping("/api/voy-estimates")
 public class VoyEstimateController {
 
   private VoyEstimateRepository voyEstimateRepository;
@@ -33,63 +34,62 @@ public class VoyEstimateController {
   }
 
   @ApiOperation(value = "This endpoint returns a list of Voyage Estimates.")
-  @GetMapping("/voy-estimate")
-  @ResponseBody
+  @GetMapping
   @ResponseStatus(HttpStatus.OK)
-  @PreAuthorize("hasAnyRole('GUEST', 'ADMIN')")
+//  @PreAuthorize("hasAnyRole('GUEST', 'ADMIN')")
   public List<VoyEstimate> getAllVoyEstimates() {
     return voyEstimateRepository.findAll();
   }
 
   @ApiOperation(value = "This endpoint returns a Voyage Estimate.")
-  @GetMapping("/{id}")
-  @ResponseBody
+  @GetMapping("/{key}")
   @ResponseStatus(HttpStatus.OK)
-  @PreAuthorize("hasAnyRole('GUEST', 'ADMIN')")
-  public VoyEstimate getEstimateById(@PathVariable Long id) {
-    return voyEstimateRepository.findById(id).orElseThrow(() -> new EstimateNotFoundException(id));
+//  @PreAuthorize("hasAnyRole('GUEST', 'ADMIN')")
+  public VoyEstimate getEstimateByKey(@PathVariable Long key) {
+    return voyEstimateRepository.findById(key).orElseThrow(() -> new EstimateNotFoundException(key));
   }
 
   @ApiOperation(value = "This endpoint updates a Voyage Estimate.")
-  @PutMapping("/{id}")
+  @PutMapping("/{key}")
   @ResponseStatus(HttpStatus.OK)
-  @PreAuthorize("hasRole('ADMIN')")
-  public VoyEstimate updateVoyEstimate(
-      @Valid @RequestBody VoyEstimate newVoyEstimate, @PathVariable Long id) {
-    newVoyEstimate.setId(id);
+//  @PreAuthorize("hasRole('ADMIN')")
+  public VoyEstimate updateVoyEstimate(@Valid @RequestBody VoyEstimate newVoyEstimate, @PathVariable Long key) {
+    newVoyEstimate.setKey(key);
     return voyEstimateRepository.save(newVoyEstimate);
   }
 
   @ApiOperation(value = "This endpoint deletes a Voyage Estimate.")
-  @DeleteMapping("/{id}")
+  @DeleteMapping("/{key}")
   @ResponseStatus(HttpStatus.NO_CONTENT)
-  @PreAuthorize("hasRole('ADMIN')")
-  public void removeVoyEstimate(@PathVariable Long id) {
-    voyEstimateRepository.deleteById(id);
+//  @PreAuthorize("hasRole('ADMIN')")
+  public void removeVoyEstimate(@PathVariable Long key) {
+    voyEstimateRepository.deleteById(key);
   }
 
   @ApiOperation(value = "This endpoint creates a Voyage Estimate.")
-  @PostMapping("/{id}")
+  @PostMapping
   @ResponseStatus(HttpStatus.CREATED)
-  @PreAuthorize("hasRole('ADMIN')")
-  VoyEstimate newVoyEstimate(@RequestBody VoyEstimate newVoyEstimate) {
+//  @PreAuthorize("hasRole('ADMIN')")
+  VoyEstimate newVoyEstimate(@Valid @RequestBody VoyEstimate newVoyEstimate) {
+    if (voyEstimateRepository.findByName(newVoyEstimate.getName()).isPresent()) {
+      throw new VoyEstimateAlreadyExistsException(newVoyEstimate.getName());
+    }
     return voyEstimateRepository.save(newVoyEstimate);
   }
 
   @ApiOperation(value = "This endpoint exports a Voyage Estimate in PDF form.")
-  @GetMapping(value = "/pdf/{id}", produces = MediaType.APPLICATION_PDF_VALUE)
-  @PreAuthorize("hasAnyRole('GUEST', 'ADMIN')")
-  public ResponseEntity<InputStreamResource> voyEstimateReport(@PathVariable Long id) throws IOException {
-    VoyEstimate voyEstimate = voyEstimateRepository.findById(id).get();
-
+  @GetMapping(value = "/pdf/{key}", produces = MediaType.APPLICATION_PDF_VALUE)
+//  @PreAuthorize("hasAnyRole('GUEST', 'ADMIN')")
+  public ResponseEntity<InputStreamResource> voyEstimateReport(@PathVariable Long key) throws IOException {
+    VoyEstimate voyEstimate = voyEstimateRepository.findById(key).get();
     ByteArrayInputStream bis = GeneratePDF.voyEstimatePDF(voyEstimate);
 
     HttpHeaders headers = new HttpHeaders();
     headers.add("Content-Disposition", "inline; filename=VOYestimate.pdf");
 
     return ResponseEntity.ok()
-        .headers(headers)
-        .contentType(MediaType.APPLICATION_PDF)
-        .body(new InputStreamResource(bis));
+            .headers(headers)
+            .contentType(MediaType.APPLICATION_PDF)
+            .body(new InputStreamResource(bis));
   }
 }
