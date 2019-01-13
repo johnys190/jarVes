@@ -4,17 +4,19 @@ import com.vetx.jarVes.exceptions.CannotDeleteUserException;
 import com.vetx.jarVes.exceptions.UserAlreadyExistsException;
 import com.vetx.jarVes.exceptions.UserNotFoundException;
 import com.vetx.jarVes.model.RoleName;
+import com.vetx.jarVes.model.User;
 import com.vetx.jarVes.payload.UserSummary;
 import com.vetx.jarVes.repository.UserRepository;
-import com.vetx.jarVes.repository.VesselRepository;
 import com.vetx.jarVes.security.CurrentUser;
 import com.vetx.jarVes.security.UserPrincipal;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Api(value = "This is the User controller.")
