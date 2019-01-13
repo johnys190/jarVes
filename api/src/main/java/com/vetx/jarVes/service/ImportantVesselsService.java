@@ -6,6 +6,7 @@ import com.vetx.jarVes.payload.ImportantVesselDTO;
 import com.vetx.jarVes.repository.UserRepository;
 import com.vetx.jarVes.repository.VesselRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -31,12 +32,12 @@ public class ImportantVesselsService {
     List<ImportantVesselDTO> importantVessels = new ArrayList<>();
 
     vesselRepository
-        .findAll()
+        .findAll(Sort.by(Sort.Order.asc("name")))
         .forEach(
             vessel -> {
               ImportantVesselDTO importantVessel =
                   ImportantVesselDTO.builder()
-                      .id(vessel.getId())
+                      .id(vessel.getKey())
                       .name(vessel.getName())
                       .dwt(vessel.getDwt())
                       .type(vessel.getType())
