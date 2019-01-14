@@ -1,6 +1,7 @@
 package com.vetx.jarVes.controller;
 
 import com.vetx.jarVes.exceptions.EstimateNotFoundException;
+import com.vetx.jarVes.exceptions.VesselNotFoundException;
 import com.vetx.jarVes.exceptions.VoyEstimateAlreadyExistsException;
 import com.vetx.jarVes.model.VoyEstimate;
 import com.vetx.jarVes.repository.VoyEstimateRepository;
@@ -14,7 +15,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
 import java.io.ByteArrayInputStream;
@@ -37,7 +40,7 @@ public class VoyEstimateController {
   @GetMapping
   @ResponseStatus(HttpStatus.OK)
 //  @PreAuthorize("hasAnyRole('GUEST', 'ADMIN')")
-  public List<VoyEstimate> getAllVoyEstimates() {
+  public List<VoyEstimate> getVoyEstimates() {
     return voyEstimateRepository.findAll();
   }
 
@@ -45,7 +48,7 @@ public class VoyEstimateController {
   @GetMapping("/{key}")
   @ResponseStatus(HttpStatus.OK)
 //  @PreAuthorize("hasAnyRole('GUEST', 'ADMIN')")
-  public VoyEstimate getEstimateByKey(@PathVariable Long key) {
+  public VoyEstimate getVoyEstimate(@PathVariable Long key) {
     return voyEstimateRepository.findById(key).orElseThrow(() -> new EstimateNotFoundException(key));
   }
 
@@ -62,7 +65,8 @@ public class VoyEstimateController {
   @DeleteMapping("/{key}")
   @ResponseStatus(HttpStatus.NO_CONTENT)
 //  @PreAuthorize("hasRole('ADMIN')")
-  public void removeVoyEstimate(@PathVariable Long key) {
+  public void deleteVoyEstimate(@PathVariable Long key) {
+    voyEstimateRepository.findById(key).orElseThrow(() -> new VesselNotFoundException(key));
     voyEstimateRepository.deleteById(key);
   }
 

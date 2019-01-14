@@ -26,6 +26,8 @@ public class VoyEstimate {
     private String commodity;
 
     private String broker;
+
+    private boolean executed;
 //
 //    private String laycan;
 //

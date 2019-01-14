@@ -42,7 +42,7 @@ public class GeneratePDF {
 
       PdfPCell cell;
 
-      cell = new PdfPCell(new Phrase(voyEstimate.getId().toString()));
+      cell = new PdfPCell(new Phrase(voyEstimate.getKey().toString()));
       cell.setHorizontalAlignment(Element.ALIGN_CENTER);
       table.addCell(cell);
 

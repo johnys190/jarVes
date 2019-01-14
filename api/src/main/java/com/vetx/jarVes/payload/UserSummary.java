@@ -9,6 +9,6 @@ import lombok.Data;
 @Builder
 public class UserSummary {
   private Long id;
-  private String username;
+  private String email;
   private String name;
 }

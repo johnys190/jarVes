@@ -21,6 +21,8 @@ public class TcEstimate {
 
   @NonNull private String voyage;
 
+  private boolean executed;
+
   private String account;
 
   private String commodity;
