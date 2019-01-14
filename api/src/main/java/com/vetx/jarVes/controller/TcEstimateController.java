@@ -43,9 +43,10 @@ public class TcEstimateController {
   @ApiOperation(value = "This endpoint updates a Time Charter Estimate by its KEY.")
   @PutMapping("/{key}")
   @ResponseStatus(HttpStatus.OK)
-//  @PreAuthorize("hasRole('ADMIN')")
-  public TcEstimate updateTcEstimate(@Valid @RequestBody TcEstimate newTcEstimate, @PathVariable Long key) {
-    newTcEstimate.setKey(key);
+  @PreAuthorize("hasRole('ADMIN')")
+  public TcEstimate updateTcEstimate(
+      @Valid @RequestBody TcEstimate newTcEstimate, @PathVariable Long id) {
+    newTcEstimate.setKey(id);
     return tcEstimateRepository.save(newTcEstimate);
   }
 
