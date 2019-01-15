@@ -121,4 +121,15 @@ public class VoyEstimate extends UserDateAudit {
 //    private Double timeCharterRate;
 //
 //    private Double sensitivity;
+
+    public VoyEstimate copyVoyEstimate(VoyEstimate newVoyEstimate) {
+        this.setVoyage(newVoyEstimate.getVoyage());
+        this.setCommodity(newVoyEstimate.getCommodity());
+        this.setBroker(newVoyEstimate.getBroker());
+        this.setAccount(newVoyEstimate.getAccount());
+        this.setExecuted(newVoyEstimate.isExecuted());
+        this.setName(newVoyEstimate.getName());
+        return this;
+    }
+
 }

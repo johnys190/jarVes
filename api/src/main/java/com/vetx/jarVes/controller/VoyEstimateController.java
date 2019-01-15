@@ -57,12 +57,7 @@ public class VoyEstimateController {
 //  @PreAuthorize("hasRole('ADMIN')")
   public VoyEstimate updateVoyEstimate(@Valid @RequestBody VoyEstimate newVoyEstimate, @PathVariable Long key) {
     VoyEstimate voyEstimate = voyEstimateRepository.findById(key).orElseThrow(() -> new EstimateNotFoundException(key));
-    voyEstimate.setVoyage(newVoyEstimate.getVoyage());
-    voyEstimate.setCommodity(newVoyEstimate.getCommodity());
-    voyEstimate.setBroker(newVoyEstimate.getBroker());
-    voyEstimate.setAccount(newVoyEstimate.getAccount());
-    voyEstimate.setExecuted(newVoyEstimate.isExecuted());
-    voyEstimate.setName(newVoyEstimate.getName());
+    voyEstimate = voyEstimate.copyVoyEstimate(newVoyEstimate);
     return voyEstimateRepository.save(voyEstimate);
   }
 

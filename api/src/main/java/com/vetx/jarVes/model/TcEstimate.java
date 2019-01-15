@@ -126,4 +126,42 @@ public class TcEstimate extends UserDateAudit {
             ", vessel=" + vessel +
             '}';
   }
+
+  public TcEstimate copyTcEstimate(TcEstimate newTcEstimate) {
+    this.setName(newTcEstimate.getName());
+    this.setVoyage(newTcEstimate.getVoyage());
+    this.setExecuted(newTcEstimate.isExecuted());
+    this.setAccount(newTcEstimate.getAccount());
+    this.setCommodity(newTcEstimate.getCommodity());
+    this.setBroker(newTcEstimate.getBroker());
+    this.setLaycan(newTcEstimate.getLaycan());
+    this.setReposition(newTcEstimate.getReposition());
+    this.setDate(newTcEstimate.getDate());
+    this.setHireRate(newTcEstimate.getHireRate());
+    this.setApproxDuration(newTcEstimate.getApproxDuration());
+    this.setBallastBonus(newTcEstimate.getBallastBonus());
+    this.setCommisionPercent(newTcEstimate.getCommisionPercent());
+    this.setBallastDistanceNonSeca(newTcEstimate.getBallastDistanceNonSeca());
+    this.setBallastDistanceSeca(newTcEstimate.getBallastDistanceSeca());
+    this.setLadenDistanceSeca(newTcEstimate.getLadenDistanceSeca());
+    this.setLadenDistanceNonSeca(newTcEstimate.getLadenDistanceNonSeca());
+    this.setIfoPrice(newTcEstimate.getIfoPrice());
+    this.setMdoPrice(newTcEstimate.getMdoPrice());
+    this.setDeliveryCosts(newTcEstimate.getDeliveryCosts());
+    this.setRedeliveryCosts(newTcEstimate.getRedeliveryCosts());
+    this.setCanalsCost(newTcEstimate.getCanalsCost());
+    this.setMiscelCosts(newTcEstimate.getMiscelCosts());
+    this.setLostWaitingDays(newTcEstimate.getLostWaitingDays());
+    this.setGrossRevenue(newTcEstimate.getGrossRevenue());
+    this.setBunkerCost(newTcEstimate.getBunkerCost());
+    this.setExpenses(newTcEstimate.getExpenses());
+    this.setNetRevenue(newTcEstimate.getNetRevenue());
+    this.setSensitivity(newTcEstimate.getSensitivity());
+    this.setSensitivityFiveDays(newTcEstimate.getSensitivityFiveDays());
+    this.setBbGross(newTcEstimate.getBbGross());
+    this.setTotalDuration(newTcEstimate.getTotalDuration());
+    this.setTimeCharterRate(newTcEstimate.getTimeCharterRate());
+    this.setVessel(newTcEstimate.getVessel());
+    return this;
+  }
 }
