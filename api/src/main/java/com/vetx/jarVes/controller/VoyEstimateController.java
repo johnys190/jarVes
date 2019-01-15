@@ -57,8 +57,14 @@ public class VoyEstimateController {
   @ResponseStatus(HttpStatus.OK)
 //  @PreAuthorize("hasRole('ADMIN')")
   public VoyEstimate updateVoyEstimate(@Valid @RequestBody VoyEstimate newVoyEstimate, @PathVariable Long key) {
-    newVoyEstimate.setKey(key);
-    return voyEstimateRepository.save(newVoyEstimate);
+    VoyEstimate voyEstimate = voyEstimateRepository.findById(key).orElseThrow(() -> new EstimateNotFoundException(key));
+    voyEstimate.setVoyage(newVoyEstimate.getVoyage());
+    voyEstimate.setCommodity(newVoyEstimate.getCommodity());
+    voyEstimate.setBroker(newVoyEstimate.getBroker());
+    voyEstimate.setAccount(newVoyEstimate.getAccount());
+    voyEstimate.setExecuted(newVoyEstimate.isExecuted());
+    voyEstimate.setName(newVoyEstimate.getName());
+    return voyEstimateRepository.save(voyEstimate);
   }
 
   @ApiOperation(value = "This endpoint deletes a Voyage Estimate.")

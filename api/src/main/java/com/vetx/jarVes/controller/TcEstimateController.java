@@ -43,11 +43,44 @@ public class TcEstimateController {
   @ApiOperation(value = "This endpoint updates a Time Charter Estimate by its KEY.")
   @PutMapping("/{key}")
   @ResponseStatus(HttpStatus.OK)
-  @PreAuthorize("hasRole('ADMIN')")
-  public TcEstimate updateTcEstimate(
-      @Valid @RequestBody TcEstimate newTcEstimate, @PathVariable Long id) {
-    newTcEstimate.setKey(id);
-    return tcEstimateRepository.save(newTcEstimate);
+//  @PreAuthorize("hasRole('ADMIN')")
+  public TcEstimate updateTcEstimate(@Valid @RequestBody TcEstimate newTcEstimate, @PathVariable Long key) {
+    TcEstimate tcEstimate = tcEstimateRepository.findById(key).orElseThrow(() -> new EstimateNotFoundException(key));
+    tcEstimate.setName(newTcEstimate.getName());
+    tcEstimate.setVoyage(newTcEstimate.getVoyage());
+    tcEstimate.setExecuted(newTcEstimate.isExecuted());
+    tcEstimate.setAccount(newTcEstimate.getAccount());
+    tcEstimate.setCommodity(newTcEstimate.getCommodity());
+    tcEstimate.setBroker(newTcEstimate.getBroker());
+    tcEstimate.setLaycan(newTcEstimate.getLaycan());
+    tcEstimate.setReposition(newTcEstimate.getReposition());
+    tcEstimate.setDate(newTcEstimate.getDate());
+    tcEstimate.setHireRate(newTcEstimate.getHireRate());
+    tcEstimate.setApproxDuration(newTcEstimate.getApproxDuration());
+    tcEstimate.setBallastBonus(newTcEstimate.getBallastBonus());
+    tcEstimate.setCommisionPercent(newTcEstimate.getCommisionPercent());
+    tcEstimate.setBallastDistanceNonSeca(newTcEstimate.getBallastDistanceNonSeca());
+    tcEstimate.setBallastDistanceSeca(newTcEstimate.getBallastDistanceSeca());
+    tcEstimate.setLadenDistanceSeca(newTcEstimate.getLadenDistanceSeca());
+    tcEstimate.setLadenDistanceNonSeca(newTcEstimate.getLadenDistanceNonSeca());
+    tcEstimate.setIfoPrice(newTcEstimate.getIfoPrice());
+    tcEstimate.setMdoPrice(newTcEstimate.getMdoPrice());
+    tcEstimate.setDeliveryCosts(newTcEstimate.getDeliveryCosts());
+    tcEstimate.setRedeliveryCosts(newTcEstimate.getRedeliveryCosts());
+    tcEstimate.setCanalsCost(newTcEstimate.getCanalsCost());
+    tcEstimate.setMiscelCosts(newTcEstimate.getMiscelCosts());
+    tcEstimate.setLostWaitingDays(newTcEstimate.getLostWaitingDays());
+    tcEstimate.setGrossRevenue(newTcEstimate.getGrossRevenue());
+    tcEstimate.setBunkerCost(newTcEstimate.getBunkerCost());
+    tcEstimate.setExpenses(newTcEstimate.getExpenses());
+    tcEstimate.setNetRevenue(newTcEstimate.getNetRevenue());
+    tcEstimate.setSensitivity(newTcEstimate.getSensitivity());
+    tcEstimate.setSensitivityFiveDays(newTcEstimate.getSensitivityFiveDays());
+    tcEstimate.setBbGross(newTcEstimate.getBbGross());
+    tcEstimate.setTotalDuration(newTcEstimate.getTotalDuration());
+    tcEstimate.setTimeCharterRate(newTcEstimate.getTimeCharterRate());
+    tcEstimate.setVessel(newTcEstimate.getVessel());
+    return tcEstimateRepository.save(tcEstimate);
   }
 
   @ApiOperation(value = "This endpoint deletes a Time Charter Estimate by its ID.")
