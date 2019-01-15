@@ -1,5 +1,6 @@
 package com.vetx.jarVes.model;
 
+import com.vetx.jarVes.model.audit.UserDateAudit;
 import lombok.*;
 
 import javax.persistence.*;
@@ -10,7 +11,7 @@ import javax.persistence.*;
 @RequiredArgsConstructor
 @AllArgsConstructor
 @Builder
-public class VoyEstimate {
+public class VoyEstimate extends UserDateAudit {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long key;

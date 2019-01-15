@@ -1,5 +1,6 @@
 package com.vetx.jarVes.model;
 
+import com.vetx.jarVes.model.audit.UserDateAudit;
 import lombok.*;
 
 import javax.persistence.*;
@@ -11,7 +12,7 @@ import java.util.Date;
 @RequiredArgsConstructor
 @AllArgsConstructor
 @Builder
-public class TcEstimate {
+public class TcEstimate extends UserDateAudit {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long key;
