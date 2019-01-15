@@ -15,10 +15,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -101,5 +100,18 @@ public class VoyEstimateController {
             .headers(headers)
             .contentType(MediaType.APPLICATION_PDF)
             .body(new InputStreamResource(bis));
+  }
+  @ApiOperation(value = "This endpoint produces a Voyage Estimate in plaintext format.")
+  @GetMapping("/txt/{key}")
+  @ResponseStatus(HttpStatus.CREATED)
+//  @PreAuthorize("hasRole('ADMIN')")
+  public String produceTxt(@PathVariable Long key, HttpServletResponse response) {
+    if (voyEstimateRepository.findById(key).isEmpty()) {
+      throw new EstimateNotFoundException(key);
+    }
+    response.setContentType("text/plain");
+    response.setCharacterEncoding("UTF-8");
+    response.setHeader(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + "TimeCharter.txt");
+    return voyEstimateRepository.findById(key).get().toString();
   }
 }

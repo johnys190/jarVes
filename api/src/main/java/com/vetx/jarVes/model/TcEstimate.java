@@ -87,4 +87,43 @@ public class TcEstimate extends UserDateAudit {
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "Vessel_id")
   private Vessel vessel;
+
+  public String toText() {
+    return "TcEstimate{" +
+            "name='" + name + '\n' +
+            ", voyage='" + voyage + '\n' +
+            ", executed=" + executed +
+            ", account='" + account + '\n' +
+            ", commodity='" + commodity + '\n' +
+            ", broker='" + broker + '\n' +
+            ", laycan='" + laycan + '\n' +
+            ", reposition='" + reposition + '\n' +
+            ", date=" + date +
+            ", hireRate=" + hireRate +
+            ", approxDuration=" + approxDuration +
+            ", ballastBonus=" + ballastBonus +
+            ", commisionPercent=" + commisionPercent +
+            ", ballastDistanceSeca=" + ballastDistanceSeca +
+            ", ballastDistanceNonSeca=" + ballastDistanceNonSeca +
+            ", ladenDistanceSeca=" + ladenDistanceSeca +
+            ", ladenDistanceNonSeca=" + ladenDistanceNonSeca +
+            ", ifoPrice=" + ifoPrice +
+            ", mdoPrice=" + mdoPrice +
+            ", deliveryCosts=" + deliveryCosts +
+            ", redeliveryCosts=" + redeliveryCosts +
+            ", canalsCost=" + canalsCost +
+            ", miscelCosts=" + miscelCosts +
+            ", lostWaitingDays=" + lostWaitingDays +
+            ", grossRevenue=" + grossRevenue +
+            ", bunkerCost=" + bunkerCost +
+            ", expenses=" + expenses +
+            ", netRevenue=" + netRevenue +
+            ", sensitivity=" + sensitivity +
+            ", sensitivityFiveDays=" + sensitivityFiveDays +
+            ", bbGross=" + bbGross +
+            ", totalDuration=" + totalDuration +
+            ", timeCharterRate=" + timeCharterRate +
+            ", vessel=" + vessel +
+            '}';
+  }
 }

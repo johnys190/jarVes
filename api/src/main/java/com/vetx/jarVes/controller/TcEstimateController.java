@@ -1,5 +1,6 @@
 package com.vetx.jarVes.controller;
 
+import com.google.common.net.HttpHeaders;
 import com.vetx.jarVes.exceptions.EstimateNotFoundException;
 import com.vetx.jarVes.exceptions.TcEstimateAlreadyExistsException;
 import com.vetx.jarVes.model.TcEstimate;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -101,5 +103,18 @@ public class TcEstimateController {
       throw new TcEstimateAlreadyExistsException(newTcEstimate.getName());
     }
     return tcEstimateRepository.save(newTcEstimate);
+  }
+  @ApiOperation(value = "This endpoint produces a Time Charter Estimate in plaintext format.")
+  @GetMapping("/txt/{key}")
+  @ResponseStatus(HttpStatus.CREATED)
+//  @PreAuthorize("hasRole('ADMIN')")
+  public String produceTxt(@PathVariable Long key, HttpServletResponse response) {
+    if (!(tcEstimateRepository.findById(key).isPresent())) {
+      throw new EstimateNotFoundException(key);
+    }
+    response.setContentType("text/plain");
+    response.setCharacterEncoding("UTF-8");
+//  response.setHeader(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + "TimeCharter.txt");
+    return tcEstimateRepository.findById(key).get().toText();
   }
 }
