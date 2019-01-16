@@ -65,18 +65,18 @@ public class AuthController {
             .build());
   }
 
-  @ApiOperation(value = "This endpoint will be used for User sign-up.")
-  @PostMapping("/signup")
-  public ResponseEntity<?> registerUser(@Valid @RequestBody SignUpRequest signUpRequest) {
-    if (userRepository.existsByEmail(signUpRequest.getEmail())) {
-      return new ResponseEntity(
-          new ApiResponse(false, "Email Address already in use!"), HttpStatus.BAD_REQUEST);
-    }
-
-    createUserAccountService.newUser(
-        signUpRequest.getFirstName(), signUpRequest.getLastName(),
-        signUpRequest.getEmail(), signUpRequest.getPassword());
-
-    return ResponseEntity.ok(new ApiResponse(true, "User registered successfully."));
-  }
+//  @ApiOperation(value = "This endpoint will be used for User sign-up.")
+//  @PostMapping("/signup")
+//  public ResponseEntity<?> registerUser(@Valid @RequestBody SignUpRequest signUpRequest) {
+//    if (userRepository.existsByEmail(signUpRequest.getEmail())) {
+//      return new ResponseEntity(
+//          new ApiResponse(false, "Email Address already in use!"), HttpStatus.BAD_REQUEST);
+//    }
+//
+//    createUserAccountService.newUser(
+//        signUpRequest.getFirstName(), signUpRequest.getLastName(),
+//        signUpRequest.getEmail(), signUpRequest.getPassword());
+//
+//    return ResponseEntity.ok(new ApiResponse(true, "User registered successfully."));
+//  }
 }

@@ -38,7 +38,7 @@ public class UserController {
 
     @ApiOperation(value = "This endpoint will return the current User.")
     @GetMapping("/me")
-//    @PreAuthorize("hasRole('GUEST')")
+    @PreAuthorize("hasRole('GUEST')")
     public UserSummary getCurrentUser(@CurrentUser UserPrincipal currentUser) {
         return new UserSummary(currentUser.getId(), currentUser.getUsername(), currentUser.getName());
     }
@@ -46,7 +46,7 @@ public class UserController {
     @ApiOperation(value = "This endpoint will return a list of all Users.")
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-//    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     public List<User> getUsers() {
         return userRepository.findAll();
     }
@@ -54,7 +54,7 @@ public class UserController {
     @ApiOperation(value = "This endpoint will return a User.")
     @GetMapping("/{key}")
     @ResponseStatus(HttpStatus.OK)
-//    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     public User getUser(@PathVariable Long key) {
         return userRepository.findById(key).orElseThrow(() -> new UserNotFoundException(key));
     }
@@ -62,7 +62,7 @@ public class UserController {
     @ApiOperation(value = "This endpoint will create a User.")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-//    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> createNewUser(@Valid @RequestBody User user) {
         if (userRepository.findByEmail(user.getEmail()).isPresent()) {
             throw new UserAlreadyExistsException(user.getEmail());
@@ -74,7 +74,7 @@ public class UserController {
     @ApiOperation(value = "This endpoint will update a User.")
     @PutMapping("/{key}")
     @ResponseStatus(HttpStatus.OK)
-//    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     public User updateUser(@PathVariable Long key, @Valid @RequestBody User updatedUser) {
         updatedUser.setKey(key);
         return userRepository.save(updatedUser);
@@ -83,7 +83,7 @@ public class UserController {
     @ApiOperation(value = "This endpoint will delete a User.")
     @DeleteMapping("/{key}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-//    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     public void deleteUser(@PathVariable Long key, @CurrentUser UserPrincipal currentUser) {
         User user = userRepository.findById(key).orElseThrow(() -> new UserNotFoundException(key));
         if ((user.getEmail().equals(currentUser.getUsername())) ||
