@@ -1,9 +1,6 @@
 package com.vetx.jarVes.model;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -13,45 +10,47 @@ import javax.persistence.*;
 @Data
 @RequiredArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Vessel {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long key;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
 
   @Column(unique = true)
   @NonNull
   private String name;
 
-  @NonNull private Integer dwt;
+  private Integer dwt;
 
-  @NonNull private String type;
+  private String type;
 
-  @NonNull private String flag;
+  private String flag;
 
-  @NonNull private Integer built;
+  private Integer built;
 
-  @NonNull private String gear;
+  private String gear;
 
-  @NonNull private Double grain;
+  private Double grain;
 
-  @NonNull private String manager;
+  private String manager;
 
-  @NonNull private String pic;
+  private String pic;
 
-  @NonNull private Integer speed;
+  private Integer speed;
 
-  @NonNull private Double ifo_ballast;
+  private Double ifo_ballast;
 
-  @NonNull private Double ifo_laden;
+  private Double ifo_laden;
 
-  @NonNull private Double port_idle;
+  private Double port_idle;
 
-  @NonNull private Double port_working;
+  private Double port_working;
 
-  @NonNull private Double mgo_port_idle;
+  private Double mgo_port_idle;
 
-  @NonNull private Double mgo_port_working;
+  private Double mgo_port_working;
 
-  @NonNull private Integer boiler;
+  private Integer boiler;
 }

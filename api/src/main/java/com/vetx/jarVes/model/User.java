@@ -23,7 +23,7 @@ public class User {
     //Variable Declaration
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long key;
+    private Long id;
 
     @NonNull
     @NotBlank(message = "Name is required.")

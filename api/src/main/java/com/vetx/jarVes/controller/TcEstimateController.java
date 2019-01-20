@@ -35,31 +35,31 @@ public class TcEstimateController {
     return tcEstimateRepository.findAll();
   }
 
-  @ApiOperation(value = "This endpoint returns a Time Charter Estimate by its KEY.")
-  @GetMapping("/{key}")
+  @ApiOperation(value = "This endpoint returns a Time Charter Estimate by its id.")
+  @GetMapping("/{id}")
   @ResponseStatus(HttpStatus.OK)
   @PreAuthorize("hasAnyRole('GUEST', 'ADMIN')")
-  public TcEstimate getTcEstimateById(@PathVariable Long key) {
-    return tcEstimateRepository.findById(key).orElseThrow(() -> new EstimateNotFoundException(key));
+  public TcEstimate getTcEstimateById(@PathVariable Long id) {
+    return tcEstimateRepository.findById(id).orElseThrow(() -> new EstimateNotFoundException(id));
   }
 
-  @ApiOperation(value = "This endpoint updates a Time Charter Estimate by its KEY.")
-  @PutMapping("/{key}")
+  @ApiOperation(value = "This endpoint updates a Time Charter Estimate by its id.")
+  @PutMapping("/{id}")
   @ResponseStatus(HttpStatus.OK)
   @PreAuthorize("hasRole('ADMIN')")
-  public TcEstimate updateTcEstimate(@Valid @RequestBody TcEstimate newTcEstimate, @PathVariable Long key) {
-    TcEstimate tcEstimate = tcEstimateRepository.findById(key).orElseThrow(() -> new EstimateNotFoundException(key));
+  public TcEstimate updateTcEstimate(@Valid @RequestBody TcEstimate newTcEstimate, @PathVariable Long id) {
+    TcEstimate tcEstimate = tcEstimateRepository.findById(id).orElseThrow(() -> new EstimateNotFoundException(id));
     tcEstimate = tcEstimate.copyTcEstimate(newTcEstimate);
     return tcEstimateRepository.save(tcEstimate);
   }
 
   @ApiOperation(value = "This endpoint deletes a Time Charter Estimate by its ID.")
-  @DeleteMapping("/{key}")
+  @DeleteMapping("/{id}")
   @ResponseStatus(HttpStatus.NO_CONTENT)
   @PreAuthorize("hasRole('ADMIN')")
-  public void deleteTcEstimateById(@PathVariable Long key) {
-    tcEstimateRepository.findById(key).orElseThrow(() -> new EstimateNotFoundException(key));
-    tcEstimateRepository.deleteById(key);
+  public void deleteTcEstimateById(@PathVariable Long id) {
+    tcEstimateRepository.findById(id).orElseThrow(() -> new EstimateNotFoundException(id));
+    tcEstimateRepository.deleteById(id);
   }
 
   @ApiOperation(value = "This endpoint creates a Time Charter Estimate.")
@@ -73,16 +73,16 @@ public class TcEstimateController {
     return tcEstimateRepository.save(newTcEstimate);
   }
   @ApiOperation(value = "This endpoint produces a Time Charter Estimate in plaintext format.")
-  @GetMapping("/txt/{key}")
+  @GetMapping("/txt/{id}")
   @ResponseStatus(HttpStatus.CREATED)
   @PreAuthorize("hasRole('ADMIN')")
-  public String produceTxt(@PathVariable Long key, HttpServletResponse response) {
-    if (!(tcEstimateRepository.findById(key).isPresent())) {
-      throw new EstimateNotFoundException(key);
+  public String produceTxt(@PathVariable Long id, HttpServletResponse response) {
+    if (!(tcEstimateRepository.findById(id).isPresent())) {
+      throw new EstimateNotFoundException(id);
     }
     response.setContentType("text/plain");
     response.setCharacterEncoding("UTF-8");
 //  response.setHeader(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + "TimeCharter.txt");
-    return tcEstimateRepository.findById(key).get().toText();
+    return tcEstimateRepository.findById(id).get().toText();
   }
 }

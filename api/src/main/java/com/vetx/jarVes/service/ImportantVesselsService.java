@@ -37,7 +37,7 @@ public class ImportantVesselsService {
             vessel -> {
               ImportantVesselDTO importantVessel =
                   ImportantVesselDTO.builder()
-                      .id(vessel.getKey())
+                      .id(vessel.getId())
                       .name(vessel.getName())
                       .dwt(vessel.getDwt())
                       .type(vessel.getType())

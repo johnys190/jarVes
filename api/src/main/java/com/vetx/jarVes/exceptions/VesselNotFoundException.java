@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(value= HttpStatus.NOT_FOUND)
 public class VesselNotFoundException extends RuntimeException {
-    public VesselNotFoundException(Long key) {
-        super("Could not find Vessel" + key);
+    public VesselNotFoundException(Long id) {
+        super("Could not find Vessel" + id);
     }
 }

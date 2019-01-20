@@ -30,11 +30,11 @@ public class CreateUserAccountService {
   }
 
   // Creating user's account
-  public void newUser(String firstName, String lastName, String email, String password) {
+  public User newUser(String firstName, String lastName, String email, String password) {
 
     User user = new User(firstName, lastName, email, passwordEncoder.encode(password));
     Role userRole = roleRepository.findByName(RoleName.ROLE_GUEST).get();
     user.setRoles(Collections.singleton(userRole));
-    userRepository.save(user);
+    return userRepository.save(user);
   }
 }

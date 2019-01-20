@@ -44,30 +44,30 @@ public class VoyEstimateController {
   }
 
   @ApiOperation(value = "This endpoint returns a Voyage Estimate.")
-  @GetMapping("/{key}")
+  @GetMapping("/{id}")
   @ResponseStatus(HttpStatus.OK)
   @PreAuthorize("hasAnyRole('GUEST', 'ADMIN')")
-  public VoyEstimate getVoyEstimate(@PathVariable Long key) {
-    return voyEstimateRepository.findById(key).orElseThrow(() -> new EstimateNotFoundException(key));
+  public VoyEstimate getVoyEstimate(@PathVariable Long id) {
+    return voyEstimateRepository.findById(id).orElseThrow(() -> new EstimateNotFoundException(id));
   }
 
   @ApiOperation(value = "This endpoint updates a Voyage Estimate.")
-  @PutMapping("/{key}")
+  @PutMapping("/{id}")
   @ResponseStatus(HttpStatus.OK)
   @PreAuthorize("hasRole('ADMIN')")
-  public VoyEstimate updateVoyEstimate(@Valid @RequestBody VoyEstimate newVoyEstimate, @PathVariable Long key) {
-    VoyEstimate voyEstimate = voyEstimateRepository.findById(key).orElseThrow(() -> new EstimateNotFoundException(key));
+  public VoyEstimate updateVoyEstimate(@Valid @RequestBody VoyEstimate newVoyEstimate, @PathVariable Long id) {
+    VoyEstimate voyEstimate = voyEstimateRepository.findById(id).orElseThrow(() -> new EstimateNotFoundException(id));
     voyEstimate = voyEstimate.copyVoyEstimate(newVoyEstimate);
     return voyEstimateRepository.save(voyEstimate);
   }
 
   @ApiOperation(value = "This endpoint deletes a Voyage Estimate.")
-  @DeleteMapping("/{key}")
+  @DeleteMapping("/{id}")
   @ResponseStatus(HttpStatus.NO_CONTENT)
   @PreAuthorize("hasRole('ADMIN')")
-   public void deleteVoyEstimate(@PathVariable Long key) {
-    voyEstimateRepository.findById(key).orElseThrow(() -> new VesselNotFoundException(key));
-    voyEstimateRepository.deleteById(key);
+   public void deleteVoyEstimate(@PathVariable Long id) {
+    voyEstimateRepository.findById(id).orElseThrow(() -> new VesselNotFoundException(id));
+    voyEstimateRepository.deleteById(id);
   }
 
   @ApiOperation(value = "This endpoint creates a Voyage Estimate.")
@@ -82,10 +82,10 @@ public class VoyEstimateController {
   }
 
   @ApiOperation(value = "This endpoint exports a Voyage Estimate in PDF form.")
-  @GetMapping(value = "/pdf/{key}", produces = MediaType.APPLICATION_PDF_VALUE)
+  @GetMapping(value = "/pdf/{id}", produces = MediaType.APPLICATION_PDF_VALUE)
   @PreAuthorize("hasAnyRole('GUEST', 'ADMIN')")
-  public ResponseEntity<InputStreamResource> voyEstimateReport(@PathVariable Long key) throws IOException {
-    VoyEstimate voyEstimate = voyEstimateRepository.findById(key).get();
+  public ResponseEntity<InputStreamResource> voyEstimateReport(@PathVariable Long id) throws IOException {
+    VoyEstimate voyEstimate = voyEstimateRepository.findById(id).get();
     ByteArrayInputStream bis = GeneratePDF.voyEstimatePDF(voyEstimate);
 
     HttpHeaders headers = new HttpHeaders();
@@ -97,16 +97,16 @@ public class VoyEstimateController {
             .body(new InputStreamResource(bis));
   }
   @ApiOperation(value = "This endpoint produces a Voyage Estimate in plaintext format.")
-  @GetMapping("/txt/{key}")
+  @GetMapping("/txt/{id}")
   @ResponseStatus(HttpStatus.CREATED)
   @PreAuthorize("hasRole('ADMIN')")
-   public String produceTxt(@PathVariable Long key, HttpServletResponse response) {
-    if (voyEstimateRepository.findById(key).isEmpty()) {
-      throw new EstimateNotFoundException(key);
+   public String produceTxt(@PathVariable Long id, HttpServletResponse response) {
+    if (!voyEstimateRepository.findById(id).isPresent()) {
+      throw new EstimateNotFoundException(id);
     }
     response.setContentType("text/plain");
     response.setCharacterEncoding("UTF-8");
     response.setHeader(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + "TimeCharter.txt");
-    return voyEstimateRepository.findById(key).get().toString();
+    return voyEstimateRepository.findById(id).get().toString();
   }
 }

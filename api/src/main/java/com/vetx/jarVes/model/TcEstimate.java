@@ -15,7 +15,7 @@ import java.util.Date;
 public class TcEstimate extends UserDateAudit {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long key;
+    private Long id;
 
   @Column(unique = true)
   private String name;

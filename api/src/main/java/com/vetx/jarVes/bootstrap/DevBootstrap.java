@@ -62,7 +62,7 @@ public class DevBootstrap implements ApplicationListener<ContextRefreshedEvent> 
 
     user1.setRoles(Collections.singleton(roleAdmin));
     user524.setRoles(Collections.singleton(roleAdmin));
-    user2.setRoles(Collections.singleton(roleGuest));
+    user2.setRoles(Collections.singleton(roleAdmin));
     user3.setRoles(Collections.singleton(roleGuest));
     user4.setRoles(Collections.singleton(roleGuest));
     user5.setRoles(Collections.singleton(roleGuest));
@@ -74,44 +74,44 @@ public class DevBootstrap implements ApplicationListener<ContextRefreshedEvent> 
     userRepository.save(user4);
     userRepository.save(user5);
 
-    Vessel vessel1 =
-        new Vessel(
-            "peos",
-            1,
-            "type1",
-            "flag1",
-            1,
-            "gear1",
-            1.1,
-            "manager1",
-            "pic1",
-            1,
-            1.1,
-            1.1,
-            1.1,
-            1.1,
-            1.1,
-            1.1,
-            1);
-    Vessel vessel2 =
-        new Vessel(
-            "aidio",
-            2,
-            "type2",
-            "flag2",
-            2,
-            "gear2",
-            2.2,
-            "manager2",
-            "pic2",
-            2,
-            2.2,
-            2.2,
-            2.2,
-            2.2,
-            2.2,
-            2.2,
-            2);
+    Vessel vessel1 = Vessel.builder()
+        .name("peos")
+        .dwt(1)
+        .type("type1")
+        .flag("flag1")
+        .built(1)
+        .gear("gear1")
+        .grain(1.1)
+        .manager("manager1")
+        .pic("pic1")
+        .speed(1234)
+        .ifo_ballast(2134.0)
+        .ifo_laden(234.0)
+        .port_idle(214.0)
+        .port_working(34.02)
+        .mgo_port_idle(123.0)
+        .mgo_port_working(1234.0)
+        .boiler(1234)
+        .build();
+    Vessel vessel2 = Vessel.builder()
+        .name("aidio")
+        .dwt(2)
+        .type("type2")
+        .flag("flag2")
+        .built(1)
+        .gear("gear2")
+        .grain(1.1)
+        .manager("manager2")
+        .pic("pic2")
+        .speed(1234)
+        .ifo_ballast(2134.0)
+        .ifo_laden(234.0)
+        .port_idle(214.0)
+        .port_working(34.02)
+        .mgo_port_idle(123.0)
+        .mgo_port_working(1234.0)
+        .boiler(1234)
+        .build();
 
     vesselRepository.save(vessel1);
     vesselRepository.save(vessel2);

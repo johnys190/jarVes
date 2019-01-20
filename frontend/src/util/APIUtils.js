@@ -68,7 +68,7 @@ export function login(loginRequest) {
 
 export function signup(signupRequest) {
     return request({
-        url: API_BASE_URL + "/auth/signup",
+        url: API_BASE_URL + "/users",
         method: 'POST',
         body: JSON.stringify(signupRequest)
     });
@@ -94,7 +94,7 @@ export function getCurrentUser() {
     }
 
     return request({
-        url: API_BASE_URL + "/user/me",
+        url: API_BASE_URL + "/users/me",
         method: 'GET'
     });
 }
@@ -108,7 +108,7 @@ export function getUserProfile(username) {
 
 export function createVessel(body) {
     return request({
-        url: API_BASE_URL + "/vessel/new",
+        url: API_BASE_URL + "/vessels",
         method: 'POST',
         body: JSON.stringify(body)
     });
@@ -116,14 +116,14 @@ export function createVessel(body) {
 
 export function deleteVesselById(id) {
     return request({
-        url: API_BASE_URL + "/vessel/" + id,
+        url: API_BASE_URL + "/vessels/" + id,
         method: 'DELETE'
     });
 }
 
 export function updateVesselById(id, body) {
     return request({
-        url: API_BASE_URL + "/vessel/" + id,
+        url: API_BASE_URL + "/vessels/" + id,
         method: 'PUT',
         body: JSON.stringify(body)
     });
@@ -131,21 +131,21 @@ export function updateVesselById(id, body) {
 
 export function getVesselById(id) {
     return request({
-        url: API_BASE_URL + "/vessel/" + id,
+        url: API_BASE_URL + "/vessels/" + id,
         method: 'GET'
     });
 }
 
 export function getAllVessels() {
     return request({
-        url: API_BASE_URL + "/vessel/all",
+        url: API_BASE_URL + "/vessels",
         method: 'GET'
     });
 }
 
 export function createTCEstimate(body) {
     return request({
-        url: API_BASE_URL + "/tc-estimate/new",
+        url: API_BASE_URL + "/tc-estimates",
         method: 'POST',
         body: JSON.stringify(body)
     });
@@ -153,14 +153,14 @@ export function createTCEstimate(body) {
 
 export function deleteTCEstimateById(id) {
     return request({
-        url: API_BASE_URL + "/tc-estimate/" + id,
+        url: API_BASE_URL + "/tc-estimates/" + id,
         method: 'DELETE'
     });
 }
 
 export function updateTCEstimateById(id, body) {
     return request({
-        url: API_BASE_URL + "/tc-estimate/" + id,
+        url: API_BASE_URL + "/tc-estimates/" + id,
         method: 'PUT',
         body: JSON.stringify(body)
     });
@@ -168,21 +168,21 @@ export function updateTCEstimateById(id, body) {
 
 export function getTCEstimateById(id) {
     return request({
-        url: API_BASE_URL + "/tc-estimate/" + id,
+        url: API_BASE_URL + "/tc-estimates/" + id,
         method: 'GET'
     });
 }
 
 export function getAllTCEstimates() {
     return request({
-        url: API_BASE_URL + "/tc-estimate/all",
+        url: API_BASE_URL + "/tc-estimates",
         method: 'GET'
     });
 }
 
 export function createVoyEstimate(body) {
     return request({
-        url: API_BASE_URL + "/voy-estimate/new",
+        url: API_BASE_URL + "/voy-estimates",
         method: 'POST',
         body: JSON.stringify(body)
     });
@@ -190,14 +190,14 @@ export function createVoyEstimate(body) {
 
 export function deleteVoyEstimateById(id) {
     return request({
-        url: API_BASE_URL + "/voy-estimate/" + id,
+        url: API_BASE_URL + "/voy-estimates/" + id,
         method: 'DELETE'
     });
 }
 
 export function updateVoyEstimateById(id, body) {
     return request({
-        url: API_BASE_URL + "/voy-estimate/" + id,
+        url: API_BASE_URL + "/voy-estimates/" + id,
         method: 'PUT',
         body: JSON.stringify(body)
     });
@@ -205,28 +205,28 @@ export function updateVoyEstimateById(id, body) {
 
 export function getVoyEstimateById(id) {
     return request({
-        url: API_BASE_URL + "/voy-estimate/" + id,
+        url: API_BASE_URL + "/voy-estimates/" + id,
         method: 'GET'
     });
 }
 
 export function getAllVoyEstimates() {
     return request({
-        url: API_BASE_URL + "/voy-estimate/all",
+        url: API_BASE_URL + "/voy-estimates",
         method: 'GET'
     });
 }
 
 export function getVoyEstimatePDF() {
     return request({
-        url: API_BASE_URL + "/voy-estimate/voyestimate-pdf",
+        url: API_BASE_URL + "/voy-estimates/voyestimate-pdf",
         method: 'GET'
     });
 }
 
 export function getAllUsers() {
     return request({
-        url: API_BASE_URL + "/users/all",
+        url: API_BASE_URL + "/users",
         method: 'GET'
     });
 }

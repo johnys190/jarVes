@@ -38,9 +38,9 @@ class Signup extends Component {
         this.validateEmailAvailability = this.validateEmailAvailability.bind(this);
         this.isFormInvalid = this.isFormInvalid.bind(this);
         this.loadUserProfile = this.loadUserProfile.bind(this);
-        if (this.state.id !== 'new'){
-            this.loadUserProfile();
-        }
+        // if (this.state.id !== 'new'){
+        //     this.loadUserProfile();
+        // }
 
 
     }

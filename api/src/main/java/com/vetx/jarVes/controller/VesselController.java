@@ -13,16 +13,12 @@ import com.vetx.jarVes.security.UserPrincipal;
 import com.vetx.jarVes.service.ImportantVesselsService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
-import java.util.Comparator;
 import java.util.List;
 
 @Api(value = "This is the Vessel controller.")
@@ -44,59 +40,59 @@ public class VesselController {
 
 
   @ApiOperation(value = "This endpoint returns a Vessel by its ID.")
-  @GetMapping("/{key}")
+  @GetMapping("/{id}")
   @PreAuthorize("hasAnyRole('GUEST', 'ADMIN')")
   @ResponseStatus(HttpStatus.OK)
-  public Vessel getVesselById(@PathVariable Long key) {
-    return vesselRepository.findById(key).orElseThrow(() -> new VesselNotFoundException(key));
+  public Vessel getVesselById(@PathVariable Long id) {
+    return vesselRepository.findById(id).orElseThrow(() -> new VesselNotFoundException(id));
   }
 
   @ApiOperation(value = "This endpoint returns a list of Vessels with the Important property added.")
   @GetMapping
   @ResponseStatus(HttpStatus.OK)
-  @PreAuthorize("hasRole('GUEST')")
-  public List<ImportantVesselDTO> getAllVessel(@CurrentUser UserPrincipal currentUser) {
+  @PreAuthorize("hasAnyRole('GUEST', 'ADMIN')")
+  public List<ImportantVesselDTO> getAllVessels(@CurrentUser UserPrincipal currentUser) {
     return importantVesselsService.getImportantVessels(currentUser.getId());
   }
 
   @ApiOperation(value = "This endpoint deletes a Vessel by its ID.")
-  @DeleteMapping("/{key}")
+  @DeleteMapping("/{id}")
   @ResponseStatus(HttpStatus.NO_CONTENT)
   @PreAuthorize("hasRole('ADMIN')")
-  public void deleteVesselById(@PathVariable Long key) {
-    vesselRepository.findById(key).orElseThrow(() -> new VesselNotFoundException(key));
-    vesselRepository.deleteById(key);
+  public void deleteVesselById(@PathVariable Long id) {
+    vesselRepository.findById(id).orElseThrow(() -> new VesselNotFoundException(id));
+    vesselRepository.deleteById(id);
   }
   @ApiOperation(value = "This endpoint updates a Vessel by its ID.")
-  @PutMapping("/{key}")
+  @PutMapping("/{id}")
   @ResponseStatus(HttpStatus.OK)
   @PreAuthorize("hasRole('ADMIN')")
   public Vessel updateVessel(
-          @Valid @RequestBody Vessel newVessel, @PathVariable Long key) {
-    newVessel.setKey(key);
+          @Valid @RequestBody Vessel newVessel, @PathVariable Long id) {
+    newVessel.setId(id);
     return vesselRepository.save(newVessel);
   }
 
   @ApiOperation(value = "This endpoint deletes an important Vessel from a User")
-  @DeleteMapping("/important/{key}")
+  @DeleteMapping("/important/{id}")
   @PreAuthorize("hasAnyRole('GUEST', 'ADMIN')")
   @ResponseStatus(HttpStatus.NO_CONTENT)
-  public void deleteImportantVessel(@CurrentUser UserPrincipal currentUser, @PathVariable Long key) {
-    User user = userRepository.findByEmail(currentUser.getUsername()).orElseThrow(() -> new UserNotFoundException(key));
+  public void deleteImportantVessel(@CurrentUser UserPrincipal currentUser, @PathVariable Long id) {
+    User user = userRepository.findByEmail(currentUser.getUsername()).orElseThrow(() -> new UserNotFoundException(id));
     Vessel importantVessel =
-            vesselRepository.findById(key).orElseThrow(() -> new VesselNotFoundException(key));
+            vesselRepository.findById(id).orElseThrow(() -> new VesselNotFoundException(id));
     user.getImportantVessels().remove(importantVessel);
     userRepository.save(user);
   }
 
   @ApiOperation(value = "This endpoint Adds Important Vessel to a User")
-  @PostMapping("/important/{key}")
+  @PostMapping("/important/{id}")
   @ResponseStatus(HttpStatus.CREATED)
   @PreAuthorize("hasAnyRole('GUEST', 'ADMIN')")
-  public void addImportantVessel(@CurrentUser UserPrincipal currentUser, @PathVariable Long key) {
-    User user = userRepository.findByEmail(currentUser.getUsername()).orElseThrow(() -> new UserNotFoundException(key));
+  public void addImportantVessel(@CurrentUser UserPrincipal currentUser, @PathVariable Long id) {
+    User user = userRepository.findByEmail(currentUser.getUsername()).orElseThrow(() -> new UserNotFoundException(id));
     Vessel importantVessel =
-            vesselRepository.findById(key).orElseThrow(() -> new VesselNotFoundException(key));
+            vesselRepository.findById(id).orElseThrow(() -> new VesselNotFoundException(id));
     user.getImportantVessels().add(importantVessel);
     userRepository.save(user);
   }
@@ -105,10 +101,10 @@ public class VesselController {
   @ApiOperation(value = "This endpoint creates a Vessel.")
   @PostMapping
   @ResponseStatus(HttpStatus.CREATED)
-  @PreAuthorize("hasRole('ADMIN')")
+  @PreAuthorize("hasAnyRole('GUEST', 'ADMIN')")
   public Vessel createNewVessel(@Valid @RequestBody Vessel vessel) {
-      if (vesselRepository.findById(vessel.getKey()).isPresent()){
-        throw new VesselAlreadyExistsException(vessel.getKey());
+      if (vesselRepository.findByName(vessel.getName()).isPresent()){
+        throw new VesselAlreadyExistsException(vessel.getName());
       }
       return vesselRepository.save(vessel);
     }
