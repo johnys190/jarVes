@@ -17,73 +17,79 @@ class VesselList extends Component {
         super(props);
         this.state = {
             isLoading: false,
-            columns: [{
-              title: 'Name',
-              dataIndex: 'name',
-              key: 'name',
-              sorter: (a, b) => a.name.localeCompare(b.name),
-              render: (name, record) =>{
-                    return (
-                          <Link to={{ pathname: "/vessel/" + record.id, state:{vessel: this.record} }}>{name}</Link>
-                          );
-              }
-            },{
-            	title: 'Boiler',
-            	dataIndex: 'boiler',
-            	key: 'boiler',
-            },{
-            	title: 'DWT',
-            	dataIndex: 'dwt',
-            	key: 'dwt',
-            },{
-            	title: 'Type',
-            	dataIndex: 'type',
-            	key: 'type',
-            },{
-            	title: 'Flag',
-            	dataIndex: 'flag',
-            	key: 'flag',
-            },{
-            	title: 'Built',
-            	dataIndex: 'built',
-            	key: 'built',
-            },{
-            	title: 'Gear',
-            	dataIndex: 'gear',
-            	key: 'gear',
-            },{
-            	title: 'Grain',
-            	dataIndex: 'grain',
-            	key: 'grain',
-            },{
-            	title: 'Manager',
-            	dataIndex: 'manager',
-            	key: 'manager',
-            },{
-            	title: 'Speed',
-            	dataIndex: 'speed',
-            	key: 'speed',
-            },{
-            	title: 'Pic',
-            	dataIndex: 'pic',
-            	key: 'pic',
-            },{
-            	title: 'Important',
-            	key: 'important',
-              sorter: (a, b) => a.important - b.important,
-              render: (record) => (
-                    <Checkbox key={'important'+record.id} defaultChecked={record.important} onChange={this.handleCheckbox.bind(this, record.id, record.important)}/>
-              )
-            },{
-                  key: 'delete',
-                  render: (record) => {
-                        return (
-                              <Popconfirm title="Are you sure delete this?"
-                                    onConfirm={this.deleteRecord.bind(this, record.id)}>
-                                          <Button type="danger">Delete</Button>
-                              </Popconfirm>
-                  )}
-            }],
+            columns: [
+				{
+					title: 'Mark',
+					key: 'important',
+					sorter: (a, b) => a.important - b.important,
+					render: (record) => (
+						<Checkbox key={'important' + record.id} defaultChecked={record.important}
+								  onChange={this.handleCheckbox.bind(this, record.id, record.important)}/>
+					),
+					fixed: 'left',
+				}, {
+					title: 'Name',
+					dataIndex: 'name',
+					key: 'name',
+					sorter: (a, b) => a.name.localeCompare(b.name),
+					render: (name, record) => {
+						return (
+							<Link to={{pathname: "/vessel/" + record.id, state: {vessel: this.record}}}>{name}</Link>
+						);
+					},
+					fixed: 'left',
+				}, {
+					title: 'Boiler',
+					dataIndex: 'boiler',
+					key: 'boiler',
+				}, {
+					title: 'DWT',
+					dataIndex: 'dwt',
+					key: 'dwt',
+				}, {
+					title: 'Type',
+					dataIndex: 'type',
+					key: 'type',
+				}, {
+					title: 'Flag',
+					dataIndex: 'flag',
+					key: 'flag',
+				}, {
+					title: 'Built',
+					dataIndex: 'built',
+					key: 'built',
+				}, {
+					title: 'Gear',
+					dataIndex: 'gear',
+					key: 'gear',
+				}, {
+					title: 'Grain',
+					dataIndex: 'grain',
+					key: 'grain',
+				}, {
+					title: 'Manager',
+					dataIndex: 'manager',
+					key: 'manager',
+				}, {
+					title: 'Speed',
+					dataIndex: 'speed',
+					key: 'speed',
+				}, {
+					title: 'Pic',
+					dataIndex: 'pic',
+					key: 'pic',
+				}, {
+					key: 'delete',
+					render: (record) => {
+						return (
+							<Popconfirm title="Are you sure delete this?"
+										onConfirm={this.deleteRecord.bind(this, record.id)}>
+								<Button type="danger">Delete</Button>
+							</Popconfirm>
+						)
+					},
+					fixed: 'right'
+				}],
             dataSource:[
             // {
             //       id: '1',
@@ -172,6 +178,7 @@ class VesselList extends Component {
       				columns={this.state.columns}
       				dataSource={this.state.dataSource}
               rowClassName={(record) => record.important ?  'withBgC':  ''}
+					scroll={{ x: 1000 }}
               />
                         </div>
       		);
