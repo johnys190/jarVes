@@ -20,6 +20,7 @@ class TCEstimateList extends Component {
                   title: 'Name',
                   dataIndex: 'name',
                   key: 'name',
+                  sorter: (a, b) => a.name.localeCompare(b.name),
                   render: (name, record) =>{
                         return (
                               <Link to={{ pathname: "/timeCharterEstimate/" + record.id, state:{tcEstimate: this.record} }}>{name}</Link>

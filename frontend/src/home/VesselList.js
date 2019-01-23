@@ -6,10 +6,11 @@ import {
       Popconfirm,
       Button,
       notification,
-      message
+      message,
+      Checkbox
 } from 'antd';
 import { formatHumanDate } from '../util/Helpers';
-import { deleteVesselById, getAllVessels } from '../util/APIUtils';
+import { deleteVesselById, getAllVessels, makeVesselImportant, makeVesselCommon } from '../util/APIUtils';
 
 class VesselList extends Component {
 	constructor(props) {
@@ -17,14 +18,15 @@ class VesselList extends Component {
         this.state = {
             isLoading: false,
             columns: [{
-                  title: 'Name',
-                  dataIndex: 'name',
-                  key: 'name',
-                  render: (name, record) =>{
-                        return (
-                              <Link to={{ pathname: "/vessel/" + record.id, state:{vessel: this.record} }}>{name}</Link>
-                              );
-                  }
+              title: 'Name',
+              dataIndex: 'name',
+              key: 'name',
+              sorter: (a, b) => a.name.localeCompare(b.name),
+              render: (name, record) =>{
+                    return (
+                          <Link to={{ pathname: "/vessel/" + record.id, state:{vessel: this.record} }}>{name}</Link>
+                          );
+              }
             },{
             	title: 'Boiler',
             	dataIndex: 'boiler',
@@ -66,12 +68,12 @@ class VesselList extends Component {
             	dataIndex: 'pic',
             	key: 'pic',
             },{
-            	title: 'Date',
-            	dataIndex: 'date',
-            	key: 'date',
-                  // render: (date) => (
-                  //       date.toString()
-                  // )
+            	title: 'Important',
+            	key: 'important',
+              sorter: (a, b) => a.important - b.important,
+              render: (record) => (
+                    <Checkbox key={'important'+record.id} defaultChecked={record.important} onChange={this.handleCheckbox.bind(this, record.id, record.important)}/>
+              )
             },{
                   key: 'delete',
                   render: (record) => {
@@ -132,18 +134,32 @@ class VesselList extends Component {
         });
     }
 
-      deleteRecord(id){
+    handleCheckbox(id, prev_state){
+        let promise;
 
-            let promise;
+        promise = prev_state ? makeVesselCommon(id):makeVesselImportant(id);
 
-            promise = deleteVesselById(id);
+        const dataSource = this.state.dataSource.map((i) => {
+              if (i.id == id){ 
+                i.important = !i.important;
+              }
+              return i;
+          })
+        this.setState({dataSource})
+    }
 
-            const dataSource = this.state.dataSource.filter(i => i.id !== id)
-            this.setState({dataSource})
+    deleteRecord(id){
 
-            message.success('Deleted');
+          let promise;
 
-      }
+          promise = deleteVesselById(id);
+
+          const dataSource = this.state.dataSource.filter(i => i.id !== id)
+          this.setState({dataSource})
+
+          message.success('Deleted');
+
+    }
 
 	render(){
             if(this.state.isLoading) {
@@ -154,7 +170,9 @@ class VesselList extends Component {
                         <Button className="add-button" type="primary" href="/vessel/new">Add Vessel</Button>
       			<Table 
       				columns={this.state.columns}
-      				dataSource={this.state.dataSource}/>
+      				dataSource={this.state.dataSource}
+              rowClassName={(record) => record.important ?  'withBgC':  ''}
+              />
                         </div>
       		);
 	}

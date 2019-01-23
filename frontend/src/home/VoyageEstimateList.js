@@ -20,6 +20,7 @@ class VoyageEstimateList extends Component {
                   title: 'Name',
                   dataIndex: 'name',
                   key: 'name',
+                  sorter: (a, b) => a.name.localeCompare(b.name),
                   render: (name, record) =>{
                         return (
                               <Link to={{ pathname: "/voyageEstimate/" + record.id, state:{voyageEstimate: this.record} }}>{name}</Link>

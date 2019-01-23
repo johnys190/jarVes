@@ -93,6 +93,44 @@ public class DevBootstrap implements ApplicationListener<ContextRefreshedEvent> 
         .mgo_port_working(1234.0)
         .boiler(1234)
         .build();
+    Vessel vessel3 = Vessel.builder()
+        .name("peot")
+        .dwt(4)
+        .type("type4")
+        .flag("flag14")
+        .built(4)
+        .gear("gear4")
+        .grain(1.4)
+        .manager("manager4")
+        .pic("pic4")
+        .speed(12345)
+        .ifo_ballast(2134.4)
+        .ifo_laden(234.4)
+        .port_idle(214.4)
+        .port_working(34.04)
+        .mgo_port_idle(124.0)
+        .mgo_port_working(1284.1)
+        .boiler(1234)
+        .build();
+    Vessel vessel4 = Vessel.builder()
+        .name("peou")
+        .dwt(4)
+        .type("type4")
+        .flag("flag14")
+        .built(4)
+        .gear("gear4")
+        .grain(1.4)
+        .manager("manager4")
+        .pic("pic4")
+        .speed(12345)
+        .ifo_ballast(2134.4)
+        .ifo_laden(234.4)
+        .port_idle(214.4)
+        .port_working(34.04)
+        .mgo_port_idle(124.0)
+        .mgo_port_working(1284.1)
+        .boiler(1234)
+        .build();
     Vessel vessel2 = Vessel.builder()
         .name("aidio")
         .dwt(2)
@@ -115,6 +153,8 @@ public class DevBootstrap implements ApplicationListener<ContextRefreshedEvent> 
 
     vesselRepository.save(vessel1);
     vesselRepository.save(vessel2);
+    vesselRepository.save(vessel3);
+    vesselRepository.save(vessel4);
 
     TcEstimate tcEstimate1 =
         TcEstimate.builder().name("TcTestimate").account("testaccount").voyage("ath-lon").build();

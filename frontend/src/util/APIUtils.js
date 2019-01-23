@@ -143,6 +143,20 @@ export function getAllVessels() {
     });
 }
 
+export function makeVesselImportant(id) {
+    return request({
+        url: API_BASE_URL + "/vessels/important/"+id,
+        method: 'POST'
+    });
+}
+
+export function makeVesselCommon(id) {
+    return request({
+        url: API_BASE_URL + "/vessels/important/"+id,
+        method: 'DELETE'
+    });
+}
+
 export function createTCEstimate(body) {
     return request({
         url: API_BASE_URL + "/tc-estimates",

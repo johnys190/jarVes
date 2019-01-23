@@ -20,6 +20,7 @@ class UserList extends Component {
                   title: 'Name',
                   dataIndex: 'name',
                   key: 'name',
+                  sorter: (a, b) => a.name.localeCompare(b.name),
                   render: (name, record) =>{
                         return (
                               <Link to={{ pathname: "/users/" + record.id, state:{user: this.record} }}>{name}</Link>
@@ -29,10 +30,12 @@ class UserList extends Component {
                 title: 'Last Name',
                 dataIndex: 'lastName',
                 key: 'lastName',
+                sorter: (a, b) => a.lastName.localeCompare(b.lastName),
             },{
                 title: 'Email',
                 dataIndex: 'email',
                 key: 'email',
+                sorter: (a, b) => a.email.localeCompare(b.email),
             },{
                   key: 'delete',
                   render: (record) => {
