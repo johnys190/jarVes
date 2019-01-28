@@ -127,7 +127,7 @@ class Signup extends Component {
 
         return (
             <div className="signup-container">
-                <h1 className="page-title">Sign Up</h1>
+                <h1 className="page-title">Create User</h1>
                 <div className="signup-content">
                     <Form onSubmit={this.handleSubmit} className="signup-form">
                         <FormItem 
@@ -188,8 +188,7 @@ class Signup extends Component {
                                 htmlType="submit" 
                                 size="large" 
                                 className="signup-form-button"
-                                disabled={this.isFormInvalid()}>Sign up</Button>
-                            Already registed? <Link to="/login">Login now!</Link>
+                                disabled={this.isFormInvalid()}>Create User</Button>
                         </FormItem>
                     </Form>
                 </div>

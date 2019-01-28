@@ -25,7 +25,9 @@ class VoyageEstimateList extends Component {
                         return (
                               <Link to={{ pathname: "/voyageEstimate/" + record.id, state:{voyageEstimate: this.record} }}>{name}</Link>
                               );
-                  }
+                  },
+                width: 150,
+                fixed: 'left',
             },{
                 title: 'Vessel',
                 dataIndex: 'vessel',
@@ -47,14 +49,16 @@ class VoyageEstimateList extends Component {
                 dataIndex: 'commodity',
                 key: 'commodity',
             },{
-                  key: 'delete',
-                  render: (record) => {
-                        return (
-                              <Popconfirm title="Are you sure delete this?"
-                                    onConfirm={this.deleteRecord.bind(this, record.id)}>
-                                          <Button type="danger">Delete</Button>
-                              </Popconfirm>
-                  )}
+                key: 'delete',
+                render: (record) => {
+                      return (
+                            <Popconfirm title="Are you sure delete this?"
+                                  onConfirm={this.deleteRecord.bind(this, record.id)}>
+                                        <Button type="danger">Delete</Button>
+                            </Popconfirm>
+                )},
+                width: 100,
+                fixed: 'right'
             }],
             dataSource:[]
         };
@@ -109,10 +113,15 @@ class VoyageEstimateList extends Component {
 
         return (   
             <div>
-                <Button type="primary" className="add-button" href="/voyageEstimate/new">New Voyage Estimation</Button>
+                <Button type="primary" className="add-button">
+                  <Link to={{ pathname: "/voyageEstimate/new" }}>
+                  New Voyage Estimation
+                  </Link>
+                </Button>
                 <Table 
                     columns={this.state.columns}
-                    dataSource={this.state.dataSource}/>
+                    dataSource={this.state.dataSource}
+                    scroll={{ x: 1000 }}/>
             </div>
             );
     }

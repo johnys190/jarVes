@@ -102,39 +102,69 @@ class App extends Component {
 
           <Content className="app-content">
               <Switch>      
-                <Route exact path="/" 
-                  render={(props) => <Home {...props} />}>
-                </Route>
-                <Route exact path="/vessel/:id" 
-                  render={(props) => <Home {...props} />}>
-                </Route>
-                <Route exact path="/vessel/new" 
-                  render={(props) => <Home {...props} />}>
-                </Route>
-                <Route exact path="/voyageEstimate/:id" 
-                  render={(props) => <Home {...props} />}>
-                </Route>
-                <Route exact path="/voyageEstimate/new" 
-                  render={(props) => <Home {...props} />}>
-                </Route>
-                <Route exact path="/timeCharterEstimate/:id" 
-                  render={(props) => <Home {...props} />}>
-                </Route>
-                <Route exact path="/timeCharterEstimate/new" 
-                  render={(props) => <Home {...props} />}>
-                </Route>
-                <Route path="/users/:id" 
-                  render={(props) => <Home {...props} />}>
-                </Route>
-                <Route path="/users/new" 
-                  render={(props) => <Home {...props} />}>
-                </Route>
                 <Route path="/login" 
-                  render={(props) => <Login onLogin={this.handleLogin} {...props} />}></Route>
-                <Route path="/signup" component={Signup}></Route>
-                <Route path="/profile/:id" 
-                  render={(props) => <Profile isAuthenticated={this.state.isAuthenticated} currentUser={this.state.currentUser} {...props}  />}>
+                  render={(props) => <Login onLogin={this.handleLogin} {...props} />}>
                 </Route>
+                <PrivateRoute 
+                  authenticated={this.state.isAuthenticated}
+                  exact path="/" 
+                  component={Home}
+                  handleLogout={this.handleLogout}>
+                </PrivateRoute>
+                <PrivateRoute 
+                  authenticated={this.state.isAuthenticated}
+                  exact path="/vessel/:id" 
+                  component={Home}
+                  handleLogout={this.handleLogout}>
+                </PrivateRoute>
+                <PrivateRoute 
+                  authenticated={this.state.isAuthenticated}
+                  exact path="/vessel/new" 
+                  component={Home}
+                  handleLogout={this.handleLogout}>
+                </PrivateRoute>
+                <PrivateRoute 
+                  authenticated={this.state.isAuthenticated}
+                  exact path="/voyageEstimate/:id" 
+                  component={Home}
+                  handleLogout={this.handleLogout}>
+                </PrivateRoute>
+                <PrivateRoute 
+                  authenticated={this.state.isAuthenticated}
+                  exact path="/voyageEstimate/new" 
+                  component={Home}
+                  handleLogout={this.handleLogout}>
+                </PrivateRoute>
+                <PrivateRoute 
+                  authenticated={this.state.isAuthenticated}
+                  exact path="/timeCharterEstimate/:id" 
+                  component={Home}
+                  handleLogout={this.handleLogout}>
+                </PrivateRoute>
+                <PrivateRoute 
+                  authenticated={this.state.isAuthenticated}
+                  exact path="/timeCharterEstimate/new" 
+                  component={Home}
+                  handleLogout={this.handleLogout}>
+                </PrivateRoute>
+                <PrivateRoute 
+                  authenticated={this.state.isAuthenticated}
+                  exact path="/users/:id" 
+                  component={Home}
+                  handleLogout={this.handleLogout}>
+                </PrivateRoute>
+                <PrivateRoute 
+                  authenticated={this.state.isAuthenticated}
+                  exact path="/users/new" 
+                  component={Home}
+                  handleLogout={this.handleLogout}>
+                </PrivateRoute>
+                <PrivateRoute 
+                  authenticated={this.state.isAuthenticated}
+                  exact path="/profile/:id" 
+                  component={(props) => <Profile isAuthenticated={this.state.isAuthenticated} currentUser={this.state.currentUser} {...props}  />}
+                  handleLogout={this.handleLogout}>
+                </PrivateRoute>
                 <Route component={NotFound}></Route>
               </Switch>
           </Content>

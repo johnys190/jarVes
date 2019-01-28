@@ -25,7 +25,9 @@ class UserList extends Component {
                         return (
                               <Link to={{ pathname: "/users/" + record.id, state:{user: this.record} }}>{name}</Link>
                               );
-                  }
+                  },
+                  width: 150,
+                  fixed: 'left',
             },{
                 title: 'Last Name',
                 dataIndex: 'lastName',
@@ -44,7 +46,9 @@ class UserList extends Component {
                                     onConfirm={this.deleteRecord.bind(this, record.id)}>
                                           <Button type="danger">Delete</Button>
                               </Popconfirm>
-                  )}
+                  )},
+                  width: 100,
+                  fixed: 'right',
             }],
             dataSource:[]
         };
@@ -99,7 +103,11 @@ class UserList extends Component {
 
         return (   
             <div>
-                <Button type="primary" className="add-button" href="/users/new">New User</Button>
+                <Button type="primary" className="add-button">
+                  <Link to={{ pathname: "/users/new" }}>
+                  New User
+                  </Link>
+                </Button>
                 <Table 
                     columns={this.state.columns}
                     dataSource={this.state.dataSource}/>

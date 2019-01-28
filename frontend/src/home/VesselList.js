@@ -26,6 +26,7 @@ class VesselList extends Component {
 						<Checkbox key={'important' + record.id} defaultChecked={record.important}
 								  onChange={this.handleCheckbox.bind(this, record.id, record.important)}/>
 					),
+          width: 100,
 					fixed: 'left',
 				}, {
 					title: 'Name',
@@ -37,6 +38,7 @@ class VesselList extends Component {
 							<Link to={{pathname: "/vessel/" + record.id, state: {vessel: this.record}}}>{name}</Link>
 						);
 					},
+          width: 150,
 					fixed: 'left',
 				}, {
 					title: 'Boiler',
@@ -88,6 +90,7 @@ class VesselList extends Component {
 							</Popconfirm>
 						)
 					},
+          width: 100,
 					fixed: 'right'
 				}],
             dataSource:[
@@ -141,6 +144,9 @@ class VesselList extends Component {
     }
 
     handleCheckbox(id, prev_state){
+        this.setState({
+          isLoading:true
+        });
         let promise;
 
         promise = prev_state ? makeVesselCommon(id):makeVesselImportant(id);
@@ -150,18 +156,28 @@ class VesselList extends Component {
                 i.important = !i.important;
               }
               return i;
-          })
-        this.setState({dataSource})
+          });
+        this.setState({
+          dataSource,
+          isLoading:false
+        });
     }
 
     deleteRecord(id){
+        this.setState({
+          isLoading:true
+        });
 
           let promise;
 
           promise = deleteVesselById(id);
 
           const dataSource = this.state.dataSource.filter(i => i.id !== id)
-          this.setState({dataSource})
+          
+        this.setState({
+          dataSource,
+          isLoading:false
+        });
 
           message.success('Deleted');
 
@@ -173,12 +189,16 @@ class VesselList extends Component {
             }
 
       	return (   <div>
-                        <Button className="add-button" type="primary" href="/vessel/new">Add Vessel</Button>
+                        <Button className="add-button" type="primary">
+                          <Link to={{ pathname: "/vessel/new" }}>
+                           Add Vessel
+                          </Link>
+                        </Button>
       			<Table 
       				columns={this.state.columns}
       				dataSource={this.state.dataSource}
               rowClassName={(record) => record.important ?  'withBgC':  ''}
-					scroll={{ x: 1000 }}
+					    scroll={{ x: 1000 }}
               />
                         </div>
       		);

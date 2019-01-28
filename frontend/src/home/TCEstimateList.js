@@ -25,7 +25,9 @@ class TCEstimateList extends Component {
                         return (
                               <Link to={{ pathname: "/timeCharterEstimate/" + record.id, state:{tcEstimate: this.record} }}>{name}</Link>
                               );
-                  }
+                  },
+                  width: 150,
+                  fixed: 'left',
             },{
                 title: 'Vessel',
                 dataIndex: 'vessel',
@@ -47,14 +49,16 @@ class TCEstimateList extends Component {
                 dataIndex: 'commodity',
                 key: 'commodity',
             },{
-                  key: 'delete',
-                  render: (record) => {
-                        return (
-                              <Popconfirm title="Are you sure delete this?"
-                                    onConfirm={this.deleteRecord.bind(this, record.id)}>
-                                          <Button type="danger">Delete</Button>
-                              </Popconfirm>
-                  )}
+                key: 'delete',
+                render: (record) => {
+                      return (
+                            <Popconfirm title="Are you sure delete this?"
+                                  onConfirm={this.deleteRecord.bind(this, record.id)}>
+                                        <Button type="danger">Delete</Button>
+                            </Popconfirm>
+                )},
+                width: 100,
+                fixed: 'right',
             }],
             dataSource:[]
         };
@@ -110,10 +114,15 @@ class TCEstimateList extends Component {
 
         return (   
             <div>
-                <Button type="primary" className="add-button" href="/timeCharterEstimate/new">New Time Charter Estimation</Button>
+                <Button type="primary" className="add-button">
+                  <Link to={{ pathname: "/timeCharterEstimate/new" }}>
+                  New Time Charter Estimation
+                  </Link>
+                </Button>
                 <Table 
                     columns={this.state.columns}
-                    dataSource={this.state.dataSource}/>
+                    dataSource={this.state.dataSource}
+                    scroll={{ x: 1000 }}/>
             </div>
             );
     }
