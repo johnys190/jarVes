@@ -1,6 +1,7 @@
 package com.vetx.jarVes.model.audit;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.Setter;
@@ -20,9 +21,11 @@ import javax.persistence.MappedSuperclass;
 public abstract class UserDateAudit extends DateAudit{
     @CreatedBy
     @Column(updatable = false)
+//    @Setter(onMethod = @__( @JsonIgnore))
     private String createdBy;
 
     @LastModifiedBy
+//    @Setter(onMethod = @__( @JsonIgnore))
     private String updatedBy;
 }
 

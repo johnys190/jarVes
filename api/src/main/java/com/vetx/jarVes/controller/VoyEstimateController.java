@@ -54,17 +54,19 @@ public class VoyEstimateController {
   @ApiOperation(value = "This endpoint updates a Voyage Estimate.")
   @PutMapping("/{id}")
   @ResponseStatus(HttpStatus.OK)
-  @PreAuthorize("hasRole('ADMIN')")
+  @PreAuthorize("hasAnyRole('GUEST', 'ADMIN')")
   public VoyEstimate updateVoyEstimate(@Valid @RequestBody VoyEstimate newVoyEstimate, @PathVariable Long id) {
     VoyEstimate voyEstimate = voyEstimateRepository.findById(id).orElseThrow(() -> new EstimateNotFoundException(id));
-    voyEstimate = voyEstimate.copyVoyEstimate(newVoyEstimate);
-    return voyEstimateRepository.save(voyEstimate);
+    newVoyEstimate.setId(id);
+    newVoyEstimate.setCreatedBy(voyEstimate.getCreatedBy());
+    newVoyEstimate.setCreatedAt(voyEstimate.getCreatedAt());
+    return voyEstimateRepository.save(newVoyEstimate);
   }
 
   @ApiOperation(value = "This endpoint deletes a Voyage Estimate.")
   @DeleteMapping("/{id}")
   @ResponseStatus(HttpStatus.NO_CONTENT)
-  @PreAuthorize("hasRole('ADMIN')")
+  @PreAuthorize("hasAnyRole('GUEST', 'ADMIN')")
    public void deleteVoyEstimate(@PathVariable Long id) {
     voyEstimateRepository.findById(id).orElseThrow(() -> new VesselNotFoundException(id));
     voyEstimateRepository.deleteById(id);
@@ -73,7 +75,7 @@ public class VoyEstimateController {
   @ApiOperation(value = "This endpoint creates a Voyage Estimate.")
   @PostMapping
   @ResponseStatus(HttpStatus.CREATED)
-  @PreAuthorize("hasRole('ADMIN')")
+  @PreAuthorize("hasAnyRole('GUEST', 'ADMIN')")
    VoyEstimate newVoyEstimate(@Valid @RequestBody VoyEstimate newVoyEstimate) {
     if (voyEstimateRepository.findByName(newVoyEstimate.getName()).isPresent()) {
       throw new VoyEstimateAlreadyExistsException(newVoyEstimate.getName());
@@ -99,7 +101,7 @@ public class VoyEstimateController {
   @ApiOperation(value = "This endpoint produces a Voyage Estimate in plaintext format.")
   @GetMapping("/txt/{id}")
   @ResponseStatus(HttpStatus.CREATED)
-  @PreAuthorize("hasRole('ADMIN')")
+  @PreAuthorize("hasAnyRole('GUEST', 'ADMIN')")
    public String produceTxt(@PathVariable Long id, HttpServletResponse response) {
     if (!voyEstimateRepository.findById(id).isPresent()) {
       throw new EstimateNotFoundException(id);
