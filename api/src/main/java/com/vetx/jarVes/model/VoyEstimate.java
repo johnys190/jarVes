@@ -1,5 +1,6 @@
 package com.vetx.jarVes.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.vetx.jarVes.model.audit.UserDateAudit;
 import lombok.*;
 
@@ -8,7 +9,6 @@ import javax.persistence.*;
 @Entity
 @Data
 @NoArgsConstructor
-@RequiredArgsConstructor
 @AllArgsConstructor
 @Builder
 public class VoyEstimate extends UserDateAudit {
@@ -16,120 +16,125 @@ public class VoyEstimate extends UserDateAudit {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(unique = true)
-    private String name;
-
-    @NonNull
-    private String voyage;
-
-    private String account;
-
-    private String commodity;
-
-    private String broker;
-
-    private boolean executed;
-//
-//    private String laycan;
-//
-//    private Double quantity;
-//
-//    //private Double Freightrate;
-//
-//    private Integer loadRate;
-//
-//    private Integer dischargeRate;
-//
-//    @Enumerated(EnumType.STRING)
-//    private LayTimeType loadLayTimeType;
-//
-//    @Enumerated(EnumType.STRING)
-//    private LayTimeType dischargeLayTimeType;
-//
-//    private Integer ballastDistanceSeca;
-//
-//    private Integer ballastDistanceNonSeca;
-//
-//    private Integer ladenDistanceSeca;
-//
-//    private Integer ladenDistanceNonSeca;
-//
-//    private Double commisionPercent;
-//
-//    private String reposition;
-//
-//    private Date date;
-//
-//    private Double ifoPrice;
-//
-//    private Double mdoPrice;
-//
-//    private Double lostWaitingDays;
-//
-//    private Double loadPortCosts;
-//
-//    private Double dischargePortCosts;
-//
-//    private Double othersPortCosts;
-//
-//    private Double canalsCost;
-//
-//    private Double taxesCosts;
-//
-//    private Double miscelCosts;
-//
-//    private Double exinsCosts;
-//
-//    private Double loadTimeLostPercent;
-//
-//    private Double disachargeTimeLostPercent;
-//
-//    private Double steamingMarginTimeLostPercent;
-//
-//    private Double steamingDays;
-//
-//    private Double loadDays;
-//
-//    private Double dischargeDays;
-//
-//    private Double shexLoadDays;
-//
-//    private Double shexDischargeDays;
-//
-//    private Double totalDurationDays;
-//
-//    private Double grossRevenue;
-//
-//    private Double sailingBunkers;
-//
-//    private Double loadPortBunkers;
-//
-//    private Double dischargePortBunkers;
-//
-//    private Double totalBunkerCosts;
-//
-//    private Double expenses;
-//
-//    private Double commisions;
-//
-//    private Double taxes;
-//
-//    private Double exins;
-//
-//    private Double netRevenue;
-//
-//    private Double timeCharterRate;
-//
-//    private Double sensitivity;
-
-    public VoyEstimate copyVoyEstimate(VoyEstimate newVoyEstimate) {
-        this.setVoyage(newVoyEstimate.getVoyage());
-        this.setCommodity(newVoyEstimate.getCommodity());
-        this.setBroker(newVoyEstimate.getBroker());
-        this.setAccount(newVoyEstimate.getAccount());
-        this.setExecuted(newVoyEstimate.isExecuted());
-        this.setName(newVoyEstimate.getName());
-        return this;
-    }
+    @JsonProperty("account")
+    public String account;
+    @JsonProperty("boiler_port")
+    public String boilerPort;
+    @JsonProperty("broker")
+    public String broker;
+    @JsonProperty("canals")
+    public String canals;
+    @JsonProperty("comm")
+    public String comm;
+    @JsonProperty("commodity")
+    public String commodity;
+    @JsonProperty("disch")
+    public String disch;
+    @JsonProperty("disch_days")
+    public Integer dischDays;
+    @JsonProperty("disch_port")
+    public String dischPort;
+    @JsonProperty("discharge_port_type")
+    public String dischargePortType;
+    @JsonProperty("discharge_rate_type")
+    public String dischargeRateType;
+    @JsonProperty("disport_bunkers")
+    public Integer disportBunkers;
+    @JsonProperty("drate")
+    public String drate;
+    @JsonProperty("exins")
+    public String exins;
+    @JsonProperty("expenses")
+    public Integer expenses;
+    @JsonProperty("extra_costs")
+    public String extraCosts;
+    @JsonProperty("extra_costs2")
+    public String extraCosts2;
+    @JsonProperty("freight_rate")
+    public String freightRate;
+    @JsonProperty("freight_rate_type")
+    public String freightRateType;
+    @JsonProperty("gross_revenue")
+    public Integer grossRevenue;
+    @JsonProperty("ifo_ballast")
+    public String ifoBallast;
+    @JsonProperty("ifo_laden")
+    public String ifoLaden;
+    @JsonProperty("ifo_port_idle")
+    public String ifoPortIdle;
+    @JsonProperty("ifo_port_work")
+    public String ifoPortWork;
+    @JsonProperty("ifo_price")
+    public String ifoPrice;
+    @JsonProperty("laycan")
+    public String laycan;
+    @JsonProperty("load")
+    public String load;
+    @JsonProperty("load_days")
+    public String loadDays;
+    @JsonProperty("load_port")
+    public String loadPort;
+    @JsonProperty("load_port_type")
+    public String loadPortType;
+    @JsonProperty("load_rate_type")
+    public String loadRateType;
+    @JsonProperty("loadport_bunkers")
+    public Integer loadportBunkers;
+    @JsonProperty("lostwaiting_days")
+    public String lostwaitingDays;
+    @JsonProperty("lrate")
+    public String lrate;
+    @JsonProperty("mgo_port_idle")
+    public String mgoPortIdle;
+    @JsonProperty("mgo_port_work")
+    public String mgoPortWork;
+    @JsonProperty("mgo_price")
+    public String mgoPrice;
+    @JsonProperty("mgo_sea")
+    public String mgoSea;
+    @JsonProperty("miscel")
+    public String miscel;
+    @JsonProperty("name")
+    public String name;
+    @JsonProperty("net_revenue")
+    public Integer netRevenue;
+    @JsonProperty("non_seca_ballast")
+    public String nonSecaBallast;
+    @JsonProperty("non_seca_laden")
+    public String nonSecaLaden;
+    @JsonProperty("others")
+    public String others;
+    @JsonProperty("quantity")
+    public String quantity;
+    @JsonProperty("repos")
+    public String repos;
+    @JsonProperty("sailing_bunkers")
+    public Integer sailingBunkers;
+    @JsonProperty("seca_ballast")
+    public String secaBallast;
+    @JsonProperty("seca_laden")
+    public String secaLaden;
+    @JsonProperty("shex_disch")
+    public Integer shexDisch;
+    @JsonProperty("shex_load")
+    public Integer shexLoad;
+    @JsonProperty("speed")
+    public String speed;
+    @JsonProperty("steaming")
+    public Double steaming;
+    @JsonProperty("steaming_margin")
+    public String steamingMargin;
+    @JsonProperty("taxes")
+    public Integer taxes;
+    @JsonProperty("taxesP")
+    public String taxesP;
+    @JsonProperty("time_charter_rate")
+    public Double timeCharterRate;
+    @JsonProperty("total_bunker_cost")
+    public Integer totalBunkerCost;
+    @JsonProperty("total_duration")
+    public Double totalDuration;
+    @JsonProperty("voyage")
+    public String voyage;
 
 }
