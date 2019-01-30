@@ -31,7 +31,7 @@ public class VoyEstimate extends UserDateAudit {
     @JsonProperty("disch")
     public String disch;
     @JsonProperty("disch_days")
-    public Integer dischDays;
+    public Double dischDays;
     @JsonProperty("disch_port")
     public String dischPort;
     @JsonProperty("discharge_port_type")
@@ -39,13 +39,13 @@ public class VoyEstimate extends UserDateAudit {
     @JsonProperty("discharge_rate_type")
     public String dischargeRateType;
     @JsonProperty("disport_bunkers")
-    public Integer disportBunkers;
+    public Double disportBunkers;
     @JsonProperty("drate")
     public String drate;
     @JsonProperty("exins")
     public String exins;
     @JsonProperty("expenses")
-    public Integer expenses;
+    public Double expenses;
     @JsonProperty("extra_costs")
     public String extraCosts;
     @JsonProperty("extra_costs2")
@@ -55,7 +55,7 @@ public class VoyEstimate extends UserDateAudit {
     @JsonProperty("freight_rate_type")
     public String freightRateType;
     @JsonProperty("gross_revenue")
-    public Integer grossRevenue;
+    public Double grossRevenue;
     @JsonProperty("ifo_ballast")
     public String ifoBallast;
     @JsonProperty("ifo_laden")
@@ -79,7 +79,7 @@ public class VoyEstimate extends UserDateAudit {
     @JsonProperty("load_rate_type")
     public String loadRateType;
     @JsonProperty("loadport_bunkers")
-    public Integer loadportBunkers;
+    public Double loadportBunkers;
     @JsonProperty("lostwaiting_days")
     public String lostwaitingDays;
     @JsonProperty("lrate")
@@ -97,7 +97,7 @@ public class VoyEstimate extends UserDateAudit {
     @JsonProperty("name")
     public String name;
     @JsonProperty("net_revenue")
-    public Integer netRevenue;
+    public Double netRevenue;
     @JsonProperty("non_seca_ballast")
     public String nonSecaBallast;
     @JsonProperty("non_seca_laden")
@@ -109,15 +109,15 @@ public class VoyEstimate extends UserDateAudit {
     @JsonProperty("repos")
     public String repos;
     @JsonProperty("sailing_bunkers")
-    public Integer sailingBunkers;
+    public Double sailingBunkers;
     @JsonProperty("seca_ballast")
     public String secaBallast;
     @JsonProperty("seca_laden")
     public String secaLaden;
     @JsonProperty("shex_disch")
-    public Integer shexDisch;
+    public Double shexDisch;
     @JsonProperty("shex_load")
-    public Integer shexLoad;
+    public Double shexLoad;
     @JsonProperty("speed")
     public String speed;
     @JsonProperty("steaming")
@@ -125,13 +125,13 @@ public class VoyEstimate extends UserDateAudit {
     @JsonProperty("steaming_margin")
     public String steamingMargin;
     @JsonProperty("taxes")
-    public Integer taxes;
+    public Double taxes;
     @JsonProperty("taxesP")
     public String taxesP;
     @JsonProperty("time_charter_rate")
     public Double timeCharterRate;
     @JsonProperty("total_bunker_cost")
-    public Integer totalBunkerCost;
+    public Double totalBunkerCost;
     @JsonProperty("total_duration")
     public Double totalDuration;
     @JsonProperty("voyage")
