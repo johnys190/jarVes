@@ -172,31 +172,31 @@ class Vessel extends Component {
                         <Row gutter={15}>
                             <Col  xs={24} sm={24} md={24} lg={24} xl={12}>
                                 <FormItem {...formItemLayout}> 
-                                    <Input name={renderID('Name')} onChange={(event) => this.handleInputChange(event)} className='alignComponentCenter' addonBefore= 'Name' defaultValue={this.state.vessel[renderID('Name')]}/>
+                                    <Input name={renderID('Name')} onChange={(event) => this.handleInputChange(event)} className='alignComponent' addonBefore= 'Name' defaultValue={this.state.vessel[renderID('Name')]}/>
                                 </FormItem>
                                 <FormItem {...formItemLayout}> 
                                     <Input name={renderID('DWT')} onChange={(event) => this.handleInputChange(event)} className='alignComponent' addonBefore='DWT' type='number' step='any' defaultValue={this.state.vessel[renderID('DWT')]}/>
                                 </FormItem>
                                 <FormItem {...formItemLayout}> 
-                                    <Input name={renderID('Type')} onChange={(event) => this.handleInputChange(event)} className='alignComponentCenter' addonBefore='Type' defaultValue={this.state.vessel[renderID('Type')]}/>
+                                    <Input name={renderID('Type')} onChange={(event) => this.handleInputChange(event)} className='alignComponent' addonBefore='Type' defaultValue={this.state.vessel[renderID('Type')]}/>
                                 </FormItem>
                                 <FormItem {...formItemLayout}> 
-                                    <Input name={renderID('Flag')} onChange={(event) => this.handleInputChange(event)} className='alignComponentCenter' addonBefore='Flag' defaultValue={this.state.vessel[renderID('Flag')]}/>
+                                    <Input name={renderID('Flag')} onChange={(event) => this.handleInputChange(event)} className='alignComponent' addonBefore='Flag' defaultValue={this.state.vessel[renderID('Flag')]}/>
                                 </FormItem>
                                 <FormItem {...formItemLayout}> 
                                     <Input name={renderID('Built')} onChange={(event) => this.handleInputChange(event)} className='alignComponent' addonBefore='Built' type='number' step='any' defaultValue={this.state.vessel[renderID('Built')]}/>
                                 </FormItem>
                                 <FormItem {...formItemLayout}> 
-                                    <Input name={renderID('Gear')} onChange={(event) => this.handleInputChange(event)} className='alignComponentCenter' addonBefore='Gear' defaultValue={this.state.vessel[renderID('Gear')]}/>
+                                    <Input name={renderID('Gear')} onChange={(event) => this.handleInputChange(event)} className='alignComponent' addonBefore='Gear' defaultValue={this.state.vessel[renderID('Gear')]}/>
                                 </FormItem>
                                 <FormItem {...formItemLayout}> 
                                     <Input name={renderID('Grain')} onChange={(event) => this.handleInputChange(event)} className='alignComponent' addonBefore='Grain' type='number' step='any' defaultValue={this.state.vessel[renderID('Grain')]}/>
                                 </FormItem>
                                 <FormItem {...formItemLayout}> 
-                                    <Input name={renderID('Manager')} onChange={(event) => this.handleInputChange(event)} className='alignComponentCenter' addonBefore='Manager' defaultValue={this.state.vessel[renderID('Manager')]}/>
+                                    <Input name={renderID('Manager')} onChange={(event) => this.handleInputChange(event)} className='alignComponent' addonBefore='Manager' defaultValue={this.state.vessel[renderID('Manager')]}/>
                                 </FormItem>
                                 <FormItem {...formItemLayout}> 
-                                    <Input name={renderID('Pic')} onChange={(event) => this.handleInputChange(event)} className='alignComponentCenter' addonBefore='Pic' defaultValue={this.state.vessel[renderID('Pic')]}/>
+                                    <Input name={renderID('Pic')} onChange={(event) => this.handleInputChange(event)} className='alignComponent' addonBefore='Pic' defaultValue={this.state.vessel[renderID('Pic')]}/>
                                 </FormItem>
                                 <FormItem {...formItemLayout}>
                                     <span class="ant-input-group-wrapper">

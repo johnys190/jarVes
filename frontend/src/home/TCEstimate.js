@@ -8,7 +8,8 @@ import {
     DatePicker,
     Select,
     Button,
-    notification
+    notification,
+    Checkbox
 } from 'antd';
 import {
     getTCEstimateById,
@@ -229,6 +230,18 @@ class TCEstimate extends Component {
         console.log(this.state);
     }
 
+    handleCheckbox(event){
+        const target = event.target;
+        const inputName = 'executed';
+        const inputValue = target.checked;
+        // const voyestEdit = this.state.voyest;
+        // voyestEdit[inputName]= inputValue;
+        // this.setState({
+        //     voyest:voyestEdit
+        // });
+        console.log(this.state)
+    }
+
     renderInputList(fields, className='alignComponent'){
         return fields.map( (field) => (
              <Input  
@@ -268,9 +281,17 @@ class TCEstimate extends Component {
             <div>
 
                 <div className='alignLeft'>
-                    <Input addonBefore='Name' name='name' defaultValue={this.state.tcest.name}  onChange={(event) => this.handleInputChange(event)}/>
+                    <Input addonBefore='Name' name='name' className='alignComponent' defaultValue={this.state.tcest.name}  onChange={(event) => this.handleInputChange(event)}/>
                     <Button className='button' type='primary' onClick={this.handleSubmit.bind(this)}>Save</Button>
                     {saveAs}
+                    <span class="ant-input-group-wrapper">
+                        <span class="ant-input-wrapper ant-input-group">
+                            <span class="ant-input-group-addon">
+                                Excecuted
+                            </span>
+                            <Checkbox className='alignSelect' defaultChecked={this.state.tcest.executed} onChange={(event) => this.handleCheckbox(event)}/>
+                        </span>
+                    </span> 
                     <br />
                     <br />
                     <span class="ant-input-group-wrapper">

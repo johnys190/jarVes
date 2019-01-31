@@ -11,8 +11,8 @@ import {
     Button,
     Row,
     Col,
-    Form,
-    notification
+    notification,
+    Checkbox
 } from 'antd';
 import { 
     getVesselById,
@@ -23,17 +23,6 @@ import {
 } from '../util/APIUtils';
 
 const Option = Select.Option;
-const FormItem = Form.Item;
-const formItemLayout = {
-      labelCol: {
-        xs: { span: 24 },
-        sm: { span: 12 },
-      },
-      wrapperCol: {
-        xs: { span: 24 },
-        sm: { span: 12 },
-      }
-};
 
 class VoyageEstimate extends Component {
 	constructor(props) {
@@ -217,6 +206,7 @@ class VoyageEstimate extends Component {
                 isLoading: false
             })
         });
+        console.log(this.state);
     }
 
     handleSubmit() {
@@ -322,7 +312,6 @@ class VoyageEstimate extends Component {
             voyest:voyestEdit
         });
         this.calculate();
-        console.log(this.state);
     }
 
     // handleChangeInput = (e) => {
@@ -356,7 +345,19 @@ class VoyageEstimate extends Component {
         });
     }
 
-    renderInputList(fields, className='', disabled=false){
+    handleCheckbox(event){
+        const target = event.target;
+        const inputName = 'executed';
+        const inputValue = target.checked;
+        const voyestEdit = this.state.voyest;
+        voyestEdit[inputName]= inputValue;
+        this.setState({
+            voyest:voyestEdit
+        });
+        console.log(this.state)
+    }
+
+    renderInputList(fields, className='alignComponent', disabled=false){
         return fields.map( (field) => (
              <Input 
                 className={className}
@@ -368,7 +369,7 @@ class VoyageEstimate extends Component {
         ))
     }
 
-    renderInputNumberList(fields, className='', disabled=false){
+    renderInputNumberList(fields, className='alignComponent', disabled=false){
         return fields.map( (field) => (
              <Input 
                 type='number'
@@ -389,6 +390,7 @@ class VoyageEstimate extends Component {
             <RadioGroup 
                 className={className} 
                 name={id}
+                defaultValue={this.state.voyest[id]}
                 onChange={this.handleInputChange.bind(this)}>
                     {fields.map( (field) => (
                         <Radio  
@@ -416,16 +418,27 @@ class VoyageEstimate extends Component {
                                     });
         const saveAs = (this.state.voyest.id && this.state.voyest.id !== 'new') ?
             (<div>
-                <Input addonBefore='Save as' name='save_as'  onChange={(event) => this.handleInputChange(event)} defaultValue={this.state.voyest.save_as}/>
+                <Input addonBefore='Save as' name='save_as' className='alignComponent'  onChange={(event) => this.handleInputChange(event)} defaultValue={this.state.voyest.save_as}/>
                 <Button className='button' type='primary' onClick={this.handleSubmitAs.bind(this)}>Save as</Button>
             </div>) : '';
 		return (
             <div>
                 <Row gutter={15}>
                     <Col  xs={24} sm={24} md={24} lg={24} xl={12}>
-                        <Input addonBefore='Name' name='name' defaultValue={this.state.voyest.name}  onChange={(event) => this.handleInputChange(event)}/>
+                        <Input addonBefore='Name' name='name' className='alignComponent' defaultValue={this.state.voyest.name}  onChange={(event) => this.handleInputChange(event)}/>
                         <Button className='button' type='primary' onClick={this.handleSubmit.bind(this)}>Save</Button>
                         {saveAs}
+                        <br />
+                        <span class="ant-input-group-wrapper">
+                            <span class="ant-input-wrapper ant-input-group">
+                                <span class="ant-input-group-addon">
+                                    Excecuted
+                                </span>
+                                <Checkbox className='alignSelect' defaultChecked={this.state.voyest.executed} onChange={(event) => this.handleCheckbox(event)}/>
+                            </span>
+                        </span>                        
+                        <br />
+                        <br />
                         <Row gutter={15}>
                             <Col  xs={24} sm={12} md={12} lg={12} xl={12}>
                                 {this.renderInputList(['Voyage', 'Account', 'Commodity', 'Broker', 'Laycan'])}
@@ -436,7 +449,7 @@ class VoyageEstimate extends Component {
                             <Col  xs={24} sm={12} md={12} lg={12} xl={12}>
                                 <Row>
                                     <Col span={12}>
-                                        <Input type='number' step='any' className='alignComponent' addonBefore='L/Rate' name='lrate' onChange={(event) => this.handleInputChange(event)}/>
+                                        <Input type='number' step='any' className='alignComponent' addonBefore='L/Rate' name='lrate' defaultValue={this.state.voyest.lrate} onChange={(event) => this.handleInputChange(event)}/>
                                     </Col>
                                     <Col offset={1} span={11}>
                                      {this.renderRadioList(['X','C','DAPS'],'load_rate_type')}
@@ -444,7 +457,7 @@ class VoyageEstimate extends Component {
                                 </Row>
                                 <Row>
                                     <Col span={12}>
-                                        <Input type='number' step='any'  className='alignComponent' addonBefore='D/Rate' name='drate' onChange={(event) => this.handleInputChange(event)}/>
+                                        <Input type='number' step='any'  className='alignComponent' addonBefore='D/Rate' name='drate' defaultValue={this.state.voyest.drate} onChange={(event) => this.handleInputChange(event)}/>
                                     </Col>
                                     <Col offset={1} span={11}>
                                         {this.renderRadioList(['X','C','DAPS'],'discharge_rate_type')}
@@ -467,30 +480,32 @@ class VoyageEstimate extends Component {
                             <Col  xs={24} sm={12} md={12} lg={12} xl={12}>
                                 <p>Port costs</p>
                                 <Row gutter={20}>
-                                    <Col span={12}>
+                                    <Col span={13}>
                                         <Input 
                                             type='number'
                                             step='any'
+                                            className='alignComponent'
                                             addonBefore='Load' 
                                             name='load'
                                             onChange={(event) => this.handleInputChange(event)}
                                             defaultValue={this.state.voyest.load}/> 
                                     </Col>
-                                    <Col span={12}>
+                                    <Col span={11}>
                                         {this.renderRadioList(['Seca', 'NON Seca'],'load_port_type')}
                                     </Col>
                                 </Row>
                                 <Row gutter={20}>
-                                    <Col span={12}>
+                                    <Col span={13}>
                                          <Input 
                                             type='number'
                                             step='any'
+                                            className='alignComponent'
                                             addonBefore='Disch' 
                                             name='disch'
                                             onChange={(event) => this.handleInputChange(event)}
                                             defaultValue={this.state.voyest.disch}/> 
                                     </Col>
-                                    <Col span={12}>
+                                    <Col span={11}>
                                         {this.renderRadioList(['Seca', 'NON Seca'],'discharge_port_type')}
                                     </Col>
                                 </Row>
@@ -498,6 +513,7 @@ class VoyageEstimate extends Component {
                                      <Input 
                                         type='number'
                                         step='any'
+                                        className='alignComponent'
                                         addonBefore='Taxes %' 
                                         name='taxesP'
                                         onChange={(event) => this.handleInputChange(event)}
@@ -506,6 +522,7 @@ class VoyageEstimate extends Component {
                                  <Input 
                                     type='number'
                                     step='any'
+                                    className='alignComponent'
                                     addonBefore='Extra costs 2' 
                                     name='extra_costs2'
                                     onChange={(event) => this.handleInputChange(event)}
