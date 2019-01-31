@@ -136,5 +136,7 @@ public class VoyEstimate extends UserDateAudit {
     public Double totalDuration;
     @JsonProperty("voyage")
     public String voyage;
+    @JsonProperty("executed")
+    public Boolean executed;
 
 }
