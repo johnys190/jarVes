@@ -15,7 +15,8 @@ import {
     getTCEstimateById,
     updateTCEstimateById,
     deleteTCEstimateById,
-    createTCEstimate
+    createTCEstimate,
+    getAllVessels
 } from '../util/APIUtils';
 
 const Option = Select.Option;
@@ -25,6 +26,7 @@ class TCEstimate extends Component {
         super(props);
         this.state = {
             isLoading: false,
+            vessels: [],
             tcest:{
                 id: this.props.id ? this.props.id : 'new',
                 account: null,
@@ -63,6 +65,7 @@ class TCEstimate extends Component {
             }
 
         };
+        this.getAllVessels();
         if (this.state.tcest.id !== 'new'){
             this.getTCEstimate();
         }
@@ -74,6 +77,31 @@ class TCEstimate extends Component {
         //         timecharterrate:  Number(this.state.hirerate) + Number(this.state.ballastbonus)
         //     })
         // }
+    }
+
+    getAllVessels(){
+        this.setState({
+            isLoading: true
+        });
+        let promise;
+
+        promise = getAllVessels();
+
+        if (!promise) {
+            return;
+        }
+
+        promise
+            .then(response => {
+                this.setState({
+                    vessels: response ? response : [],
+                    isLoading: false
+                })
+            }).catch(error => {
+            this.setState({
+                isLoading: false
+            })
+        });
     }
 
     getTCEstimate(){
@@ -242,6 +270,23 @@ class TCEstimate extends Component {
         console.log(this.state)
     }
 
+    handleChangeSelect = (id) => {
+        let tcestEdit = this.state.tcest;
+        let vessel = this.state.vessels.find( (vessel) => {return vessel.id == id});
+        Object.keys(vessel).forEach(function(key) {
+            if (key == 'name'){
+                tcestEdit['vessel_name'] = vessel[key];
+            }else if (key == 'id'){
+                tcestEdit['vessel_id'] = vessel[key];
+            }else{
+                tcestEdit[key]= vessel[key];
+            }
+        });
+        this.setState({
+            tcest: tcestEdit
+        });
+    }
+
     renderInputList(fields, className='alignComponent'){
         return fields.map( (field) => (
              <Input  
@@ -270,6 +315,10 @@ class TCEstimate extends Component {
         if(this.state.isLoading) {
             return <LoadingIndicator />
         }
+
+        const vesselsOptions = this.state.vessels.map((vessel) => {
+                                        return (<Option value={vessel.id}>{vessel.name}</Option>);
+                                    });
 
         const saveAs = (this.state.tcest.id && this.state.tcest.id !== 'new') ?
             (<div>
@@ -302,15 +351,12 @@ class TCEstimate extends Component {
                             <Select
                                 className='alignSelect'
                                 showSearch
-                                placeholder="Select a vessel"
+                                placeholder="Select a ship"
                                 optionFilterProp="children"
-                                onChange={this.handleChange}
-                                onFocus={this.handleFocus}
-                                onBlur={this.handleBlur}
+                                value={this.state.tcest.vessel_id}
+                                onSelect={(id) => this.handleChangeSelect(id)}
                                 filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}>
-                                    <Option value="jack">Jack</Option>
-                                    <Option value="lucy">Lucy</Option>
-                                    <Option value="tom">Tom</Option>
+                                    {vesselsOptions}
                             </Select>
                         </span>
                     </span>
