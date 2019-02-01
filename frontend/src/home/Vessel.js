@@ -47,11 +47,11 @@ class Vessel extends Component {
                 ifo_laden: '',
                 manager: '',
                 mgo_port_idle: '',
-                mgo_port_working: '',
+                mgo_port_work: '',
                 name: '',
                 pic: '',
                 port_idle: '',
-                port_working: '',
+                port_work: '',
                 speed: '',
                 type: ''
             }
@@ -210,7 +210,7 @@ class Vessel extends Component {
                                 </FormItem>
                             </Col>
                             <Col  xs={24} sm={24} md={24} lg={24} xl={12}>
-                                {this.renderFormItemList(['Speed', 'Ifo-Ballast', 'Ifo-Laden', 'Port Idle', 'Port Working', 'MGO Port Idle', 'MGO Port Working', 'Boiler'])}
+                                {this.renderFormItemList(['Speed', 'Ifo-Ballast', 'Ifo-Laden', 'Port Idle', 'Port Work', 'MGO Port Idle', 'MGO Port Work', 'Boiler'])}
                                 <Row gutter={15} type='flex' justify='start'>
                                     <Col offset={4} xs={8} sm={8} md={8} lg={6} xl={6}>  
                                         <FormItem>                              

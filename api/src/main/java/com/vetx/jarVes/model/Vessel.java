@@ -1,5 +1,6 @@
 package com.vetx.jarVes.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
 import javax.persistence.*;
@@ -46,10 +47,12 @@ public class Vessel {
 
   private Double port_idle;
 
+  @JsonProperty("port_work")
   private Double port_working;
 
   private Double mgo_port_idle;
 
+  @JsonProperty("mgo_port_work")
   private Double mgo_port_working;
 
   private Integer boiler;

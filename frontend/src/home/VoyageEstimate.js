@@ -347,7 +347,7 @@ class VoyageEstimate extends Component {
                 name={renderID(field)}
                 onChange={(event) => this.handleInputChange(event)}
                 disabled={disabled}
-                defaultValue={this.state.voyest[renderID(field)]}/> 
+                value={this.state.voyest[renderID(field)]}/> 
         ))
     }
 
@@ -361,7 +361,7 @@ class VoyageEstimate extends Component {
                 name={renderID(field)}
                 onChange={(event) => this.handleInputChange(event)}
                 disabled={disabled}
-                defaultValue={this.state.voyest[renderID(field)]}/> 
+                value={this.state.voyest[renderID(field)]}/> 
         ))
     }
 
@@ -372,7 +372,7 @@ class VoyageEstimate extends Component {
             <RadioGroup 
                 className={className} 
                 name={id}
-                defaultValue={this.state.voyest[id]}
+                value={this.state.voyest[id]}
                 onChange={this.handleInputChange.bind(this)}>
                     {fields.map( (field) => (
                         <Radio  
@@ -388,7 +388,7 @@ class VoyageEstimate extends Component {
         if(this.state.isLoading) {
             return <LoadingIndicator />
         }
-
+        console.log(this.state);
         const veerticalRadioStyle = {
             display: 'block',
             height: '30px',
@@ -400,14 +400,14 @@ class VoyageEstimate extends Component {
                                     });
         const saveAs = (this.state.voyest.id && this.state.voyest.id !== 'new') ?
             (<div>
-                <Input addonBefore='Save as' name='save_as' className='alignComponent'  onChange={(event) => this.handleInputChange(event)} defaultValue={this.state.voyest.save_as}/>
+                <Input addonBefore='Save as' name='save_as' className='alignComponent'  onChange={(event) => this.handleInputChange(event)} value={this.state.voyest.save_as}/>
                 <Button className='button' type='primary' onClick={this.handleSubmitAs.bind(this)}>Save as</Button>
             </div>) : '';
 		return (
             <div>
                 <Row gutter={15}>
                     <Col  xs={24} sm={24} md={24} lg={24} xl={12}>
-                        <Input addonBefore='Name' name='name' className='alignComponent' defaultValue={this.state.voyest.name}  onChange={(event) => this.handleInputChange(event)}/>
+                        <Input addonBefore='Name' name='name' className='alignComponent' value={this.state.voyest.name}  onChange={(event) => this.handleInputChange(event)}/>
                         <Button className='button' type='primary' onClick={this.handleSubmit.bind(this)}>Save</Button>
                         {saveAs}
                         <br />
@@ -431,7 +431,7 @@ class VoyageEstimate extends Component {
                             <Col  xs={24} sm={12} md={12} lg={12} xl={12}>
                                 <Row>
                                     <Col span={12}>
-                                        <Input type='number' step='any' className='alignComponent' addonBefore='L/Rate' name='lrate' defaultValue={this.state.voyest.lrate} onChange={(event) => this.handleInputChange(event)}/>
+                                        <Input type='number' step='any' className='alignComponent' addonBefore='L/Rate' name='lrate' value={this.state.voyest.lrate} onChange={(event) => this.handleInputChange(event)}/>
                                     </Col>
                                     <Col offset={1} span={11}>
                                      {this.renderRadioList(['X','C','DAPS'],'load_rate_type')}
@@ -439,7 +439,7 @@ class VoyageEstimate extends Component {
                                 </Row>
                                 <Row>
                                     <Col span={12}>
-                                        <Input type='number' step='any'  className='alignComponent' addonBefore='D/Rate' name='drate' defaultValue={this.state.voyest.drate} onChange={(event) => this.handleInputChange(event)}/>
+                                        <Input type='number' step='any'  className='alignComponent' addonBefore='D/Rate' name='drate' value={this.state.voyest.drate} onChange={(event) => this.handleInputChange(event)}/>
                                     </Col>
                                     <Col offset={1} span={11}>
                                         {this.renderRadioList(['X','C','DAPS'],'discharge_rate_type')}
@@ -470,7 +470,7 @@ class VoyageEstimate extends Component {
                                             addonBefore='Load' 
                                             name='load'
                                             onChange={(event) => this.handleInputChange(event)}
-                                            defaultValue={this.state.voyest.load}/> 
+                                            value={this.state.voyest.load}/> 
                                     </Col>
                                     <Col span={11}>
                                         {this.renderRadioList(['Seca', 'NON Seca'],'load_port_type')}
@@ -485,7 +485,7 @@ class VoyageEstimate extends Component {
                                             addonBefore='Disch' 
                                             name='disch'
                                             onChange={(event) => this.handleInputChange(event)}
-                                            defaultValue={this.state.voyest.disch}/> 
+                                            value={this.state.voyest.disch}/> 
                                     </Col>
                                     <Col span={11}>
                                         {this.renderRadioList(['Seca', 'NON Seca'],'discharge_port_type')}
@@ -499,7 +499,7 @@ class VoyageEstimate extends Component {
                                         addonBefore='Taxes %' 
                                         name='taxesP'
                                         onChange={(event) => this.handleInputChange(event)}
-                                        defaultValue={this.state.voyest.taxesP}/> 
+                                        value={this.state.voyest.taxesP}/> 
                                  {this.renderInputNumberList(['Miscel.', 'Exins', 'Extra costs'])}
                                  <Input 
                                     type='number'
@@ -508,7 +508,7 @@ class VoyageEstimate extends Component {
                                     addonBefore='Extra costs 2' 
                                     name='extra_costs2'
                                     onChange={(event) => this.handleInputChange(event)}
-                                    defaultValue={this.state.voyest.extra_costs2}/> 
+                                    value={this.state.voyest.extra_costs2}/> 
                             </Col>
                         </Row>
                     </Col>
@@ -524,7 +524,7 @@ class VoyageEstimate extends Component {
                                     showSearch
                                     placeholder="Select a ship"
                                     optionFilterProp="children"
-                                    defaultValue={this.state.voyest.vessel_id}
+                                    value={this.state.voyest.vessel_id}
                                     onSelect={(id) => this.handleChangeSelect(id)}
                                     filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}>
                                         {vesselsOptions}
