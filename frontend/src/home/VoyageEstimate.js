@@ -15,7 +15,6 @@ import {
     Checkbox
 } from 'antd';
 import { 
-    getVesselById,
     getAllVessels,
     getVoyEstimateById,
     updateVoyEstimateById,
@@ -29,7 +28,6 @@ class VoyageEstimate extends Component {
         super(props);
         this.state = {
             isLoading: false,
-            vesselId: 1,
             vessels: [],
             voyest:{
                 id: this.props.id ? this.props.id : 'new',
@@ -127,33 +125,6 @@ class VoyageEstimate extends Component {
     
         this.setState({
             voyest:voyestEdit
-        });
-    }
-
-
-    getVesselById(){
-        this.setState({
-            isLoading: true
-        });
-        let promise;
-
-        promise = getVesselById(this.state.vesselId);
-
-        if (!promise) {
-            return;
-        }
-
-        promise
-            .then(response => {
-                console.log(response)
-                // this.setState({
-                //     vessels: response ? response : [],
-                //     isLoading: false
-                // })
-            }).catch(error => {
-            this.setState({
-                isLoading: false
-            })
         });
     }
 
@@ -333,10 +304,21 @@ class VoyageEstimate extends Component {
     //     );
     // }
 
-    handleChangeSelect = (e) => {
+    handleChangeSelect = (id) => {
+        let voyestEdit = this.state.voyest;
+        let vessel = this.state.vessels.find( (vessel) => {return vessel.id == id});
+        Object.keys(vessel).forEach(function(key) {
+            if (key == 'name'){
+                voyestEdit['vessel_name'] = vessel[key];
+            }else if (key == 'id'){
+                voyestEdit['vessel_id'] = vessel[key];
+            }else{
+                voyestEdit[key]= vessel[key];
+            }
+        });
         this.setState({
-            voyage: e
-        })
+            voyest: voyestEdit
+        });
     }
 
     handleNewCancelClick = () => {
@@ -432,7 +414,7 @@ class VoyageEstimate extends Component {
                         <span class="ant-input-group-wrapper">
                             <span class="ant-input-wrapper ant-input-group">
                                 <span class="ant-input-group-addon">
-                                    Excecuted
+                                    Executed
                                 </span>
                                 <Checkbox className='alignSelect' defaultChecked={this.state.voyest.executed} onChange={(event) => this.handleCheckbox(event)}/>
                             </span>
@@ -542,9 +524,8 @@ class VoyageEstimate extends Component {
                                     showSearch
                                     placeholder="Select a ship"
                                     optionFilterProp="children"
-                                    onChange={this.handleChange}
-                                    onFocus={this.handleFocus}
-                                    onBlur={this.handleBlur}
+                                    defaultValue={this.state.voyest.vessel_id}
+                                    onSelect={(id) => this.handleChangeSelect(id)}
                                     filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}>
                                         {vesselsOptions}
                                 </Select>

@@ -19,7 +19,8 @@ class Home extends Component {
 	constructor(props) {
         super(props);
         this.state = {
-            isLoading: false
+            isLoading: false,
+            dk: 'vessel'
         };
     }
 
@@ -67,7 +68,7 @@ class Home extends Component {
         	adminPanel = (<UserList />)
         }
 
-        let dk='vessel';
+        let dk = this.state.dk;
         if (this.props.location.pathname.indexOf('/',1) > 0){
 	        let l = this.props.location.pathname.indexOf('/', 1);
 	        if (l === -1) l = this.props.location.pathname.length-1;
@@ -78,7 +79,7 @@ class Home extends Component {
 			<div className="container">
 				<div className="content">
 					<StickyContainer>
-					    <Tabs defaultActiveKey={dk} renderTabBar={renderTabBar} onTabClick={() => {this.props.history.push('/');}}>
+					    <Tabs defaultActiveKey={dk} renderTabBar={renderTabBar} onTabClick={() => this.props.history.push('/')} onChange={(key) => {this.setState({dk: key})}}>
 					      <TabPane tab="Vessels" key="vessel">{vessels}</TabPane>
 					      <TabPane tab="Voyage Estimate" key="voyageEstimate">{voyageEstimate}</TabPane>
 					      <TabPane tab="Time Charter Estimate" key="timeCharterEstimate">{tcEstimate}</TabPane>

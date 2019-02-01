@@ -15,6 +15,7 @@ import Profile from '../user/profile/Profile';
 import AppHeader from '../common/AppHeader';
 import NotFound from '../common/NotFound';
 import LoadingIndicator from '../common/LoadingIndicator';
+import PrivateRoute from '../common/PrivateRoute';
 
 import { Layout, notification } from 'antd';
 
@@ -104,66 +105,66 @@ class App extends Component {
                 <Route path="/login" 
                   render={(props) => <Login onLogin={this.handleLogin} {...props} />}>
                 </Route>
-                <Route 
+                <PrivateRoute 
                   authenticated={this.state.isAuthenticated}
                   exact path="/" 
                   component={Home}
                   handleLogout={this.handleLogout}>
-                </Route>
-                <Route 
+                </PrivateRoute>
+                <PrivateRoute 
                   authenticated={this.state.isAuthenticated}
                   exact path="/vessel/:id" 
                   component={Home}
                   handleLogout={this.handleLogout}>
-                </Route>
-                <Route 
+                </PrivateRoute>
+                <PrivateRoute 
                   authenticated={this.state.isAuthenticated}
                   exact path="/vessel/new" 
                   component={Home}
                   handleLogout={this.handleLogout}>
-                </Route>
-                <Route 
+                </PrivateRoute>
+                <PrivateRoute 
                   authenticated={this.state.isAuthenticated}
                   exact path="/voyageEstimate/:id" 
                   component={Home}
                   handleLogout={this.handleLogout}>
-                </Route>
-                <Route 
+                </PrivateRoute>
+                <PrivateRoute 
                   authenticated={this.state.isAuthenticated}
                   exact path="/voyageEstimate/new" 
                   component={Home}
                   handleLogout={this.handleLogout}>
-                </Route>
-                <Route 
+                </PrivateRoute>
+                <PrivateRoute 
                   authenticated={this.state.isAuthenticated}
                   exact path="/timeCharterEstimate/:id" 
                   component={Home}
                   handleLogout={this.handleLogout}>
-                </Route>
-                <Route 
+                </PrivateRoute>
+                <PrivateRoute 
                   authenticated={this.state.isAuthenticated}
                   exact path="/timeCharterEstimate/new" 
                   component={Home}
                   handleLogout={this.handleLogout}>
-                </Route>
-                <Route 
+                </PrivateRoute>
+                <PrivateRoute 
                   authenticated={this.state.isAuthenticated}
                   exact path="/users/:id" 
                   component={Home}
                   handleLogout={this.handleLogout}>
-                </Route>
-                <Route 
+                </PrivateRoute>
+                <PrivateRoute 
                   authenticated={this.state.isAuthenticated}
                   exact path="/users/new" 
                   component={Home}
                   handleLogout={this.handleLogout}>
-                </Route>
-                <Route 
+                </PrivateRoute>
+                <PrivateRoute 
                   authenticated={this.state.isAuthenticated}
                   exact path="/profile/:id" 
                   component={(props) => <Profile isAuthenticated={this.state.isAuthenticated} currentUser={this.state.currentUser} {...props}  />}
                   handleLogout={this.handleLogout}>
-                </Route>
+                </PrivateRoute>
                 <Route component={NotFound}></Route>
               </Switch>
           </Content>
