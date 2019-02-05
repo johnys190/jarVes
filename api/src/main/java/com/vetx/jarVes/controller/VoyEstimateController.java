@@ -67,9 +67,10 @@ public class VoyEstimateController {
   @DeleteMapping("/{id}")
   @ResponseStatus(HttpStatus.NO_CONTENT)
   @PreAuthorize("hasAnyRole('GUEST', 'ADMIN')")
-   public void deleteVoyEstimate(@PathVariable Long id) {
+   public boolean deleteVoyEstimate(@PathVariable Long id) {
     voyEstimateRepository.findById(id).orElseThrow(() -> new VesselNotFoundException(id));
     voyEstimateRepository.deleteById(id);
+    return true;
   }
 
   @ApiOperation(value = "This endpoint creates a Voyage Estimate.")
