@@ -6,6 +6,7 @@ import com.vetx.jarVes.exceptions.VoyEstimateAlreadyExistsException;
 import com.vetx.jarVes.model.VoyEstimate;
 import com.vetx.jarVes.repository.VoyEstimateRepository;
 import com.vetx.jarVes.service.GeneratePDF;
+import com.vetx.jarVes.service.ToTextService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,13 +30,14 @@ import java.util.List;
 public class VoyEstimateController {
 
   private VoyEstimateRepository voyEstimateRepository;
+  private ToTextService toTextService;
 
-  @Autowired
-  public VoyEstimateController(VoyEstimateRepository voyEstimateRepository) {
-    this.voyEstimateRepository = voyEstimateRepository;
-  }
+    public VoyEstimateController(VoyEstimateRepository voyEstimateRepository, ToTextService toTextService) {
+        this.voyEstimateRepository = voyEstimateRepository;
+        this.toTextService = toTextService;
+    }
 
-  @ApiOperation(value = "This endpoint returns a list of Voyage Estimates.")
+    @ApiOperation(value = "This endpoint returns a list of Voyage Estimates.")
   @GetMapping
   @ResponseStatus(HttpStatus.OK)
   @PreAuthorize("hasAnyRole('GUEST', 'ADMIN')")
@@ -105,10 +107,11 @@ public class VoyEstimateController {
    public String produceTxt(@PathVariable Long id, HttpServletResponse response) {
     if (!voyEstimateRepository.findById(id).isPresent()) {
       throw new EstimateNotFoundException(id);
+    } else {
+        response.setContentType("text/plain");
+        response.setCharacterEncoding("UTF-8");
+        response.setHeader(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + "TimeCharter.txt");
+        return toTextService.vesselToText(id);
     }
-    response.setContentType("text/plain");
-    response.setCharacterEncoding("UTF-8");
-    response.setHeader(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + "TimeCharter.txt");
-    return voyEstimateRepository.findById(id).get().toString();
   }
 }

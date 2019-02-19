@@ -142,5 +142,4 @@ public class VoyEstimate extends UserDateAudit {
     public Integer vesselId;
     @JsonProperty("vessel_name")
     public String vesselName;
-
 }
