@@ -114,6 +114,13 @@ class TCEstimateList extends Component {
 
         return (   
             <div>
+                <div className='alignCenter' style={{fontStyle: 'bold', fontSize: '40px', color: 'red'}}>
+                    *** NO CALCULATIONS IMPLEMENTED ***
+                </div>
+                <div className='alignLeft' />
+                <div className='alignRight' />
+                <div className='alignClear' />
+
                 <Button type="primary" className="add-button">
                   <Link to={{ pathname: "/timeCharterEstimate/new" }}>
                   New Time Charter Estimation

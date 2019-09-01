@@ -16,6 +16,9 @@
 .button{
 	width: 100px;
 }
+.buttonDL{
+	width: 130px;
+}
 
 .alignComponent {
 	padding: 5px;
@@ -93,6 +96,10 @@
 
 .add-button{
 	min-width:150px;
+}
+
+.redRow{
+	background-color: #ffcccc;
 }
 
 .ant-row{

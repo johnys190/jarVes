@@ -267,3 +267,19 @@ export function getUserById(id) {
     });
 }
 
+export function getTXT(id, name){
+    return downloadFile({
+        url: API_BASE_URL + '/voy-estimates/txt/' +id,
+        method: 'GET',
+        name: name
+    });
+}
+
+export function getPDF(id, name){
+    return downloadFile({
+        url: API_BASE_URL + '/voy-estimates/pdf/' +id,
+        method: 'GET',
+        name: name
+    });
+}
+

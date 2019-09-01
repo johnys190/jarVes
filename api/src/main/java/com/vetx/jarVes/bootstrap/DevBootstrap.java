@@ -161,11 +161,20 @@ public class DevBootstrap implements ApplicationListener<ContextRefreshedEvent> 
     tcEstimateRepository.save(tcEstimate1);
 
     VoyEstimate voyEstimate1 =
-        VoyEstimate.builder()
-            .name("VoyTestimate")
-            .account("testvoyaccount")
-            .voyage("ath-lon")
-            .build();
+            VoyEstimate.builder()
+                    .name("VoyTestimate")
+                    .account("testvoyaccount")
+                    .voyage("ath-lon")
+                    .executed(true)
+                    .build();
     voyEstimateRepository.save(voyEstimate1);
+    VoyEstimate voyEstimate2 =
+            VoyEstimate.builder()
+                    .name("VoyTestimate2")
+                    .account("testvoyaccount")
+                    .voyage("ath-lon")
+                    .executed(false)
+                    .build();
+    voyEstimateRepository.save(voyEstimate2);
   }
 }

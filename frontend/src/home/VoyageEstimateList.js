@@ -5,6 +5,7 @@ import {
       Table,
       Popconfirm,
       Button,
+      Icon,
       notification,
       message
 } from 'antd';
@@ -48,6 +49,24 @@ class VoyageEstimateList extends Component {
                 title: 'Commodity',
                 dataIndex: 'commodity',
                 key: 'commodity',
+            },{
+                title: 'Executed',
+                key: 'executed',
+                filters: [{ text: 'Executed', value: true }, { text: 'Not executed', value: false }],
+                onFilter: (value, record) => {
+                    if ((record.executed && value === 'true') || (!record.executed && value === 'false')){
+                        return true;
+                    }else{
+                        return false;
+                    }
+                },
+                render: (record) => {
+                    if (record.executed) {
+                        return (
+                            <Icon type="check-circle"/>
+                        )
+                    }
+                },
             },{
                 key: 'delete',
                 render: (record) => {
@@ -121,6 +140,7 @@ class VoyageEstimateList extends Component {
                 <Table 
                     columns={this.state.columns}
                     dataSource={this.state.dataSource}
+                    rowClassName={(record) => record.executed ? 'redRow' : ''}
                     scroll={{ x: 1000 }}/>
             </div>
             );

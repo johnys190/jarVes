@@ -329,6 +329,14 @@ class TCEstimate extends Component {
 		return (
             <div>
 
+                <div className='alignCenter' style={{fontStyle: 'bold', fontSize: '40px', color: 'red'}}>
+                *** NO CALCULATIONS IMPLEMENTED ***
+                </div>
+                <div className='alignLeft' />
+                <div className='alignRight' />
+                <div className='alignClear' />
+
+
                 <div className='alignLeft'>
                     <Input addonBefore='Name' name='name' className='alignComponent' defaultValue={this.state.tcest.name}  onChange={(event) => this.handleInputChange(event)}/>
                     <Button className='button' type='primary' onClick={this.handleSubmit.bind(this)}>Save</Button>

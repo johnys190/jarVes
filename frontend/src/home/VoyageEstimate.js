@@ -18,8 +18,11 @@ import {
     getAllVessels,
     getVoyEstimateById,
     updateVoyEstimateById,
-    createVoyEstimate
+    createVoyEstimate,
+    getTXT,
+    getPDF
 } from '../util/APIUtils';
+import moment from "moment";
 
 const Option = Select.Option;
 
@@ -36,7 +39,8 @@ class VoyageEstimate extends Component {
                 commodity: '',
                 name: '',
                 vessel: null,
-                voyage: ''
+                voyage: '',
+                executed: false
             }
 
         };
@@ -171,13 +175,11 @@ class VoyageEstimate extends Component {
                     voyest:response,
                     isLoading: false
                 });
-                console.log(this.state);
             }).catch(error => {
             this.setState({
                 isLoading: false
             })
         });
-        console.log(this.state);
     }
 
     handleSubmit() {
@@ -187,7 +189,6 @@ class VoyageEstimate extends Component {
 
         let voyest = this.state.voyest;
         let promise;
-        console.log(this.state);
         if (this.state.voyest.id !== 'new'){
 
             promise = updateVoyEstimateById(this.state.voyest.id, voyest);
@@ -235,7 +236,6 @@ class VoyageEstimate extends Component {
                     });
                 });
         }
-        console.log(this.state);
     }
 
     handleSubmitAs() {
@@ -270,8 +270,21 @@ class VoyageEstimate extends Component {
                 });
             });
     }
+    handleTXT = () => {
+        let me;
+        me = getTXT(this.state.voyest.id, "voyage-estimate-" + this.state.voyest.name.replace(/\s+/g, '-').toLowerCase() + ".txt");
+        if (!me) {
+            return;
+        }
+    };
 
-
+    handlePDF = () => {
+        let me;
+        me = getPDF(this.state.voyest.id, "voyage-estimate-" + this.state.voyest.name.replace(/\s+/g, '-').toLowerCase() + ".pdf");
+        if (!me) {
+            return;
+        }
+    };
 
     handleInputChange(event) {
         const target = event.target;
@@ -283,6 +296,17 @@ class VoyageEstimate extends Component {
             voyest:voyestEdit
         });
         this.calculate();
+    }
+
+    handleDateChange(date,dateString){
+        console.log(date);
+        console.log(dateString);
+        const voyestEdit = this.state.voyest;
+        voyestEdit['date']= dateString;
+        this.setState({
+            voyest:voyestEdit
+        });
+
     }
 
     // handleChangeInput = (e) => {
@@ -312,10 +336,20 @@ class VoyageEstimate extends Component {
                 voyestEdit['vessel_name'] = vessel[key];
             }else if (key == 'id'){
                 voyestEdit['vessel_id'] = vessel[key];
+            }else if (key == 'port_idle'){
+                voyestEdit['ifo_port_idle'] = vessel[key];
+            }else if (key == 'port_working'){
+                voyestEdit['ifo_port_work'] = vessel[key];
+            }else if (key == 'mgo_port_working'){
+                voyestEdit['mgo_port_work'] = vessel[key];
+            }else if (key == 'boiler'){
+                voyestEdit['boiler_port'] = vessel[key];
             }else{
                 voyestEdit[key]= vessel[key];
             }
         });
+        console.log(voyestEdit);
+        console.log(vessel);
         this.setState({
             voyest: voyestEdit
         });
@@ -336,7 +370,6 @@ class VoyageEstimate extends Component {
         this.setState({
             voyest:voyestEdit
         });
-        console.log(this.state)
     }
 
     renderInputList(fields, className='alignComponent', disabled=false){
@@ -388,7 +421,6 @@ class VoyageEstimate extends Component {
         if(this.state.isLoading) {
             return <LoadingIndicator />
         }
-        console.log(this.state);
         const veerticalRadioStyle = {
             display: 'block',
             height: '30px',
@@ -402,6 +434,23 @@ class VoyageEstimate extends Component {
             (<div>
                 <Input addonBefore='Save as' name='save_as' className='alignComponent'  onChange={(event) => this.handleInputChange(event)} value={this.state.voyest.save_as}/>
                 <Button className='button' type='primary' onClick={this.handleSubmitAs.bind(this)}>Save as</Button>
+            </div>) : '';
+        const downloadButtons = (this.state.voyest.id && this.state.voyest.id !== 'new') ?
+            (<div>
+                <br />
+                <br />
+                <Row gutter={15}>
+                    <Col  xs={24} sm={12} md={12} lg={12} xl={12}>
+                        <div style={{textAlign: 'center'}}>
+                            <Button className='buttonDL' type='primary' onClick={this.handleTXT.bind(this)}>Download Text</Button>
+                        </div>
+                    </Col>
+                    <Col  xs={24} sm={12} md={12} lg={12} xl={12} >
+                        <div style={{textAlign: 'center'}}>
+                            <Button className='buttonDL' type='primary' onClick={this.handlePDF.bind(this)}>Download PDF</Button>
+                        </div>
+                    </Col>
+                </Row>
             </div>) : '';
 		return (
             <div>
@@ -446,7 +495,7 @@ class VoyageEstimate extends Component {
                                     </Col>
                                 </Row>
                                 {this.renderInputNumberList(['Comm.', 'Repos.'])}
-                                <DatePicker addonBefore='Date' name='date' />
+                                <DatePicker addonBefore='Date' name='date' onChange={(date,dateString) => this.handleDateChange(date,dateString)} value={moment(this.state.voyest.date)}/>
                             </Col>
                         </Row>
 
@@ -565,7 +614,7 @@ class VoyageEstimate extends Component {
                             name='sensitivity'
                             disabled={true}
                             value={this.state.voyest.sensitivity}/>
-                        
+                        {downloadButtons}
                     </Col>
                 </Row>
                 <br />
