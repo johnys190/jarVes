@@ -53,29 +53,12 @@ public class DevBootstrap implements ApplicationListener<ContextRefreshedEvent> 
     roleRepository.save(roleAdmin);
     roleRepository.save(roleGuest);
 
-    User user1 = new User("Zan", "Toichi", "zan@email.com", passwordEncoder.encode("123456"));
-    User user524 = new User("Peos", "Proktos", "peos@prokt.all", passwordEncoder.encode("poutsa"));
-    User user2 = new User("Thanos", "Louk", "than@email.com", passwordEncoder.encode("654321"));
-    User user3 = new User("Pietr", "Piotr", "pietr@email.com", passwordEncoder.encode("1234321"));
-    User user4 = new User("Pikos", "Pipikos", "pikos@email.com", passwordEncoder.encode("123454321"));
-    User user5 = new User("Kwstas", "Okwsten", "kwsten@email.com", passwordEncoder.encode("12321"));
-
+    User user1 = new User("TestName", "TestLN", "test@email.com", passwordEncoder.encode("password"));
     user1.setRoles(Collections.singleton(roleAdmin));
-    user524.setRoles(Collections.singleton(roleAdmin));
-    user2.setRoles(Collections.singleton(roleAdmin));
-    user3.setRoles(Collections.singleton(roleGuest));
-    user4.setRoles(Collections.singleton(roleGuest));
-    user5.setRoles(Collections.singleton(roleGuest));
-
     userRepository.save(user1);
-    userRepository.save(user524);
-    userRepository.save(user2);
-    userRepository.save(user3);
-    userRepository.save(user4);
-    userRepository.save(user5);
 
     Vessel vessel1 = Vessel.builder()
-        .name("peos")
+        .name("vessel1")
         .dwt(1)
         .type("type1")
         .flag("flag1")
@@ -94,7 +77,7 @@ public class DevBootstrap implements ApplicationListener<ContextRefreshedEvent> 
         .boiler(1234)
         .build();
     Vessel vessel3 = Vessel.builder()
-        .name("peot")
+        .name("vessel3")
         .dwt(4)
         .type("type4")
         .flag("flag14")
@@ -113,7 +96,7 @@ public class DevBootstrap implements ApplicationListener<ContextRefreshedEvent> 
         .boiler(1234)
         .build();
     Vessel vessel4 = Vessel.builder()
-        .name("peou")
+        .name("vessel4")
         .dwt(4)
         .type("type4")
         .flag("flag14")
@@ -132,7 +115,7 @@ public class DevBootstrap implements ApplicationListener<ContextRefreshedEvent> 
         .boiler(1234)
         .build();
     Vessel vessel2 = Vessel.builder()
-        .name("aidio")
+        .name("vessel2")
         .dwt(2)
         .type("type2")
         .flag("flag2")
@@ -162,11 +145,74 @@ public class DevBootstrap implements ApplicationListener<ContextRefreshedEvent> 
 
     VoyEstimate voyEstimate1 =
             VoyEstimate.builder()
-                    .name("VoyTestimate")
+                    .name("VoyTestimate1")
                     .account("testvoyaccount")
                     .voyage("ath-lon")
+                    .account("aasd")
+                    .boilerPort("1234")
+                    .broker("ddfg")
+                    .canals("76")
+                    .comm("5")
+                    .commodity("ddds")
+                    .disch("44")
+                    .dischDays(4.0)
+                    .dischPort("103")
+                    .dischargePortType("non_seca")
+                    .dischargeRateType("daps")
+                    .disportBunkers(3858445.36)
+                    .drate("4")
+                    .exins("8967")
+                    .expenses(9653.0)
+                    .extraCosts("455")
+                    .extraCosts2("545454")
+                    .freightRate("2")
+                    .freightRateType("per_mt_intake")
+                    .grossRevenue(2.0)
+                    .ifoBallast("2134")
+                    .ifoLaden("234")
+                    .ifoPortIdle("214")
+                    .ifoPortWork("34.02")
+                    .ifoPrice("67")
+                    .laycan("ghjghj")
+                    .load("00")
+                    .loadDays("0.3333333333333333")
+                    .loadPort("754")
+                    .loadPortType("seca")
+                    .loadRateType("x")
+                    .loadportBunkers(45695232.58666666)
+                    .lostwaitingDays("990")
+                    .lrate("3")
+                    .mgoPortIdle("123")
+                    .mgoPortWork("1234")
+                    .mgoPrice("88")
+                    .mgoSea("501")
+                    .miscel("90")
+                    .name("Test")
+                    .netRevenue(-178453256.94666666)
+                    .nonSecaBallast("56")
+                    .nonSecaLaden("89")
+                    .others("556")
+                    .quantity("1")
+                    .repos("4")
+                    .sailingBunkers(22128318.0)
+                    .secaBallast("67")
+                    .secaLaden("7")
+                    .shexDisch(1.0)
+                    .shexLoad(330.0)
+                    .speed("1234")
+                    .steaming(1.8930307941653162)
+                    .steamingMargin("255")
+                    .taxes(10.0)
+                    .taxesP("5")
+                    .timeCharterRate(-134628.29968552376)
+                    .totalBunkerCost(178443595.94666666)
+                    .totalDuration(1327.2263641274985)
+                    .voyage("oleeEEEDit")
+                    .date("2019-08-31")
+                    .vesselName("vessel3")
                     .executed(true)
                     .build();
+
     voyEstimateRepository.save(voyEstimate1);
     VoyEstimate voyEstimate2 =
             VoyEstimate.builder()
