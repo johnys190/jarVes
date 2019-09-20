@@ -6,6 +6,7 @@ import {
   Switch
 } from 'react-router-dom';
 
+import PrivateRoute from "../common/PrivateRoute";
 import { getCurrentUser } from '../util/APIUtils';
 import { ACCESS_TOKEN } from '../constants';
 
@@ -100,70 +101,73 @@ class App extends Component {
             onLogout={this.handleLogout} />
 
           <Content className="app-content">
-              <Switch>      
-                <Route path="/login" 
-                  render={(props) => <Login onLogin={this.handleLogin} {...props} />}>
+              <Switch>
+                <Route path="/login"
+                       render={(props) => <Login onLogin={this.handleLogin} {...props} />}>
                 </Route>
-                <Route 
+                <Route path="/signup"
+                       render={(props) => <Signup {...props} />}>
+                </Route>
+                <PrivateRoute
                   authenticated={this.state.isAuthenticated}
                   exact path="/" 
                   component={Home}
                   handleLogout={this.handleLogout}>
-                </Route>
-                <Route 
+                </PrivateRoute>
+                <PrivateRoute
                   authenticated={this.state.isAuthenticated}
                   exact path="/vessel/:id" 
                   component={Home}
                   handleLogout={this.handleLogout}>
-                </Route>
-                <Route 
+                </PrivateRoute>
+                <PrivateRoute
                   authenticated={this.state.isAuthenticated}
                   exact path="/vessel/new" 
                   component={Home}
                   handleLogout={this.handleLogout}>
-                </Route>
-                <Route 
+                </PrivateRoute>
+                <PrivateRoute
                   authenticated={this.state.isAuthenticated}
                   exact path="/voyageEstimate/:id" 
                   component={Home}
                   handleLogout={this.handleLogout}>
-                </Route>
-                <Route 
+                </PrivateRoute>
+                <PrivateRoute
                   authenticated={this.state.isAuthenticated}
                   exact path="/voyageEstimate/new" 
                   component={Home}
                   handleLogout={this.handleLogout}>
-                </Route>
-                <Route 
+                </PrivateRoute>
+                <PrivateRoute
                   authenticated={this.state.isAuthenticated}
                   exact path="/timeCharterEstimate/:id" 
                   component={Home}
                   handleLogout={this.handleLogout}>
-                </Route>
-                <Route 
+                </PrivateRoute>
+                <PrivateRoute
                   authenticated={this.state.isAuthenticated}
                   exact path="/timeCharterEstimate/new" 
                   component={Home}
                   handleLogout={this.handleLogout}>
-                </Route>
-                <Route 
+                </PrivateRoute>
+                <PrivateRoute
                   authenticated={this.state.isAuthenticated}
                   exact path="/users/:id" 
                   component={Home}
                   handleLogout={this.handleLogout}>
-                </Route>
-                <Route 
+                </PrivateRoute>
+                <PrivateRoute
                   authenticated={this.state.isAuthenticated}
                   exact path="/users/new" 
                   component={Home}
                   handleLogout={this.handleLogout}>
-                </Route>
-                <Route 
+                </PrivateRoute>
+                <PrivateRoute
                   authenticated={this.state.isAuthenticated}
                   exact path="/profile/:id" 
                   component={(props) => <Profile isAuthenticated={this.state.isAuthenticated} currentUser={this.state.currentUser} {...props}  />}
                   handleLogout={this.handleLogout}>
-                </Route>
+                </PrivateRoute>
                 <Route component={NotFound}></Route>
               </Switch>
           </Content>

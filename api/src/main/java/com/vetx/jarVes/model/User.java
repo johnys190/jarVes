@@ -28,7 +28,7 @@ public class User {
     @NonNull
     @NotBlank(message = "Name is required.")
     @Size(max = 140)
-    private String name;
+    private String firstName;
 
     @NonNull
     @NotBlank(message = "Last name is required.")

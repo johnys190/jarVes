@@ -87,7 +87,7 @@ class Profile extends Component {
         // event.preventDefault();
     
         // const signupRequest = {
-        //     name: this.state.name.value,
+        //     name: this.state.firstName.value,
         //     email: this.state.email.value,
         //     lastName: this.state.lastName.value,
         //     password: this.state.password.value
@@ -133,7 +133,7 @@ class Profile extends Component {
     }
 
     isFormInvalid() {
-        return !(this.state.name.validateStatus === 'success' &&
+        return !(this.state.firstName.validateStatus === 'success' &&
             this.state.lastName.validateStatus === 'success' &&
             this.state.email.validateStatus === 'success' &&
             this.state.password.validateStatus === 'success'
@@ -360,8 +360,8 @@ class Profile extends Component {
                     <Form onSubmit={this.handleSubmit} className="signup-form">
                         <FormItem 
                             //label="Full Name"
-                            //validateStatus={this.state.name.validateStatus}
-                            //help={this.state.name.errorMsg}
+                            //validateStatus={this.state.firstName.validateStatus}
+                            //help={this.state.firstName.errorMsg}
                             >
                             <Input 
                                 size="large"

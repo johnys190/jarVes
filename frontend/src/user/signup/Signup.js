@@ -19,7 +19,7 @@ class Signup extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            name: {
+            firstName: {
                 value: ''
             },
             lastName: {
@@ -52,8 +52,8 @@ class Signup extends Component {
         getUserById(this.state.id)
         .then(response => {
             this.setState({
-                name: {
-                    value: response.name
+                firstName: {
+                    value: response.firstName
                 },
                 lastName: {
                     value: response.lastName
@@ -95,7 +95,7 @@ class Signup extends Component {
         event.preventDefault();
     
         const signupRequest = {
-            name: this.state.name.value,
+            firstName: this.state.firstName.value,
             email: this.state.email.value,
             lastName: this.state.lastName.value,
             password: this.state.password.value
@@ -116,7 +116,7 @@ class Signup extends Component {
     }
 
     isFormInvalid() {
-        return !(this.state.name.validateStatus === 'success' &&
+        return !(this.state.firstName.validateStatus === 'success' &&
             this.state.lastName.validateStatus === 'success' &&
             this.state.email.validateStatus === 'success' &&
             this.state.password.validateStatus === 'success'
@@ -131,15 +131,15 @@ class Signup extends Component {
                 <div className="signup-content">
                     <Form onSubmit={this.handleSubmit} className="signup-form">
                         <FormItem 
-                            label="Full Name"
-                            validateStatus={this.state.name.validateStatus}
-                            help={this.state.name.errorMsg}>
+                            label="First Name"
+                            validateStatus={this.state.firstName.validateStatus}
+                            help={this.state.firstName.errorMsg}>
                             <Input 
                                 size="large"
-                                name="name"
+                                name="firstName"
                                 autoComplete="off"
-                                placeholder="Your full name"
-                                value={this.state.name.value} 
+                                placeholder="Your First Name"
+                                value={this.state.firstName.value}
                                 onChange={(event) => this.handleInputChange(event, this.validateName)} />    
                         </FormItem>
                         <FormItem label="Last Name"
