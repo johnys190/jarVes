@@ -106,7 +106,7 @@ class Signup extends Component {
                 message: 'Link Line Voyage Estimate',
                 description: "Thank you! You're successfully registered. Please Login to continue!",
             });          
-            this.props.history.push("/login");
+            this.props.history.push("/");
         }).catch(error => {
             notification.error({
                 message: 'Link Line Voyage Estimate',

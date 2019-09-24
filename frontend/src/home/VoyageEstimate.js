@@ -225,6 +225,7 @@ class VoyageEstimate extends Component {
                         voyest: response,
                         isLoading: false
                     });
+					this.props.history.push("/voyageEstimate/"+response.id);
                 })
                 .catch(error => {
                     notification.error({
@@ -259,6 +260,7 @@ class VoyageEstimate extends Component {
                     voyest: response,
                     isLoading: false
                 });
+				this.props.history.push("/voyageEstimate/"+response.id);
             })
             .catch(error => {
                 notification.error({
@@ -432,8 +434,14 @@ class VoyageEstimate extends Component {
                                     });
         const saveAs = (this.state.voyest.id && this.state.voyest.id !== 'new') ?
             (<div>
-                <Input addonBefore='Save as' name='save_as' className='alignComponent'  onChange={(event) => this.handleInputChange(event)} value={this.state.voyest.save_as}/>
-                <Button className='button' type='primary' onClick={this.handleSubmitAs.bind(this)}>Save as</Button>
+				<Row gutter={15}>
+					<Col  xs={24} sm={12} md={12} lg={12} xl={12}>
+                		<Input addonBefore='Save as' name='save_as' className='alignComponent'  onChange={(event) => this.handleInputChange(event)} value={this.state.voyest.save_as} style={{marginTop: '1%', marginBottom: '1%'}}/>
+					</Col>
+					<Col  xs={24} sm={12} md={12} lg={12} xl={12}>
+						<Button className='saveButton' type='primary' onClick={this.handleSubmitAs.bind(this)}>Save as</Button>
+					</Col>
+				</Row>
             </div>) : '';
         const downloadButtons = (this.state.voyest.id && this.state.voyest.id !== 'new') ?
             (<div>
@@ -456,20 +464,22 @@ class VoyageEstimate extends Component {
             <div>
                 <Row gutter={15}>
                     <Col  xs={24} sm={24} md={24} lg={24} xl={12}>
-                        <Input addonBefore='Name' name='name' className='alignComponent' value={this.state.voyest.name}  onChange={(event) => this.handleInputChange(event)}/>
-                        <Button className='button' type='primary' onClick={this.handleSubmit.bind(this)}>Save</Button>
+						<Row gutter={15}>
+							<Col  xs={24} sm={12} md={12} lg={12} xl={12}>
+                        		<Input addonBefore='Name' name='name' className='alignComponent' value={this.state.voyest.name}  onChange={(event) => this.handleInputChange(event)} style={{marginTop: '1%', marginBottom: '1%'}}/>
+							</Col>
+							<Col  xs={24} sm={12} md={12} lg={12} xl={12}>
+                        		<Button className='saveButton' type='primary' onClick={this.handleSubmit.bind(this)}>Save</Button>
+							</Col>
+						</Row>
                         {saveAs}
-                        <br />
-                        <span class="ant-input-group-wrapper">
-                            <span class="ant-input-wrapper ant-input-group">
-                                <span class="ant-input-group-addon">
-                                    Executed
-                                </span>
-                                <Checkbox className='alignSelect' defaultChecked={this.state.voyest.executed} onChange={(event) => this.handleCheckbox(event)}/>
-                            </span>
-                        </span>                        
-                        <br />
-                        <br />
+						<br />
+						<Row gutter={15} >
+							<Col>
+								<Checkbox className='alignSelect' checked={this.state.voyest.executed} onChange={(event) => this.handleCheckbox(event)} >Executed </Checkbox>
+							</Col>
+						</Row>
+						<br />
                         <Row gutter={15}>
                             <Col  xs={24} sm={12} md={12} lg={12} xl={12}>
                                 {this.renderInputList(['Voyage', 'Account', 'Commodity', 'Broker', 'Laycan'])}
@@ -503,13 +513,13 @@ class VoyageEstimate extends Component {
 
                         <Row gutter={15}>
                             <Col  xs={24} sm={12} md={12} lg={12} xl={12}>
-                                <p>Ballast distance</p>
+                                <h3>Ballast distance</h3>
                                 {this.renderInputNumberList(['NON Seca (Ballast)', 'Seca (Ballast)'])}
-                                <p>Laden distance</p>
+                                <h3>Laden distance</h3>
                                 {this.renderInputNumberList(['NON Seca (Laden)', 'Seca (Laden)', 'IFO price', 'MGO price', 'Lost/waiting days'])}
                             </Col>
                             <Col  xs={24} sm={12} md={12} lg={12} xl={12}>
-                                <p>Port costs</p>
+                                <h3>Port costs</h3>
                                 <Row gutter={20}>
                                     <Col span={13}>
                                         <Input 
@@ -563,30 +573,33 @@ class VoyageEstimate extends Component {
                     </Col>
 
                     <Col  xs={24} sm={24} md={24} lg={24} xl={12}>
-                        <span class="ant-input-group-wrapper">
-                            <span class="ant-input-wrapper ant-input-group">
-                                <span class="ant-input-group-addon">
-                                    Vessel
-                                </span>
-                                <Select
-                                    className='alignSelect'
-                                    showSearch
-                                    placeholder="Select a ship"
-                                    optionFilterProp="children"
-                                    value={this.state.voyest.vessel_id}
-                                    onSelect={(id) => this.handleChangeSelect(id)}
-                                    filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}>
-                                        {vesselsOptions}
-                                </Select>
-                            </span>
-                        </span>
-                        <Row gutter={15}>
-                            <Col  xs={24} sm={12} md={12} lg={12} xl={12}>
+
+						<Row gutter={15}>
+							<Col  xs={24} sm={12} md={12} lg={12} xl={12}>
+							<h3>Vessel</h3>
+							<span class="ant-input-group-wrapper">
+								<span class="ant-input-wrapper ant-input-group">
+									<span class="ant-input-group-addon">
+										Vessel
+									</span>
+									<Select
+										className='alignSelect'
+										showSearch
+										placeholder="Select a ship"
+										optionFilterProp="children"
+										value={this.state.voyest.vessel_id}
+										onSelect={(id) => this.handleChangeSelect(id)}
+										filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}>
+											{vesselsOptions}
+									</Select>
+								</span>
+							</span>
                                 {this.renderInputNumberList(['Speed', 'IFO Ballast', 'IFO Laden', 'MGO Sea', 'IFO port idle', 'IFO port work', 'MGO port idle', 'MGO port work', 'Boiler port'])}
                             </Col>
                             <Col  xs={24} sm={12} md={12} lg={12} xl={12}>
+								<h3>Voyage</h3>
                                 {this.renderInputNumberList(['Load port', 'Disch. port', 'Steaming margin'])}
-                                <p>Days</p> 
+                                <h3>Days</h3>
                                 {this.renderInputNumberList(['Steaming','Load days','Disch days', 'SHEX load', 'SHEX disch'], 'alignResultLightBlue', true)}
                                 <Input 
                                     type='number'
@@ -598,7 +611,7 @@ class VoyageEstimate extends Component {
                             </Col>
                         </Row>
 
-                        <p>RESULTS</p>
+                        <h2>Results</h2>
                         {this.renderInputNumberList(['Gross revenue', 'Sailing bunkers', 'Loadport bunkers', 'Disport bunkers', 'Total bunker cost', 'Expenses', 'Commissions', 'Taxes', 'Exins', 'Net Revenue'], 'alignResultDarkBlue', true)}
                         <Input 
                             type='number'

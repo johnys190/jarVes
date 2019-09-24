@@ -38,7 +38,13 @@ public class UserController {
     @GetMapping("/me")
     @PreAuthorize("hasAnyRole('GUEST', 'ADMIN')")
     public UserSummary getCurrentUser(@CurrentUser UserPrincipal currentUser) {
-        return new UserSummary(currentUser.getId(), currentUser.getUsername(), currentUser.getName());
+        User user = userRepository.getOne(currentUser.getId());
+        return UserSummary.builder()
+            .id(user.getId())
+            .email(user.getEmail())
+            .firstName(user.getFirstName())
+            .lastName(user.getLastName())
+            .build();
     }
 
     @ApiOperation(value = "This endpoint will return a list of all Users.")

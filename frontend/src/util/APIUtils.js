@@ -51,7 +51,7 @@ const downloadFile = (options) => {
                 let a = document.createElement('a');
                 a.href = url;
                 a.download = filename;
-                a.click();
+                a.dispatchEvent(new MouseEvent('click'));
             });
             }
         );

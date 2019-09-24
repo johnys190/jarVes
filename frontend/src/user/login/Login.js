@@ -26,6 +26,20 @@ class LoginForm extends Component {
         super(props);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
+	//
+	// onLogin = () => {
+	// 	const { state = {} } = this.props.location;
+	// 	const { prevLocation } = state;
+	//
+	// 	this.setState(
+	// 		{
+	// 			isAuthenticated: true,
+	// 		},
+	// 		() => {
+	// 			this.props.history.push(prevLocation || "/");
+	// 		},
+	// 	);
+	// };
 
     handleSubmit(event) {
         event.preventDefault();   
@@ -82,7 +96,6 @@ class LoginForm extends Component {
                 </FormItem>
                 <FormItem>
                     <Button type="primary" htmlType="submit" size="large" className="login-form-button">Login</Button>
-                    Or <Link to="/signup">register now!</Link>
                 </FormItem>
             </Form>
         );

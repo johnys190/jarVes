@@ -70,15 +70,15 @@ function ProfileDropdownMenu(props) {
     <Menu onClick={props.handleMenuClick} className="profile-dropdown-menu">
       <Menu.Item key="user-info" className="dropdown-item" disabled>
         <div className="user-full-name-info">
-          {props.currentUser.name}
+          {props.currentUser.firstName} {props.currentUser.lastName}
         </div>
         <div className="username-info">
-          @{props.currentUser.username}
+            {props.currentUser.email}
         </div>
       </Menu.Item>
       <Menu.Divider />
       <Menu.Item key="profile" className="dropdown-item">
-        <Link to={`/users/${props.currentUser.username}`}>Profile</Link>
+        <Link to={`/users/${props.currentUser.id}`}>Profile</Link>
       </Menu.Item>
       <Menu.Item key="logout" className="dropdown-item">
         Logout

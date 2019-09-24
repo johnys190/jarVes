@@ -38,6 +38,12 @@ class Home extends Component {
             return <LoadingIndicator />
         }
 
+		let dk = this.state.dk;
+        if (this.props.location.pathname.indexOf('/',1) > 0){
+	        let l = this.props.location.pathname.indexOf('/', 1);
+	        if (l === -1) l = this.props.location.pathname.length-1;
+	        dk = this.props.location.pathname.substring(1,l);
+	    }
         let vessels;
         if (this.props.location.pathname.startsWith('/vessel/')){
             vessels = (<Vessel id={this.props.match.params.id} />);
@@ -47,7 +53,7 @@ class Home extends Component {
 
         let voyageEstimate;
         if (this.props.location.pathname.startsWith('/voyageEstimate/')){
-            voyageEstimate = (<VoyageEstimate id={this.props.match.params.id} />);
+            voyageEstimate = (<VoyageEstimate id={this.props.match.params.id} {...this.props}/>);
         }else{
         	voyageEstimate = (<VoyageEstimateList /*parse props here*//>);
         }
@@ -61,31 +67,28 @@ class Home extends Component {
 
         let adminPanel;
         if (this.props.location.pathname.startsWith('/users/new')){
-        	adminPanel = (<Signup />);
+        	adminPanel = (<Signup {...this.props} />);
         }else if (this.props.location.pathname.startsWith('/users/')){
             adminPanel = (<Profile id={this.props.match.params.id} />);
+            dk = "users";
         }else{
         	adminPanel = (<UserList />)
         }
 
-        let dk = this.state.dk;
-        if (this.props.location.pathname.indexOf('/',1) > 0){
-	        let l = this.props.location.pathname.indexOf('/', 1);
-	        if (l === -1) l = this.props.location.pathname.length-1;
-	        dk = this.props.location.pathname.substring(1,l);
-	    }
 
 		return (
 			<div className="container">
 				<div className="content">
 					<StickyContainer>
-					    <Tabs defaultActiveKey={dk} renderTabBar={renderTabBar} onTabClick={() => this.props.history.push('/')} onChange={(key) => {this.setState({dk: key})}}>
+					    <Tabs activeKey={dk} renderTabBar={renderTabBar} onTabClick={() => this.props.history.push('/')} onChange={(key) => {this.setState({dk: key})}}>
 					      <TabPane tab="Vessels" key="vessel">{vessels}</TabPane>
 					      <TabPane tab="Voyage Estimate" key="voyageEstimate">{voyageEstimate}</TabPane>
 					      <TabPane tab="Time Charter Estimate" key="timeCharterEstimate">{tcEstimate}</TabPane>
 					      <TabPane tab="Admin Panel" key="users">{adminPanel}</TabPane>
 					    </Tabs>
 				  	</StickyContainer>
+					<br/>
+					<br/>
 				</div>
 			</div>
 			);

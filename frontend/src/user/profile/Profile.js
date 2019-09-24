@@ -359,17 +359,17 @@ class Profile extends Component {
                 <div className="signup-content">
                     <Form onSubmit={this.handleSubmit} className="signup-form">
                         <FormItem 
-                            //label="Full Name"
+                            label="First Name"
                             //validateStatus={this.state.firstName.validateStatus}
                             //help={this.state.firstName.errorMsg}
                             >
                             <Input 
                                 size="large"
                                 name="name"
+								placeholder="First Name"
                                 autoComplete="off"
-                                placeholder="Your name"
-                                value={this.state.user.name} 
-                                onChange={(event) => this.handleInputChange(event, this.validateName)} />    
+                                value={this.state.user.firstName}
+                                onChange={(event) => this.handleInputChange(event, this.validateName)} />
                         </FormItem>
                         <FormItem label="Last Name"
                             //hasFeedback
@@ -383,7 +383,7 @@ class Profile extends Component {
                                 placeholder="Last Name"
                                 value={this.state.user.lastName} 
                                 onBlur={this.validateUsernameAvailability}
-                                onChange={(event) => this.handleInputChange(event, this.validateUsername)} />    
+                                onChange={(event) => this.handleInputChange(event, this.validateUsername)} />
                         </FormItem>
                         <FormItem label="Email"
                             // hasFeedback

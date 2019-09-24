@@ -1,5 +1,6 @@
 package com.vetx.jarVes.controller;
 
+import com.itextpdf.text.DocumentException;
 import com.vetx.jarVes.exceptions.EstimateNotFoundException;
 import com.vetx.jarVes.exceptions.VesselNotFoundException;
 import com.vetx.jarVes.exceptions.VoyEstimateAlreadyExistsException;
@@ -67,7 +68,7 @@ public class VoyEstimateController {
   @DeleteMapping("/{id}")
   @ResponseStatus(HttpStatus.NO_CONTENT)
   @PreAuthorize("hasAnyRole('GUEST', 'ADMIN')")
-   public boolean deleteVoyEstimate(@PathVariable Long id) {
+  public boolean deleteVoyEstimate(@PathVariable Long id) {
     voyEstimateRepository.findById(id).orElseThrow(() -> new VesselNotFoundException(id));
     voyEstimateRepository.deleteById(id);
     return true;
@@ -77,7 +78,7 @@ public class VoyEstimateController {
   @PostMapping
   @ResponseStatus(HttpStatus.CREATED)
   @PreAuthorize("hasAnyRole('GUEST', 'ADMIN')")
-   VoyEstimate newVoyEstimate(@Valid @RequestBody VoyEstimate newVoyEstimate) {
+  public VoyEstimate newVoyEstimate(@Valid @RequestBody VoyEstimate newVoyEstimate) {
     if (voyEstimateRepository.findByName(newVoyEstimate.getName()).isPresent()) {
       throw new VoyEstimateAlreadyExistsException(newVoyEstimate.getName());
     }
@@ -87,7 +88,7 @@ public class VoyEstimateController {
   @ApiOperation(value = "This endpoint exports a Voyage Estimate in PDF form.")
   @GetMapping(value = "/pdf/{id}", produces = MediaType.APPLICATION_PDF_VALUE)
   @PreAuthorize("hasAnyRole('GUEST', 'ADMIN')")
-  public ResponseEntity<InputStreamResource> voyEstimateReport(@PathVariable Long id) throws IOException {
+  public ResponseEntity<InputStreamResource> voyEstimateReport(@PathVariable Long id) throws DocumentException {
     VoyEstimate voyEstimate = voyEstimateRepository.findById(id).get();
     ByteArrayInputStream bis = GeneratePDF.voyEstimatePDF(voyEstimate);
 
@@ -95,21 +96,22 @@ public class VoyEstimateController {
     headers.add("Content-Disposition", "inline; filename=VOYestimate.pdf");
 
     return ResponseEntity.ok()
-            .headers(headers)
-            .contentType(MediaType.APPLICATION_PDF)
-            .body(new InputStreamResource(bis));
+        .headers(headers)
+        .contentType(MediaType.APPLICATION_PDF)
+        .body(new InputStreamResource(bis));
   }
+
   @ApiOperation(value = "This endpoint produces a Voyage Estimate in plaintext format.")
-  @GetMapping("/txt/{id}")
+  @GetMapping(value = "/txt/{id}", produces = "application/vnd.openxmlformats-officedocument.wordprocessingml.document")
   @ResponseStatus(HttpStatus.CREATED)
   @PreAuthorize("hasAnyRole('GUEST', 'ADMIN')")
-   public String produceTxt(@PathVariable Long id, HttpServletResponse response) {
+  public String produceTxt(@PathVariable Long id, HttpServletResponse response) {
     if (!voyEstimateRepository.findById(id).isPresent()) {
-      throw new EstimateNotFoundException(id);
+       throw new EstimateNotFoundException(id);
     }
-    response.setContentType("text/plain");
+    response.setContentType("application/vnd.openxmlformats-officedocument.wordprocessingml.document");
     response.setCharacterEncoding("UTF-8");
     response.setHeader(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + "TimeCharter.txt");
-    return voyEstimateRepository.findById(id).get().toString();
+    return voyEstimateRepository.findById(id).get().toText();
   }
 }

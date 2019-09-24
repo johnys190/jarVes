@@ -35,12 +35,11 @@ class App extends Component {
     this.handleLogout = this.handleLogout.bind(this);
     this.loadCurrentUser = this.loadCurrentUser.bind(this);
     this.handleLogin = this.handleLogin.bind(this);
-
     notification.config({
       placement: 'topRight',
       top: 70,
       duration: 3,
-    });    
+    });
   }
 
   loadCurrentUser() {
@@ -61,7 +60,7 @@ class App extends Component {
     });
   }
 
-  componentDidMount() {
+  componentWillMount() {
     this.loadCurrentUser();
   }
 
@@ -105,9 +104,6 @@ class App extends Component {
                 <Route path="/login"
                        render={(props) => <Login onLogin={this.handleLogin} {...props} />}>
                 </Route>
-                <Route path="/signup"
-                       render={(props) => <Signup {...props} />}>
-                </Route>
                 <PrivateRoute
                   authenticated={this.state.isAuthenticated}
                   exact path="/" 
@@ -129,7 +125,7 @@ class App extends Component {
                 <PrivateRoute
                   authenticated={this.state.isAuthenticated}
                   exact path="/voyageEstimate/:id" 
-                  component={Home}
+                  component={(props) => <Home isAuthenticated={this.state.isAuthenticated} currentUser={this.state.currentUser} {...props}  />}
                   handleLogout={this.handleLogout}>
                 </PrivateRoute>
                 <PrivateRoute

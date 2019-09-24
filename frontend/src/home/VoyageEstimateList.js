@@ -27,8 +27,7 @@ class VoyageEstimateList extends Component {
                               <Link to={{ pathname: "/voyageEstimate/" + record.id, state:{voyageEstimate: this.record} }}>{name}</Link>
                               );
                   },
-                width: 150,
-                fixed: 'left',
+				minWidth: 'fit-content',
             },{
                 title: 'Vessel',
                 dataIndex: 'vessel',

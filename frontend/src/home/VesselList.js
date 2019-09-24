@@ -26,8 +26,7 @@ class VesselList extends Component {
 						<Checkbox key={'important' + record.id} defaultChecked={record.important}
 								  onChange={this.handleCheckbox.bind(this, record.id, record.important)}/>
 					),
-          width: 100,
-					fixed: 'left',
+          			minWidth: 'fit-content',
 				}, {
 					title: 'Name',
 					dataIndex: 'name',
@@ -38,8 +37,6 @@ class VesselList extends Component {
 							<Link to={{pathname: "/vessel/" + record.id, state: {vessel: this.record}}}>{name}</Link>
 						);
 					},
-          width: 150,
-					fixed: 'left',
 				}, {
 					title: 'Boiler',
 					dataIndex: 'boiler',
@@ -90,7 +87,7 @@ class VesselList extends Component {
 							</Popconfirm>
 						)
 					},
-          width: 100,
+          			width: 'fit-content',
 					fixed: 'right'
 				}],
             dataSource:[
